@@ -11,7 +11,7 @@ Este repositorio contiene los recursos desarrollados durante el trabajo de grado
 | Carpeta | Contenido |
 |---|---|
 | [`01_ontologia`](01_ontologia) | Ontología BFPO y su matriz de formalización. La ontología está publicada en BioPortal. |
-| [`02_grafo`](02_grafo) | Relaciones del dominio y mapeo RML utilizados para construir el grafo de conocimiento en GraphDB. |
+| [`02_grafo`](02_grafo) | Relaciones del dominio, mapeo RML y el repositorio del KG en GraphDB. |
 | [`03_implementacion`](03_implementacion) | Simulador, flujo de Kestra, entidad de Eclipse Ditto, interfaz web y configuración de los servicios. |
 | [`04_consultas`](04_consultas) | Consultas SPARQL utilizadas para recuperar información del grafo de conocimiento. |
 | [`05_evidencias`](05_evidencias) | Registros de las ejecuciones de Kestra y lecturas simuladas de los escenarios E1 a E4. |
