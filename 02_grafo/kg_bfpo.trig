@@ -1,0 +1,3400 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <https://w3id.org/bfpo#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix iot-lite: <http://purl.oclc.org/NET/UNIS/fiware/iot-lite#> .
+@prefix mod: <http://www.isibang.ac.in/ns/mod#> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix chebi: <http://purl.obolibrary.org/obo/CHEBI_> .
+@prefix prefer: <https://www.ebi.ac.uk/ols4/ontologies/prefer#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix saref: <https://saref.etsi.org/core/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix ncbi: <http://purl.obolibrary.org/obo/NCBITaxon_> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix s4inma: <https://saref.etsi.org/saref4inma/> .
+@prefix po2: <https://quantum.mia-ps.inrae.fr/PO2/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix pato: <http://purl.obolibrary.org/obo/PATO_> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix quantitykind: <http://qudt.org/vocab/quantitykind/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix ofpe: <http://purl.org/net/ofpe#> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+
+<http://w3id.org/bfpo/ontology> {
+  dc:creator a owl:AnnotationProperty .
+  
+  dc:date a owl:AnnotationProperty .
+  
+  dc:description a owl:AnnotationProperty .
+  
+  dc:language a owl:AnnotationProperty .
+  
+  dc:publisher a owl:AnnotationProperty .
+  
+  dc:rights a owl:AnnotationProperty .
+  
+  dc:title a owl:AnnotationProperty .
+  
+  mod:acronym a owl:AnnotationProperty .
+  
+  mod:formalityLevel a owl:AnnotationProperty .
+  
+  mod:naturalLanguage a owl:AnnotationProperty .
+  
+  mod:noOfClasses a owl:AnnotationProperty .
+  
+  mod:noOfProperties a owl:AnnotationProperty .
+  
+  mod:ontologyType a owl:AnnotationProperty .
+  
+  mod:status a owl:AnnotationProperty .
+  
+  :Aldehyde a owl:Class;
+    rdfs:subClassOf :VolatileCompound .
+  
+  :VolatileCompound a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :Alkaloid a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :ChemicalCompound a owl:Class .
+  
+  :CarbonDioxide a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :ChlorogenicAcid a owl:Class;
+    rdfs:subClassOf :PhenolicCompound .
+  
+  :PhenolicCompound a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :CitricAcid a owl:Class;
+    rdfs:subClassOf :OrganicAcid .
+  
+  :OrganicAcid a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :Ester a owl:Class;
+    rdfs:subClassOf :VolatileCompound .
+  
+  :Ethanol a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :FilamentousFungus a owl:Class;
+    rdfs:subClassOf :Microorganism .
+  
+  :Microorganism a owl:Class .
+  
+  :Fructose a owl:Class;
+    rdfs:subClassOf :SimpleSugar .
+  
+  :SimpleSugar a owl:Class;
+    rdfs:subClassOf :ChemicalCompound .
+  
+  :Glucose a owl:Class;
+    rdfs:subClassOf :SimpleSugar .
+  
+  :LacticAcid a owl:Class;
+    rdfs:subClassOf :OrganicAcid .
+  
+  :MalicAcid a owl:Class;
+    rdfs:subClassOf :OrganicAcid .
+  
+  :ProcessingMethod a owl:Class .
+  
+  :SuccinicAcid a owl:Class;
+    rdfs:subClassOf :OrganicAcid .
+  
+  :Sucrose a owl:Class;
+    rdfs:subClassOf :SimpleSugar .
+  
+  :WinyDefect a owl:Class;
+    rdfs:subClassOf :SensoryDefect .
+  
+  :SensoryDefect a owl:Class;
+    rdfs:subClassOf :QualityDescriptor .
+  
+  :hasAgitationSpeed a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :Bioreactor a owl:Class;
+    rdfs:subClassOf sosa:FeatureOfInterest .
+  
+  sosa:ObservableProperty a owl:Class .
+  
+  :hasAirFlow a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasAltitude a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasAmbientHumidity a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasAmbientTemperature a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasBrixDegree a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasConcentration a owl:DatatypeProperty;
+    rdfs:domain :ChemicalCompound;
+    rdfs:range xsd:float .
+  
+  :hasDissolvedOxygen a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasFermentationDuration a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasFermentationTemperature a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasMeasuredActivity a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasMeasuredValue a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasMicrobialConcentration a owl:DatatypeProperty;
+    rdfs:domain :Microorganism;
+    rdfs:range xsd:float .
+  
+  :hasObservation a owl:ObjectProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range :ProcessObservation .
+  
+  :hasOptimalRangeMax a owl:DatatypeProperty;
+    rdfs:domain :ProcessVariable;
+    rdfs:range xsd:float .
+  
+  :hasOptimalRangeMin a owl:DatatypeProperty;
+    rdfs:domain :ProcessVariable;
+    rdfs:range xsd:float .
+  
+  :hasPH a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasRedoxPotential a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasSubstrateHumidity a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  :hasSubstrateVolume a owl:DatatypeProperty .
+  
+  :hasTotalMicrobialPopulation a owl:DatatypeProperty;
+    rdfs:domain :ProcessObservation;
+    rdfs:range xsd:float .
+  
+  <https://w3id.org/bfpo> a owl:Ontology .
+  
+  :AceticAcid a owl:Class;
+    rdfs:subClassOf :OrganicAcid .
+  
+  :AceticDefect a owl:Class;
+    rdfs:subClassOf :SensoryDefect .
+  
+  :Aroma a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :SensoryAttribute a owl:Class .
+  
+  :Balance a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :CaramelNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :AromaticNote a owl:Class .
+  
+  :CarbonicMaceration a owl:Class;
+    rdfs:subClassOf :AnaerobicFermentationType .
+  
+  :AnaerobicFermentationType a owl:Class;
+    rdfs:subClassOf :ClosedSystem .
+  
+  :CupClarity a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :Flavor a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :HerbalNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :MediumQuality a owl:Class;
+    rdfs:subClassOf :QualityClassification .
+  
+  :QualityClassification a owl:Class;
+    rdfs:subClassOf :QualityEvaluation .
+  
+  :NuttyNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :OpenSystem a owl:Class;
+    rdfs:subClassOf :FermentationSystemConfiguration .
+  
+  :FermentationSystemConfiguration a owl:Class .
+  
+  :OverfermentedDefect a owl:Class;
+    rdfs:subClassOf :SensoryDefect .
+  
+  :OverripeState a owl:Class;
+    rdfs:subClassOf :RipenessState .
+  
+  :RipenessState a owl:Class .
+  
+  :RipeState a owl:Class;
+    rdfs:subClassOf :RipenessState .
+  
+  :SensoryAnalysis a owl:Class;
+    rdfs:subClassOf :QualityEvaluation .
+  
+  :QualityEvaluation a owl:Class .
+  
+  :SolidStateFermentation a owl:Class;
+    rdfs:subClassOf :FermentationMediumType .
+  
+  :FermentationMediumType a owl:Class .
+  
+  :SpicyNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :StandardAnaerobicFermentation a owl:Class;
+    rdfs:subClassOf :AnaerobicFermentationType .
+  
+  :StandardQuality a owl:Class;
+    rdfs:subClassOf :QualityClassification .
+  
+  :SubmergedFermentation a owl:Class;
+    rdfs:subClassOf :FermentationMediumType .
+  
+  :Sweetness a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :Uniformity a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :UnripeState a owl:Class;
+    rdfs:subClassOf :RipenessState .
+  
+  :WinyNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :Yeast a owl:Class;
+    rdfs:subClassOf :Microorganism .
+  
+  :conditions a owl:ObjectProperty;
+    rdfs:domain owl:Thing;
+    rdfs:range owl:Thing .
+  
+  :hasAcidityQuality a owl:DatatypeProperty;
+    rdfs:domain :SensoryAcidity;
+    rdfs:range xsd:string .
+  
+  :SensoryAcidity a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :hasAftertasteDuration a owl:DatatypeProperty;
+    rdfs:domain :Aftertaste;
+    rdfs:range xsd:string .
+  
+  :Aftertaste a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :hasAftertasteQuality a owl:DatatypeProperty;
+    rdfs:domain :Aftertaste;
+    rdfs:range xsd:string .
+  
+  :hasAgitationFrequency a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasAgitationType a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasAnaerobicThreshold a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasAromaticIntensity a owl:DatatypeProperty;
+    rdfs:domain :AromaticProfile;
+    rdfs:range xsd:string .
+  
+  :AromaticProfile a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :hasBalanceQuality a owl:DatatypeProperty;
+    rdfs:domain :Balance;
+    rdfs:range xsd:string .
+  
+  :hasBitternessQuality a owl:DatatypeProperty;
+    rdfs:domain :Bitterness;
+    rdfs:range xsd:string .
+  
+  :Bitterness a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :hasChocolateType a owl:DatatypeProperty;
+    rdfs:domain :ChocolateNote;
+    rdfs:range xsd:string .
+  
+  :ChocolateNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :hasCupProfile a owl:DatatypeProperty;
+    rdfs:domain :SensoryAnalysis;
+    rdfs:range xsd:string .
+  
+  :hasDefectIntensity a owl:DatatypeProperty;
+    rdfs:domain :SensoryDefect;
+    rdfs:range xsd:string .
+  
+  :hasDefectPresence a owl:DatatypeProperty;
+    rdfs:domain :SensoryDefect;
+    rdfs:range xsd:boolean .
+  
+  :hasDefectThreshold a owl:DatatypeProperty;
+    rdfs:domain :AceticAcid;
+    rdfs:range xsd:float .
+  
+  :hasDominantAcidType a owl:DatatypeProperty;
+    rdfs:domain :SensoryAcidity;
+    rdfs:range xsd:string .
+  
+  :hasDryBeansRatio a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasDryMatterContent a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasEnzymeType a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasFermentativeCapacity a owl:DatatypeProperty;
+    rdfs:domain :Yeast;
+    rdfs:range xsd:boolean .
+  
+  :hasFinalMoistureContent a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasFlavorNoteDevelopment a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasFlowerType a owl:DatatypeProperty;
+    rdfs:domain :FloralNote;
+    rdfs:range xsd:short .
+  
+  :FloralNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :hasFruitType a owl:DatatypeProperty;
+    rdfs:domain :FruityNote;
+    rdfs:range xsd:string .
+  
+  :FruityNote a owl:Class;
+    rdfs:subClassOf :AromaticNote .
+  
+  :hasGramType a owl:DatatypeProperty;
+    rdfs:domain :Bacterium;
+    rdfs:range xsd:string .
+  
+  :Bacterium a owl:Class;
+    rdfs:subClassOf :Microorganism .
+  
+  :hasInitialState a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasMaxScore a owl:DatatypeProperty;
+    rdfs:domain :QualityClassification;
+    rdfs:range xsd:float .
+  
+  :hasMinScore a owl:DatatypeProperty;
+    rdfs:domain :QualityClassification;
+    rdfs:range xsd:float .
+  
+  :hasMinimumRequiredScore a owl:DatatypeProperty;
+    rdfs:domain :HighQuality;
+    rdfs:range xsd:float .
+  
+  :HighQuality a owl:Class;
+    rdfs:subClassOf :QualityClassification .
+  
+  :hasMucilagePercentage a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasNoteCount a owl:DatatypeProperty;
+    rdfs:domain :AromaticComplexity;
+    rdfs:range xsd:integer .
+  
+  :AromaticComplexity a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :hasNoteIntensity a owl:DatatypeProperty;
+    rdfs:domain :AromaticNote;
+    rdfs:range xsd:string .
+  
+  :hasNotePresence a owl:DatatypeProperty;
+    rdfs:domain :AromaticNote;
+    rdfs:range xsd:boolean .
+  
+  :hasOptimalPH a owl:DatatypeProperty;
+    rdfs:domain :Microorganism;
+    rdfs:range xsd:float .
+  
+  :hasOptimalTemperature a owl:DatatypeProperty;
+    rdfs:domain :Microorganism;
+    rdfs:range xsd:float .
+  
+  :hasOrganicAcidProfile a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasOxygenTolerance a owl:DatatypeProperty;
+    rdfs:domain :Bacterium;
+    rdfs:range xsd:string .
+  
+  :hasPart a owl:ObjectProperty;
+    rdfs:domain owl:Thing;
+    rdfs:range owl:Thing;
+    owl:inverseOf :isPartOf .
+  
+  :isPartOf a owl:ObjectProperty;
+    rdfs:domain owl:Thing;
+    rdfs:range owl:Thing .
+  
+  :hasPerceivedIntensity a owl:DatatypeProperty;
+    rdfs:domain :SensoryAttribute;
+    rdfs:range xsd:string .
+  
+  :hasPerceivedWeight a owl:DatatypeProperty;
+    rdfs:domain :Body;
+    rdfs:range xsd:string .
+  
+  :Body a owl:Class;
+    rdfs:subClassOf :SensoryAttribute .
+  
+  :hasProbableCause a owl:DatatypeProperty;
+    rdfs:domain :SensoryDefect;
+    rdfs:range xsd:string .
+  
+  :hasQualityClassification a owl:ObjectProperty;
+    rdfs:domain :SCAScore;
+    rdfs:range :QualityClassification .
+  
+  :SCAScore a owl:Class;
+    rdfs:subClassOf :QualityEvaluation .
+  
+  :hasResidualSugarContent a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasRipenessLevel a owl:DatatypeProperty;
+    rdfs:domain :RipenessState;
+    rdfs:range xsd:string .
+  
+  :hasSCAAttributeScore a owl:DatatypeProperty;
+    rdfs:domain :SensoryAttribute;
+    rdfs:range xsd:float .
+  
+  :hasSCAScore a owl:DatatypeProperty;
+    rdfs:domain :SCAScore;
+    rdfs:range xsd:float .
+  
+  :hasSanitaryLevel a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:string .
+  
+  :hasScientificName a owl:DatatypeProperty;
+    rdfs:domain :Microorganism;
+    rdfs:range xsd:string .
+  
+  :hasShannonIndex a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasSpecies a owl:DatatypeProperty;
+    rdfs:domain :Variety;
+    rdfs:range xsd:string .
+  
+  :Variety a owl:Class .
+  
+  :hasSpiceType a owl:DatatypeProperty;
+    rdfs:domain :SpicyNote;
+    rdfs:range xsd:string .
+  
+  :hasTexture a owl:DatatypeProperty;
+    rdfs:domain :Body;
+    rdfs:range xsd:string .
+  
+  :hasTotalTritrableAcidity a owl:DatatypeProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range xsd:float .
+  
+  :hasVarietyName a owl:DatatypeProperty;
+    rdfs:domain :Variety;
+    rdfs:range xsd:string .
+  
+  :hosts a owl:ObjectProperty;
+    rdfs:domain :Bioreactor;
+    rdfs:range :FermentationSystemConfiguration .
+  
+  :influences a owl:ObjectProperty;
+    rdfs:domain owl:Thing;
+    rdfs:range owl:Thing .
+  
+  :meetsCriteria a owl:DatatypeProperty;
+    rdfs:domain :HighQuality;
+    rdfs:range xsd:boolean .
+  
+  :participatesIn a owl:ObjectProperty;
+    rdfs:domain :Microorganism;
+    rdfs:range :Bioreactor .
+  
+  :producedBy a owl:ObjectProperty;
+    rdfs:domain :ChemicalCompound;
+    rdfs:range :Microorganism .
+  
+  :wasGeneratedBy a owl:ObjectProperty;
+    rdfs:domain :ChemicalCompound;
+    rdfs:range :Bioreactor .
+  
+  :ClosedSystem a owl:Class;
+    rdfs:subClassOf :FermentationSystemConfiguration .
+  
+  :QualityDescriptor a owl:Class .
+  
+  sosa:FeatureOfInterest a owl:Class .
+  
+  :positivelyInfluences a owl:ObjectProperty;
+    rdfs:subPropertyOf :influences .
+  
+  :negativelyInfluences a owl:ObjectProperty;
+    rdfs:subPropertyOf :influences .
+  
+  :produces a owl:ObjectProperty;
+    rdfs:subPropertyOf :influences .
+  
+  :hasCriticalThresholdMax a owl:DatatypeProperty;
+    rdfs:domain :ProcessVariable;
+    rdfs:range xsd:float .
+  
+  :hasCriticalThresholdMin a owl:DatatypeProperty;
+    rdfs:domain :ProcessVariable;
+    rdfs:range xsd:float .
+  
+  :ProcessVariable a owl:Class;
+    rdfs:subClassOf sosa:ObservableProperty .
+  
+  :AlcoholVariable a owl:NamedIndividual, :ProcessVariable .
+  
+  :BrixVariable a owl:NamedIndividual, :ProcessVariable .
+  
+  :DissolvedOxygenVariable a owl:NamedIndividual, :ProcessVariable .
+  
+  :TemperatureVariable a owl:NamedIndividual, :ProcessVariable .
+  
+  :TotalAcidityVariable a owl:NamedIndividual, :ProcessVariable .
+  
+  :pHVariable a owl:NamedIndividual, :ProcessVariable .
+  
+  :measuresVariable a owl:AnnotationProperty .
+  
+  skos:altLabel a owl:AnnotationProperty .
+  
+  sosa:Observation a owl:Class .
+  
+  :ProcessObservation a owl:Class;
+    rdfs:subClassOf sosa:Observation .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-7384C589DDF06EDEA7A1FC99280C93C2 a owl:AllDisjointClasses;
+    owl:members _:genid-901d7cdce59548448dfb52d404c090ca565-A48EC2F50ECC0A844A04F84C300B4319 .
+  
+  sosa:hasFeatureOfInterest a owl:ObjectProperty .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-9BF6F0CD5FF5BC700841306EEA7706F2 rdf:first
+      :Variety;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-B1AA370F5D559B5CBD8628C20263B885 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-B1AA370F5D559B5CBD8628C20263B885 rdf:first
+      :AromaticNote;
+    rdf:rest rdf:nil .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-A48EC2F50ECC0A844A04F84C300B4319 rdf:first
+      :Bioreactor;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-CC632C6265A4EB7D708A6FAB6A375D9D .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-CC632C6265A4EB7D708A6FAB6A375D9D rdf:first
+      :ProcessObservation;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-28D13FA1C1277081523801E080FF18B3 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-870E18DA620FAD78326D1ECA203D9994 rdf:first
+      :QualityEvaluation;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-0D5974A67A98BCA40A2C69EB45AB8A03 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-0D5974A67A98BCA40A2C69EB45AB8A03 rdf:first
+      :FermentationSystemConfiguration;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-F6CF00CAA3064BFA51125A535658827E .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-D5AA3BC86D463C289BA02535B5D9ADA1 rdf:first
+      :ProcessingMethod;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-D74F884C34DADEDC5ADEBCC087850760 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-D74F884C34DADEDC5ADEBCC087850760 rdf:first
+      :RipenessState;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-9BF6F0CD5FF5BC700841306EEA7706F2 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-28D13FA1C1277081523801E080FF18B3 rdf:first
+      :ProcessVariable;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-5D5D9902CC87FD8CF2A61F6623107612 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-5B26172BA16D948136C3119CD6D976C6 rdf:first
+      :Microorganism;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-77EC3309088B8C29D783731042F535F9 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-77EC3309088B8C29D783731042F535F9 rdf:first
+      :SensoryAttribute;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-D5E3F273E72FD9A514826CDEC335DD6A .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-D5E3F273E72FD9A514826CDEC335DD6A rdf:first
+      :QualityDescriptor;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-870E18DA620FAD78326D1ECA203D9994 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-5D5D9902CC87FD8CF2A61F6623107612 rdf:first
+      :ChemicalCompound;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-5B26172BA16D948136C3119CD6D976C6 .
+  
+  _:genid-901d7cdce59548448dfb52d404c090ca565-F6CF00CAA3064BFA51125A535658827E rdf:first
+      :FermentationMediumType;
+    rdf:rest _:genid-901d7cdce59548448dfb52d404c090ca565-D5AA3BC86D463C289BA02535B5D9ADA1 .
+}
+
+<http://w3id.org/bfpo/conocimiento_experto> {
+  :VolatileCompound a owl:NamedIndividual, :ChemicalCompound .
+  
+  :OrganicAcid a owl:NamedIndividual, :ChemicalCompound .
+  
+  :Ester a owl:NamedIndividual, :VolatileCompound .
+  
+  :Ethanol a owl:NamedIndividual, :ChemicalCompound .
+  
+  :Microorganism a owl:NamedIndividual .
+  
+  :LacticAcid a owl:NamedIndividual, :OrganicAcid .
+  
+  :WinyDefect a owl:NamedIndividual, :SensoryDefect .
+  
+  :AceticAcid a owl:NamedIndividual, :OrganicAcid .
+  
+  :AceticDefect a owl:NamedIndividual, :SensoryDefect .
+  
+  :Aroma a owl:NamedIndividual, :SensoryAttribute .
+  
+  :Balance a owl:NamedIndividual, :SensoryAttribute .
+  
+  :CupClarity a owl:NamedIndividual, :SensoryAttribute .
+  
+  :Flavor a owl:NamedIndividual, :SensoryAttribute .
+  
+  :MediumQuality a owl:NamedIndividual, :QualityClassification .
+  
+  :OverfermentedDefect a owl:NamedIndividual, :SensoryDefect .
+  
+  :StandardQuality a owl:NamedIndividual, :QualityClassification .
+  
+  :Sweetness a owl:NamedIndividual, :SensoryAttribute .
+  
+  :Uniformity a owl:NamedIndividual, :SensoryAttribute .
+  
+  :Yeast a owl:NamedIndividual, :Microorganism .
+  
+  :SensoryAcidity a owl:NamedIndividual, :SensoryAttribute .
+  
+  :Aftertaste a owl:NamedIndividual, :SensoryAttribute .
+  
+  :AromaticProfile a owl:NamedIndividual, :SensoryAttribute .
+  
+  :HighQuality a owl:NamedIndividual, :QualityClassification .
+  
+  :Body a owl:NamedIndividual, :SensoryAttribute .
+  
+  :SCAScore a owl:NamedIndividual, :QualityEvaluation .
+  
+  :FermentationDuration a owl:NamedIndividual .
+  
+  :BrixDegree a owl:NamedIndividual .
+  
+  :OrganicAcidProfile a owl:NamedIndividual .
+  
+  :pH a owl:NamedIndividual .
+  
+  :FermentationTemperature a owl:NamedIndividual .
+  
+  :EthanolProduction a owl:NamedIndividual .
+  
+  :SIAFFermentation a owl:NamedIndividual, :AnaerobicFermentationType .
+  
+  :LacticAcidBacteria a owl:NamedIndividual, :Microorganism .
+  
+  :CO2 a owl:NamedIndividual, :CarbonDioxide .
+  
+  :AromaticIntensity a owl:NamedIndividual, :SensoryAttribute .
+}
+
+<http://w3id.org/bfpo/datos_yina> {
+  :MediumQuality a :QualityClassification .
+  
+  :HighQuality a :QualityClassification .
+  
+  :BiorreactorYina a :Bioreactor .
+  
+  :Obs_FERM_23C_2DA_0h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_12h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_24h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_36h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_48h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_60h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_72h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_84h a :ProcessObservation .
+  
+  :Obs_FERM_23C_2DA_96h a :ProcessObservation .
+  
+  :SCA_FERM_23C_2DA_0h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_12h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_24h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_36h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_48h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_60h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_72h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_84h a :SCAScore .
+  
+  :SCA_FERM_23C_2DA_96h a :SCAScore .
+  
+  :Aftertaste_FERM_23C_2DA_0h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_12h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_24h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_36h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_48h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_60h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_72h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_84h a :Aftertaste .
+  
+  :Aftertaste_FERM_23C_2DA_96h a :Aftertaste .
+  
+  :Aroma_FERM_23C_2DA_0h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_12h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_24h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_36h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_48h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_60h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_72h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_84h a :Aroma .
+  
+  :Aroma_FERM_23C_2DA_96h a :Aroma .
+  
+  :Balance_FERM_23C_2DA_0h a :Balance .
+  
+  :Balance_FERM_23C_2DA_12h a :Balance .
+  
+  :Balance_FERM_23C_2DA_24h a :Balance .
+  
+  :Balance_FERM_23C_2DA_36h a :Balance .
+  
+  :Balance_FERM_23C_2DA_48h a :Balance .
+  
+  :Balance_FERM_23C_2DA_60h a :Balance .
+  
+  :Balance_FERM_23C_2DA_72h a :Balance .
+  
+  :Balance_FERM_23C_2DA_84h a :Balance .
+  
+  :Balance_FERM_23C_2DA_96h a :Balance .
+  
+  :Body_FERM_23C_2DA_0h a :Body .
+  
+  :Body_FERM_23C_2DA_12h a :Body .
+  
+  :Body_FERM_23C_2DA_24h a :Body .
+  
+  :Body_FERM_23C_2DA_36h a :Body .
+  
+  :Body_FERM_23C_2DA_48h a :Body .
+  
+  :Body_FERM_23C_2DA_60h a :Body .
+  
+  :Body_FERM_23C_2DA_72h a :Body .
+  
+  :Body_FERM_23C_2DA_84h a :Body .
+  
+  :Body_FERM_23C_2DA_96h a :Body .
+  
+  :CupClarity_FERM_23C_2DA_0h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_12h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_24h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_36h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_48h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_60h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_72h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_84h a :CupClarity .
+  
+  :CupClarity_FERM_23C_2DA_96h a :CupClarity .
+  
+  :Flavor_FERM_23C_2DA_0h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_12h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_24h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_36h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_48h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_60h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_72h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_84h a :Flavor .
+  
+  :Flavor_FERM_23C_2DA_96h a :Flavor .
+  
+  :SensoryAcidity_FERM_23C_2DA_0h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_12h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_24h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_36h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_48h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_60h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_72h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_84h a :SensoryAcidity .
+  
+  :SensoryAcidity_FERM_23C_2DA_96h a :SensoryAcidity .
+  
+  :Sweetness_FERM_23C_2DA_0h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_12h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_24h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_36h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_48h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_60h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_72h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_84h a :Sweetness .
+  
+  :Sweetness_FERM_23C_2DA_96h a :Sweetness .
+  
+  :Uniformity_FERM_23C_2DA_0h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_12h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_24h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_36h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_48h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_60h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_72h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_84h a :Uniformity .
+  
+  :Uniformity_FERM_23C_2DA_96h a :Uniformity .
+}
+
+<http://w3id.org/bfpo/procedencia> {
+  :Rel_R01 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationTemperature;
+    rdf:predicate :positivelyInfluences .
+  
+  :Fuente_MapeoDeVariables a prov:Entity .
+  
+  :Fuente_cruzobyrne2020physicochemical a prov:Entity .
+  
+  :Fuente_ferreira2023coffee a prov:Entity .
+  
+  :Rel_R02 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationTemperature;
+    rdf:predicate :negativelyInfluences .
+  
+  :Fuente_Entrevista2 a prov:Entity .
+  
+  :Rel_R03 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationTemperature;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R04 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationTemperature;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R05 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R06 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R07 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R08 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R09 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Fuente_penuela2010remocion a prov:Entity .
+  
+  :Rel_R10 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R11 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R12 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R13 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R14 a rdf:Statement, prov:Entity;
+    rdf:subject :FermentationDuration;
+    rdf:predicate :influences .
+  
+  :Rel_R15 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :influences .
+  
+  :Rel_R16 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :influences .
+  
+  :Rel_R17 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :influences .
+  
+  :Rel_R18 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :influences .
+  
+  :Rel_R19 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R20 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R21 a rdf:Statement, prov:Entity;
+    rdf:subject :pH;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R22 a rdf:Statement, prov:Entity;
+    rdf:subject :BrixDegree;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R23 a rdf:Statement, prov:Entity;
+    rdf:subject :BrixDegree;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R24 a rdf:Statement, prov:Entity;
+    rdf:subject :BrixDegree;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R25 a rdf:Statement, prov:Entity;
+    rdf:subject :BrixDegree;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R26 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :produces .
+  
+  :Fuente_revelo2025omics a prov:Entity .
+  
+  :Rel_R27 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :produces .
+  
+  :Rel_R28 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :produces .
+  
+  :Rel_R29 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :produces .
+  
+  :Rel_R30 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :produces .
+  
+  :Rel_R31 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R32 a rdf:Statement, prov:Entity;
+    rdf:subject :Microorganism;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R33 a rdf:Statement, prov:Entity;
+    rdf:subject :Yeast;
+    rdf:predicate :produces .
+  
+  :Rel_R34 a rdf:Statement, prov:Entity;
+    rdf:subject :Yeast;
+    rdf:predicate :produces .
+  
+  :Rel_R35 a rdf:Statement, prov:Entity;
+    rdf:subject :Yeast;
+    rdf:predicate :produces .
+  
+  :Rel_R36 a rdf:Statement, prov:Entity;
+    rdf:subject :Yeast;
+    rdf:predicate :produces .
+  
+  :Rel_R37 a rdf:Statement, prov:Entity;
+    rdf:subject :Yeast;
+    rdf:predicate :produces .
+  
+  :Rel_R38 a rdf:Statement, prov:Entity;
+    rdf:subject :Yeast;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R39 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcidBacteria;
+    rdf:predicate :produces .
+  
+  :Rel_R40 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcidBacteria;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R41 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcidBacteria;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R42 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcidBacteria;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R43 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcid;
+    rdf:predicate :positivelyInfluences .
+  
+  :Fuente_brioschi2021microbial a prov:Entity .
+  
+  :Rel_R44 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcid;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R45 a rdf:Statement, prov:Entity;
+    rdf:subject :LacticAcid;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R46 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticAcid;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R47 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticAcid;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R48 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticAcid;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R49 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticAcid;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R50 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticAcid;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R51 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticAcid;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R52 a rdf:Statement, prov:Entity;
+    rdf:subject :VolatileCompound;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R53 a rdf:Statement, prov:Entity;
+    rdf:subject :VolatileCompound;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R54 a rdf:Statement, prov:Entity;
+    rdf:subject :VolatileCompound;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R55 a rdf:Statement, prov:Entity;
+    rdf:subject :VolatileCompound;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R56 a rdf:Statement, prov:Entity;
+    rdf:subject :Ethanol;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R57 a rdf:Statement, prov:Entity;
+    rdf:subject :Ethanol;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R58 a rdf:Statement, prov:Entity;
+    rdf:subject :Ethanol;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R59 a rdf:Statement, prov:Entity;
+    rdf:subject :Ester;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R60 a rdf:Statement, prov:Entity;
+    rdf:subject :Ester;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R61 a rdf:Statement, prov:Entity;
+    rdf:subject :Ester;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R62 a rdf:Statement, prov:Entity;
+    rdf:subject :OrganicAcid;
+    rdf:predicate :negativelyInfluences .
+  
+  :Rel_R63 a rdf:Statement, prov:Entity;
+    rdf:subject :OrganicAcid;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R64 a rdf:Statement, prov:Entity;
+    rdf:subject :OrganicAcidProfile;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R65 a rdf:Statement, prov:Entity;
+    rdf:subject :OrganicAcidProfile;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R66 a rdf:Statement, prov:Entity;
+    rdf:subject :OrganicAcidProfile;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R67 a rdf:Statement, prov:Entity;
+    rdf:subject :Aroma;
+    rdf:predicate :isPartOf .
+  
+  :Fuente_sca2015cupping a prov:Entity .
+  
+  :Rel_R68 a rdf:Statement, prov:Entity;
+    rdf:subject :Aroma;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R69 a rdf:Statement, prov:Entity;
+    rdf:subject :Flavor;
+    rdf:predicate :isPartOf .
+  
+  :Rel_R70 a rdf:Statement, prov:Entity;
+    rdf:subject :Flavor;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R71 a rdf:Statement, prov:Entity;
+    rdf:subject :Body;
+    rdf:predicate :isPartOf .
+  
+  :Rel_R72 a rdf:Statement, prov:Entity;
+    rdf:subject :Body;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R73 a rdf:Statement, prov:Entity;
+    rdf:subject :Balance;
+    rdf:predicate :isPartOf .
+  
+  :Rel_R74 a rdf:Statement, prov:Entity;
+    rdf:subject :Balance;
+    rdf:predicate :positivelyInfluences .
+  
+  :Rel_R75 a rdf:Statement, prov:Entity;
+    rdf:subject :Sweetness;
+    rdf:predicate :isPartOf .
+  
+  :Rel_R76 a rdf:Statement, prov:Entity;
+    rdf:subject :Sweetness .
+  
+  :Rel_R77 a rdf:Statement, prov:Entity;
+    rdf:subject :Uniformity .
+  
+  :Rel_R78 a rdf:Statement, prov:Entity;
+    rdf:subject :Uniformity .
+  
+  :Rel_R79 a rdf:Statement, prov:Entity;
+    rdf:subject :CupClarity .
+  
+  :Rel_R80 a rdf:Statement, prov:Entity;
+    rdf:subject :CupClarity .
+  
+  :Rel_R81 a rdf:Statement, prov:Entity;
+    rdf:subject :Aftertaste .
+  
+  :Rel_R82 a rdf:Statement, prov:Entity;
+    rdf:subject :Aftertaste .
+  
+  :Rel_R83 a rdf:Statement, prov:Entity;
+    rdf:subject :SensoryAcidity .
+  
+  :Rel_R84 a rdf:Statement, prov:Entity;
+    rdf:subject :SensoryAcidity .
+  
+  :Rel_R85 a rdf:Statement, prov:Entity;
+    rdf:subject :AromaticProfile .
+  
+  :Rel_R86 a rdf:Statement, prov:Entity;
+    rdf:subject :AromaticIntensity .
+  
+  :Rel_R87 a rdf:Statement, prov:Entity;
+    rdf:subject :WinyDefect .
+  
+  :Rel_R88 a rdf:Statement, prov:Entity;
+    rdf:subject :WinyDefect .
+  
+  :Rel_R89 a rdf:Statement, prov:Entity;
+    rdf:subject :OverfermentedDefect .
+  
+  :Rel_R90 a rdf:Statement, prov:Entity;
+    rdf:subject :OverfermentedDefect .
+  
+  :Rel_R91 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticDefect .
+  
+  :Rel_R92 a rdf:Statement, prov:Entity;
+    rdf:subject :AceticDefect .
+  
+  :Rel_R93 a rdf:Statement, prov:Entity;
+    rdf:subject :SIAFFermentation .
+  
+  :Fuente_vale2023siaf a prov:Entity .
+  
+  :Rel_R94 a rdf:Statement, prov:Entity;
+    rdf:subject :SIAFFermentation .
+  
+  :Rel_R95 a rdf:Statement, prov:Entity;
+    rdf:subject :SIAFFermentation .
+  
+  :Rel_R96 a rdf:Statement, prov:Entity;
+    rdf:subject :SIAFFermentation .
+  
+  :Rel_R97 a rdf:Statement, prov:Entity;
+    rdf:subject :SIAFFermentation .
+  
+  :ExpertaDominio a prov:Agent .
+  
+  :Rel_R76 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 102"@es .
+  
+  :Rel_R77 rdf:predicate :isPartOf;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 15"@es .
+  
+  :Rel_R78 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore .
+  
+  :Rel_R79 rdf:predicate :isPartOf;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 16"@es .
+  
+  :Rel_R80 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 103"@es .
+  
+  :Rel_R81 rdf:predicate :isPartOf;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 18"@es .
+  
+  :Rel_R82 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore .
+  
+  :Rel_R83 rdf:predicate :isPartOf;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 11"@es .
+  
+  :Rel_R84 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore .
+  
+  :Rel_R85 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 10 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 100"@es .
+  
+  :Rel_R86 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 108"@es .
+  
+  :Rel_R87 rdf:predicate :negativelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 104 | Entrevista 2, hoja «Variables Resultado», fila 13"@es .
+  
+  :Rel_R88 rdf:predicate :negativelyInfluences;
+    rdf:object :CupClarity;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 98"@es .
+  
+  :Rel_R89 rdf:predicate :negativelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 104 | Entrevista 2, hoja «Variables Resultado», fila 191"@es .
+  
+  :Rel_R90 rdf:predicate :negativelyInfluences;
+    rdf:object :CupClarity;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 98"@es .
+  
+  :Rel_R91 rdf:predicate :negativelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 13 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 104"@es .
+  
+  :Rel_R92 rdf:predicate :negativelyInfluences;
+    rdf:object :CupClarity;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 98"@es .
+  
+  :Rel_R93 rdf:predicate :positivelyInfluences;
+    rdf:object :LacticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Pre-proceso», fila 85"@es .
+  
+  :Rel_R94 rdf:predicate :positivelyInfluences;
+    rdf:object :VolatileCompound;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Pre-proceso», fila 44 | Entrevista 2, hoja «Variables Resultado», fila 77"@es .
+  
+  :Rel_R95 rdf:predicate :positivelyInfluences;
+    rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Pre-proceso», fila 45"@es .
+  
+  :Rel_R96 rdf:predicate :negativelyInfluences;
+    rdf:object :AceticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 57 | Entrevista 2, hoja «Variables Proceso», fila 42"@es .
+  
+  :Rel_R97 rdf:predicate :negativelyInfluences;
+    rdf:object :pH .
+  
+  :Rel_R01 rdf:object :Microorganism;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 14"@es .
+  
+  :Rel_R02 rdf:object :FermentationDuration;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 18 | Entrevista 2, hoja «Variables Proceso», fila 39 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 12 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 27"@es .
+  
+  :Rel_R03 rdf:object :BrixDegree;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 19 | Entrevista 2, hoja «Variables Proceso», fila 155 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 13"@es .
+  
+  :Rel_R04 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 15 | Entrevista 2, hoja «Variables Proceso», fila 235 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 11"@es .
+  
+  :Rel_R05 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 33 | Entrevista 2, hoja «Variables Proceso», fila 234 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 21"@es .
+  
+  :Rel_R06 rdf:object :BrixDegree;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 34 | Entrevista 2, hoja «Variables Proceso», fila 143 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 22"@es .
+  
+  :Rel_R07 rdf:object :LacticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 21 | Entrevista 2, hoja «Variables Resultado», fila 28"@es .
+  
+  :Rel_R08 rdf:object :AceticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 24 | Entrevista 2, hoja «Variables Resultado», fila 9"@es .
+  
+  :Rel_R09 rdf:object :AceticDefect;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 86"@es .
+  
+  :Rel_R10 rdf:object :OverfermentedDefect;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 86 | Entrevista 2, hoja «Variables Resultado», fila 191"@es .
+  
+  :Rel_R11 rdf:object :VolatileCompound;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 27 | Entrevista 2, hoja «Variables Resultado», fila 81 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 19"@es .
+  
+  :Rel_R12 rdf:object :Ester;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 30 | Entrevista 2, hoja «Variables Resultado», fila 119 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 20"@es .
+  
+  :Rel_R13 rdf:object :OrganicAcidProfile;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 18 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 79"@es .
+  
+  :Rel_R14 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 191"@es .
+  
+  :Rel_R15 rdf:object :LacticAcidBacteria;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 53"@es .
+  
+  :Rel_R16 rdf:object :Yeast;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 184 | Entrevista 2, hoja «Variables Proceso», fila 225 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 53"@es .
+  
+  :Rel_R17 rdf:object :Microorganism;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 83 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 53 | Entrevista 2, hoja «Variables Proceso», fila 229 | Entrevista 2, hoja «Variables Proceso», fila 232 | Entrevista 2, hoja «Variables Proceso», fila 233"@es .
+  
+  :Rel_R18 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 190"@es .
+  
+  :Rel_R19 rdf:object :SensoryAcidity .
+  
+  :Rel_R20 rdf:object :WinyDefect;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 88 | Entrevista 2, hoja «Variables Resultado», fila 190"@es .
+  
+  :Rel_R21 rdf:object :OverfermentedDefect;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 190"@es .
+  
+  :Rel_R22 rdf:object :Microorganism;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 65"@es .
+  
+  :Rel_R23 rdf:object :Yeast;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 188"@es .
+  
+  :Rel_R24 rdf:object :EthanolProduction;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 193 | Entrevista 2, hoja «Variables Proceso», fila 196"@es .
+  
+  :Rel_R25 rdf:object :SCAScore .
+  
+  :Rel_R26 rdf:object :LacticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 59 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 50"@es .
+  
+  :Rel_R27 rdf:object :AceticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 140 | Entrevista 2, hoja «Variables Resultado», fila 6 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 43"@es .
+  
+  :Rel_R28 rdf:object :VolatileCompound;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 178 | Entrevista 2, hoja «Variables Resultado», fila 78 | Entrevista 2, hoja «Variables Proceso», fila 98"@es .
+  
+  :Rel_R29 rdf:object :EthanolProduction;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 172"@es .
+  
+  :Rel_R30 rdf:object :CO2;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 78 | Entrevista 2, hoja «Variables Proceso», fila 209 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 45"@es .
+  
+  :Rel_R31 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 62 | Entrevista 2, hoja «Variables Proceso», fila 226 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 51"@es .
+  
+  :Rel_R32 rdf:object :BrixDegree;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 146 | Entrevista 2, hoja «Variables Proceso», fila 206 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 47"@es .
+  
+  :Rel_R33 rdf:object :Ethanol;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 172 | Entrevista 2, hoja «Variables Proceso», fila 131 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 48"@es .
+  
+  :Rel_R34 rdf:object :EthanolProduction;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 189 | Entrevista 2, hoja «Variables Proceso», fila 190"@es .
+  
+  :Rel_R35 rdf:object :VolatileCompound;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 178 | Entrevista 2, hoja «Variables Resultado», fila 72 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 49"@es .
+  
+  :Rel_R36 rdf:object :Ester;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 181 | Entrevista 2, hoja «Variables Resultado», fila 116"@es .
+  
+  :Rel_R37 rdf:object :CO2;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 175 | Entrevista 2, hoja «Variables Proceso», fila 92"@es .
+  
+  :Rel_R38 rdf:object :BrixDegree;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 149"@es .
+  
+  :Rel_R39 rdf:object :LacticAcid;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 59 | Entrevista 2, hoja «Variables Resultado», fila 25 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 50"@es .
+  
+  :Rel_R40 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 70 | Entrevista 2, hoja «Variables Resultado», fila 188"@es .
+  
+  :Rel_R41 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 62 | Entrevista 2, hoja «Variables Proceso», fila 226 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 51"@es .
+  
+  :Rel_R42 rdf:object :BrixDegree;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 65 | Entrevista 2, hoja «Variables Proceso», fila 152"@es .
+  
+  :Rel_R43 rdf:object :SensoryAcidity;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 176"@es .
+  
+  :Rel_R44 rdf:object :Aroma .
+  
+  :Rel_R45 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 218 | Entrevista 2, hoja «Variables Resultado», fila 35"@es .
+  
+  :Rel_R46 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 222 | Entrevista 2, hoja «Variables Resultado», fila 10"@es .
+  
+  :Rel_R47 rdf:object :WinyDefect;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 85"@es .
+  
+  :Rel_R48 rdf:object :AceticDefect;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 85 | Entrevista 2, hoja «Variables Resultado», fila 13"@es .
+  
+  :Rel_R49 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 13 | Entrevista 2, hoja «Variables Resultado», fila 185"@es .
+  
+  :Rel_R50 rdf:object :CupClarity;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 98"@es .
+  
+  :Rel_R51 rdf:object :SensoryAcidity;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 10"@es .
+  
+  :Rel_R52 rdf:object :Aroma;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 182 | Entrevista 2, hoja «Variables Resultado», fila 89"@es .
+  
+  :Rel_R53 rdf:object :Flavor;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 182"@es .
+  
+  :Rel_R54 rdf:object :AromaticProfile;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 62"@es .
+  
+  :Rel_R55 rdf:object :AromaticIntensity;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 61"@es .
+  
+  :Rel_R56 rdf:object :VolatileCompound;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 125 | Entrevista 2, hoja «Variables Resultado», fila 88 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 56"@es .
+  
+  :Rel_R57 rdf:object :Ester;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 128 | Entrevista 2, hoja «Variables Resultado», fila 125 | Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 57"@es .
+  
+  :Rel_R58 rdf:object :Aroma;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Proceso», fila 125"@es .
+  
+  :Rel_R59 rdf:object :Aroma;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 179 | Entrevista 2, hoja «Variables Resultado», fila 122"@es .
+  
+  :Rel_R60 rdf:object :Flavor;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 179"@es .
+  
+  :Rel_R61 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Entrevista 2, hoja «Variables Resultado», fila 122 | Entrevista 2, hoja «Variables Resultado», fila 179"@es .
+  
+  :Rel_R62 rdf:object :pH;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 58"@es .
+  
+  :Rel_R63 rdf:object :OrganicAcidProfile;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 59"@es .
+  
+  :Rel_R64 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 105"@es .
+  
+  :Rel_R65 rdf:object :Flavor .
+  
+  :Rel_R66 rdf:object :SensoryAcidity;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 78"@es .
+  
+  :Rel_R67 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 10"@es .
+  
+  :Rel_R68 rdf:object :SCAScore .
+  
+  :Rel_R69 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 13"@es .
+  
+  :Rel_R70 rdf:object :SCAScore .
+  
+  :Rel_R71 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 12"@es .
+  
+  :Rel_R72 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «6_Relaciones_Asociativas», fila 101"@es .
+  
+  :Rel_R73 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 17"@es .
+  
+  :Rel_R74 rdf:object :SCAScore .
+  
+  :Rel_R75 rdf:object :SCAScore;
+    rdfs:comment "Evidencia experta: Mapeo de variables, hoja «3_Relaciones_Composicion», fila 14"@es .
+  
+  :ExpertaDominio rdfs:label "Experta del dominio de fermentación de café"@es .
+}
+
+<http://w3id.org/bfpo/ontology> {
+  :Aldehyde rdfs:comment "Compuestos con grupo funcional –CHO. Generan aromas florales y frutales en el producto."@es;
+    rdfs:label "Aldehyde"@en, "Aldehído"@es;
+    rdfs:seeAlso obo:CHEBI_17478 .
+  
+  :VolatileCompound rdfs:comment "Moléculas aromáticas de alta presión de vapor. Determinan el perfil organoléptico del producto fermentado."@es;
+    rdfs:label "Volatile compound"@en, "Compuesto volátil (VOC)"@es;
+    rdfs:seeAlso obo:CHEBI_134179 .
+  
+  :Alkaloid rdfs:comment "Compuestos nitrogenados bioactivos."@es;
+    rdfs:label "Alkaloid"@en, "Alcaloide"@es;
+    rdfs:seeAlso obo:CHEBI_22315 .
+  
+  :ChemicalCompound rdfs:comment "Clase raíz de todas las sustancias químicas presentes o producidas durante el bioproceso de fermentación."@es;
+    rdfs:label "Chemical compound"@en, "Compuesto químico"@es;
+    rdfs:seeAlso obo:CHEBI_24431 .
+  
+  :CarbonDioxide rdfs:comment "CO2 producido por microorganismos durante la fermentación. Indicador de actividad metabólica."@es;
+    rdfs:label "Carbon dioxide"@en, "Dióxido de carbono (CO2)"@es;
+    rdfs:seeAlso obo:CHEBI_16526 .
+  
+  :ChlorogenicAcid rdfs:comment "Principales antioxidantes del sustrato. Ésteres del ácido quínico."@es;
+    rdfs:label "Chlorogenic acid"@en, "Ácido clorogénico (CQA)"@es;
+    rdfs:seeAlso obo:CHEBI_16112 .
+  
+  :PhenolicCompound rdfs:comment "Antioxidantes y polifenoles del sustrato fermentativo."@es;
+    rdfs:label "Phenolic compound"@en, "Compuesto fenólico"@es;
+    rdfs:seeAlso obo:CHEBI_26195 .
+  
+  :CitricAcid rdfs:comment "Ácido 2-hidroxipropano-1,2,3-tricarboxílico. Ácido natural del sustrato fermentativo."@es;
+    rdfs:label "Citric acid"@en, "Ácido cítrico"@es;
+    rdfs:seeAlso obo:CHEBI_30769 .
+  
+  :OrganicAcid rdfs:comment "Clase padre de los ácidos producidos durante la fermentación."@es;
+    rdfs:label "Organic acid"@en, "Ácido orgánico"@es;
+    rdfs:seeAlso obo:CHEBI_64709 .
+  
+  :Ester rdfs:comment "Compuestos de esterificación entre ácidos y alcoholes. Responsables de aromas frutales."@es;
+    rdfs:label "Ester"@en, "Éster"@es;
+    rdfs:seeAlso obo:CHEBI_35701 .
+  
+  :Ethanol rdfs:comment "Alcohol etílico C2H5OH. Producto de la fermentación alcohólica de azúcares."@es;
+    rdfs:label "Ethanol"@en, "Etanol"@es;
+    rdfs:seeAlso obo:CHEBI_16236 .
+  
+  :FilamentousFungus rdfs:comment "Hongos eucarióticos filamentosos distintos de levaduras. Pueden generar defectos sensoriales."@es;
+    rdfs:label "Filamentous fungus"@en, "Hongo filamentoso"@es;
+    rdfs:seeAlso obo:NCBITaxon_4751 .
+  
+  :Microorganism rdfs:comment "Clase raíz de todos los microorganismos que participan en el bioproceso de fermentación."@es;
+    rdfs:label "Microorganism"@en, "Microorganismo"@es .
+  
+  :Fructose rdfs:comment "Monosacárido consumido por microorganismos fermentadores."@es;
+    rdfs:label "Fructose"@en, "Fructosa"@es;
+    rdfs:seeAlso obo:CHEBI_15824 .
+  
+  :SimpleSugar rdfs:comment "Azúcares simples del sustrato fermentativo, que agrupan monosacáridos (glucosa, fructosa) y disacáridos (sacarosa). Constituyen los sustratos primarios consumidos por los microorganismos durante la fermentación."@es;
+    rdfs:label "Simple sugar"@en, "Azúcar simple"@es;
+    rdfs:seeAlso obo:CHEBI_16646 .
+  
+  :Glucose rdfs:comment "Monosacárido. Principal azúcar consumido por microorganismos durante la fermentación."@es;
+    rdfs:label "Glucose"@en, "Glucosa"@es;
+    rdfs:seeAlso obo:CHEBI_17234 .
+  
+  :LacticAcid rdfs:comment "Principal producto de la fermentación láctica."@es;
+    rdfs:label "Lactic acid"@en, "Ácido láctico"@es;
+    rdfs:seeAlso obo:CHEBI_28358 .
+  
+  :MalicAcid rdfs:comment "Ácido hidroxibutanodioico. Componente del perfil de acidez del producto."@es;
+    rdfs:label "Malic acid"@en, "Ácido málico"@es;
+    rdfs:seeAlso obo:CHEBI_6650 .
+  
+  :ProcessingMethod rdfs:comment "Método de preparación del sustrato antes o durante la fermentación."@es;
+    rdfs:label "Processing method"@en, "Método de procesamiento"@es .
+  
+  :SuccinicAcid rdfs:comment "Ácido butanodioico. Metabolito producido durante la fermentación."@es;
+    rdfs:label "Succinic acid"@en, "Ácido succínico"@es;
+    rdfs:seeAlso obo:CHEBI_15741 .
+  
+  :Sucrose rdfs:comment "Disacárido. Precursor de glucosa y fructosa. Principal azúcar de reserva del sustrato."@es;
+    rdfs:label "Sucrose"@en, "Sacarosa"@es;
+    rdfs:seeAlso obo:CHEBI_17992 .
+  
+  :WinyDefect rdfs:comment "Sabor a vino o vinagre por exceso de ácido acético en el producto fermentado."@es;
+    rdfs:label "Winy defect"@en, "Defecto avinado"@es .
+  
+  :SensoryDefect rdfs:comment "Sabor indeseable detectable en la evaluación sensorial."@es;
+    rdfs:label "Sensory defect"@en, "Defecto sensorial"@es .
+  
+  :hasAgitationSpeed rdfs:comment "Velocidad de agitación mecánica del biorreactor expresada en rpm."@es;
+    rdfs:label "Has agitation speed"@en, "Velocidad de agitación"@es;
+    rdfs:seeAlso sosa:ObservableProperty, obo:PREFER_0000054 .
+  
+  :Bioreactor rdfs:comment "Instrumento físico donde ocurre el bioproceso de fermentación. Objeto de interés observado por los sensores del sistema."@es;
+    rdfs:label "Bioreactor"@en, "Biorreactor"@es;
+    rdfs:seeAlso sosa:FeatureOfInterest, saref:Device, s4inma:ProductionEquipment, obo:PREFER_0000014 .
+  
+  :hasAirFlow rdfs:comment "Flujo de aire suministrado al biorreactor"@es;
+    rdfs:label "Has air flow"@en, "Flujo de aireación"@es;
+    rdfs:seeAlso sosa:ObservableProperty, obo:PREFER_0000055 .
+  
+  :hasAltitude rdfs:comment "Altura sobre el nivel del mar donde se ubica el biorreactor. En metros."@es;
+    rdfs:label "Has altitude"@en, "Altitud"@es;
+    rdfs:seeAlso quantitykind:Altitude .
+  
+  :hasAmbientHumidity rdfs:comment "Humedad relativa del ambiente externo al biorreactor expresada en porcentaje."@es;
+    rdfs:label "Has ambient humidity"@en, "Humedad del ambiente"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasAmbientTemperature rdfs:comment "Temperatura del entorno externo al biorreactor."@es;
+    rdfs:label "Has ambient temperature"@en, "Temperatura ambiente"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasBrixDegree rdfs:comment "Sólidos solubles totales del sustrato. Indicador de azúcares disponibles para fermentación."@es;
+    rdfs:label "Has Brix degree"@en, "Grados Brix"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasConcentration rdfs:comment "Concentración de un compuesto químico en el medio fermentativo expresada en g/L."@es;
+    rdfs:label "Has concentration"@en, "Concentración"@es;
+    rdfs:seeAlso quantitykind:Concentration .
+  
+  :hasDissolvedOxygen rdfs:comment "Concentración de oxígeno en solución."@es;
+    rdfs:label "Has dissolved oxygen"@en, "Oxígeno disuelto (DO)"@es;
+    rdfs:seeAlso sosa:ObservableProperty, obo:PREFER_0000039 .
+  
+  :hasFermentationDuration rdfs:comment "Duración total del proceso fermentativo expresada en horas."@es;
+    rdfs:label "Has fermentation duration"@en, "Duración de fermentación"@es;
+    rdfs:seeAlso quantitykind:Time .
+  
+  :hasFermentationTemperature rdfs:comment "Temperatura dentro de la masa fermentativa. Sensor DS18B20 disponible en el biorreactor."@es;
+    rdfs:label "Has fermentation temperature"@en, "Temperatura de fermentación"@es;
+    rdfs:seeAlso sosa:ObservableProperty, obo:PREFER_0000041 .
+  
+  :hasMeasuredActivity rdfs:comment "Actividad enzimática específica expresada en unidades por mililitro."@es;
+    rdfs:label "Has measured activity"@en, "Actividad enzimática medida"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasMeasuredValue rdfs:comment "Valor numérico medido por sensor en un momento específico del proceso."@es;
+    rdfs:label "Has measured value"@en, "Valor medido"@es;
+    rdfs:seeAlso saref:Measurement, sosa:hasSimpleResult .
+  
+  :hasMicrobialConcentration rdfs:comment "Concentración de microorganismos expresada en unidades formadoras de colonia por mililitro."@es;
+    rdfs:label "Has microbial concentration"@en, "Concentración microbiana"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasObservation rdfs:comment "Vincula el biorreactor con las observaciones registradas por los sensores del sistema."@es;
+    rdfs:label "Has observation"@en, "Tiene observación"@es;
+    rdfs:seeAlso saref:Observation, sosa:Observation .
+  
+  :hasOptimalRangeMax rdfs:comment "Límite superior del rango óptimo de la variable en el proceso de fermentación."@es;
+    rdfs:label "Has optimal range maximum"@en, "Rango óptimo máximo"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasOptimalRangeMin rdfs:comment "Límite inferior del rango óptimo de la variable en el proceso de fermentación."@es;
+    rdfs:label "Has optimal range minimum"@en, "Rango óptimo mínimo"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasPH rdfs:comment "Potencial de hidrógeno del medio fermentativo."@es;
+    rdfs:label "Has pH"@en, "pH"@es;
+    rdfs:seeAlso sosa:ObservableProperty, obo:PREFER_0000040 .
+  
+  :hasRedoxPotential rdfs:comment "Potencial de oxidorreducción del medio"@es;
+    rdfs:label "Has redox potential"@en, "Potencial redox (ORP)"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasSubstrateHumidity rdfs:comment "Contenido de agua en el sustrato durante la fermentación expresado en porcentaje."@es;
+    rdfs:label "Has substrate humidity"@en, "Humedad del sustrato"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasSubstrateVolume rdfs:comment "Volumen en litros del sustrato fermentativo en el biorreactor."@es;
+    rdfs:label "Has substrate volume"@en, "Volumen del sustrato"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  :hasTotalMicrobialPopulation rdfs:comment "Suma de UFC/mL de todos los microorganismos presentes en el proceso."@es;
+    rdfs:label "Has total microbial population"@en, "Población microbiana total"@es;
+    rdfs:seeAlso sosa:ObservableProperty .
+  
+  <https://w3id.org/bfpo> rdfs:comment "Bioreactor Fermentation Process Ontology - Ontología del bioproceso de fermentación en biorreactor"@es;
+    owl:priorVersion <https://w3id.org/bfpo/1.2>;
+    owl:versionInfo "1.3";
+    owl:versionIRI <https://w3id.org/bfpo/1.3>;
+    dc:creator "Karen Viviana Muñoz Portilla";
+    dc:date "2026-11";
+    dc:description "Ontología de dominio que formaliza el conocimiento del bioproceso de fermentación en biorreactor. Desarrollada como parte del proyecto CDT+KG en la Universidad del Cauca. Caso de uso: fermentación de café de especialidad."@es;
+    dc:language "es";
+    dc:publisher "Universidad del Cauca";
+    dc:rights "CC BY 4.0";
+    dc:title "Bioreactor Fermentation Process Ontology";
+    mod:acronym "BFPO";
+    mod:formalityLevel "OWL 2 DL";
+    mod:naturalLanguage "es (etiquetas) , en (identificadores técnicos)";
+    mod:noOfClasses "75";
+    mod:noOfProperties 87;
+    mod:ontologyType "Domain Ontology";
+    mod:status "stable" .
+  
+  :AceticAcid rdfs:comment "Ácido etanoico. Indicador de sobrefermentación cuando excede el umbral."@es;
+    rdfs:label "Acetic acid"@en, "Ácido acético"@es;
+    rdfs:seeAlso obo:CHEBI_15366 .
+  
+  :AceticDefect rdfs:comment "Sabor a vinagre por producción excesiva de ácido acético durante la fermentación."@es;
+    rdfs:label "Acetic defect"@en, "Defecto acético"@es .
+  
+  :Aroma rdfs:comment "Percepción aromática del producto fermentado evaluada en el protocolo SCA."@es;
+    rdfs:label "Aroma"@en, "Aroma"@es;
+    rdfs:seeAlso obo:PATO_0000058 .
+  
+  :SensoryAttribute rdfs:comment "Clase raíz de todos los atributos evaluados en el análisis sensorial del producto fermentado según el protocolo SCA Cupping 2015."@es;
+    rdfs:label "Sensory attribute"@en, "Atributo sensorial"@es;
+    rdfs:seeAlso obo:PATO_0000001 .
+  
+  :Balance rdfs:comment <https://w3id.org/bfpo>;
+    rdfs:label "Balance"@en, "Balance"@es .
+  
+  :CaramelNote rdfs:comment "Notas de caramelo, miel y panela en el perfil aromático."@es;
+    rdfs:label "Caramel note"@en, "Nota caramelo"@es .
+  
+  :AromaticNote rdfs:comment "Clase raíz de todas las notas específicas del perfil organoléptico del producto fermentado según el SCA Flavor Wheel 2016."@es;
+    rdfs:label "Aromatic note"@en, "Nota aromática"@es;
+    rdfs:seeAlso obo:PATO_0000058 .
+  
+  :CarbonicMaceration rdfs:comment "Fermentación con CO2 exógeno. Término enológico adoptado en café de especialidad."@es;
+    rdfs:label "Carbonic maceration"@en, "Maceración carbónica"@es .
+  
+  :AnaerobicFermentationType rdfs:comment "Clasificación de fermentaciones sin oxígeno."@es;
+    rdfs:label "Anaerobic fermentation type"@en, "Tipo de fermentación anaeróbica"@es .
+  
+  :CupClarity rdfs:comment "Ausencia de sabores extraños o defectos en el producto evaluado."@es;
+    rdfs:label "Cup clarity"@en, "Limpieza de taza"@es .
+  
+  :Flavor rdfs:comment "Percepción gustativa integrada. Incluye componentes gustativos y retronasal."@es;
+    rdfs:label "Flavor"@en, "Sabor"@es;
+    rdfs:seeAlso obo:PATO_0000043 .
+  
+  :HerbalNote rdfs:comment "Notas herbales de té y plantas en el perfil aromático."@es;
+    rdfs:label "Herbal note"@en, "Nota herbal"@es .
+  
+  :MediumQuality rdfs:comment "Puntaje SCA entre 80 y 84,99, según el protocolo de catación de la SCA."@es;
+    rdfs:label "Medium quality"@en, "Calidad media"@es .
+  
+  :QualityClassification rdfs:comment "Sistema de categorización del producto fermentado por rango de puntaje SCA."@es;
+    rdfs:label "Quality classification"@en, "Clasificación de calidad"@es;
+    owl:priorVersion :QualityClassification .
+  
+  :NuttyNote rdfs:comment "Notas de nueces y almendras en el perfil aromático."@es;
+    rdfs:label "Nutty note"@en, "Nota frutos secos"@es .
+  
+  :OpenSystem rdfs:comment "Sistema de fermentación en contacto con el ambiente. Permite intercambio de O2 y CO2."@es;
+    rdfs:label "Open system"@en, "Sistema abierto"@es .
+  
+  :FermentationSystemConfiguration rdfs:comment "Tipo de sistema de fermentación por grado de apertura. Determina disponibilidad de oxígeno en el proceso."@es;
+    rdfs:label "Fermentation system configuration"@en, "Configuración del sistema"@es .
+  
+  :OverfermentedDefect rdfs:comment "Defecto causado por tiempo o temperatura de fermentación excesivos."@es;
+    rdfs:label "Overfermented defect"@en, "Defecto de sobrefermentación"@es .
+  
+  :OverripeState rdfs:comment "Sustrato pasado del punto óptimo. Riesgo de defectos por fermentación previa al proceso."@es;
+    rdfs:label "Overripe state"@en, "Estado sobremaduro"@es .
+  
+  :RipenessState rdfs:comment "Nivel de madurez del sustrato al inicio del proceso. Determina la composición química inicial."@es;
+    rdfs:label "Ripeness state"@en, "Estado de madurez"@es;
+    rdfs:seeAlso obo:PATO_0000001 .
+  
+  :RipeState rdfs:comment "Sustrato en punto óptimo de madurez. Mayor contenido de azúcares y aromas precursores."@es;
+    rdfs:label "Ripe state"@en, "Estado maduro"@es;
+    rdfs:seeAlso obo:PATO_0001701 .
+  
+  :SensoryAnalysis rdfs:comment "Evaluación sensorial formal del producto fermentado mediante el protocolo SCA de catación."@es;
+    rdfs:label "Sensory analysis"@en, "Análisis sensorial"@es .
+  
+  :QualityEvaluation rdfs:comment "Proceso formal de valoración de calidad del producto fermentado."@es;
+    rdfs:label "Quality evaluation"@en, "Evaluación de calidad"@es .
+  
+  :SolidStateFermentation rdfs:comment "Fermentación sin agua añadida. Menor actividad de agua y proceso más lento."@es;
+    rdfs:label "Solid state fermentation"@en, "Fermentación en estado sólido"@es .
+  
+  :FermentationMediumType rdfs:comment "Clasificación por presencia o ausencia de agua en el medio fermentativo."@es;
+    rdfs:label "Fermentation medium type"@en, "Tipo de medio de fermentación"@es;
+    rdfs:seeAlso obo:PREFER_0000011 .
+  
+  :SpicyNote rdfs:comment "Notas de especias en el perfil aromático. Canela, clavo, pimienta."@es;
+    rdfs:label "Spicy note"@en, "Nota especiada"@es .
+  
+  :StandardAnaerobicFermentation rdfs:comment "Fermentación en tanques sellados sin O2. Sin modificaciones adicionales al proceso anaeróbico."@es;
+    rdfs:label "Standard anaerobic fermentation"@en, "Fermentación anaeróbica estándar"@es .
+  
+  :StandardQuality rdfs:comment "Puntaje SCA menor a 80, según el protocolo de catación de la SCA."@es;
+    rdfs:label "Standard quality"@en, "Calidad estándar"@es .
+  
+  :SubmergedFermentation rdfs:comment "ermentación con sustrato bajo agua. Garantiza anaerobiosis total desde el inicio del proceso."@es;
+    rdfs:label "Submerged fermentation"@en, "Fermentación sumergida"@es .
+  
+  :Sweetness rdfs:comment "Percepción de dulzura natural del producto. Distinto del contenido de azúcares residuales."@es;
+    rdfs:label "Sweetness"@en, "Dulzor"@es .
+  
+  :Uniformity rdfs:comment "Consistencia percibida entre múltiples tazas del mismo lote evaluado."@es;
+    rdfs:label "Uniformity"@en, "Uniformidad"@es .
+  
+  :UnripeState rdfs:comment "Sustrato inmaduro. Menor contenido de azúcares y compuestos precursores aromáticos"@es;
+    rdfs:label "Unripe state"@en, "Estado verde"@es;
+    rdfs:seeAlso obo:PATO_0001501 .
+  
+  :WinyNote rdfs:comment :WinyNote, "Notas fermentadas con carácter vinoso en el perfil aromático."@es;
+    rdfs:label "Winy note"@en, "Nota vinosa"@es .
+  
+  :Yeast rdfs:comment "Hongos unicelulares fermentadores. Producen etanol, CO2 y compuestos volátiles."@es;
+    rdfs:label "Yeast"@en, "Levadura"@es;
+    rdfs:seeAlso obo:NCBITaxon_147537 .
+  
+  :conditions rdfs:comment "Relación de condicionamiento entre dos conceptos del bioproceso."@es;
+    rdfs:label "Conditions"@en, "Condiciona"@es .
+  
+  :hasAcidityQuality rdfs:comment "Calidad percibida de la acidez del producto."@es;
+    rdfs:label "Has acidity quality"@en, "Calidad de acidez"@es .
+  
+  :SensoryAcidity rdfs:comment "Percepción vibrante de acidez en taza. Distinta del pH que es una medición química."@es;
+    rdfs:label "Sensory acidity"@en, "Acidez sensorial"@es .
+  
+  :hasAftertasteDuration rdfs:comment "Duración del sabor residual post-deglución."@es;
+    rdfs:label "Has aftertaste duration"@en, "Duración del retrogusto"@es .
+  
+  :Aftertaste rdfs:comment "Sabor residual percibido después de deglutir el producto evaluado."@es;
+    rdfs:label "Aftertaste"@en, "Retrogusto"@es .
+  
+  :hasAftertasteQuality rdfs:comment "Calidad del retrogusto percibido."@es;
+    rdfs:label "Has aftertaste quality"@en, "Calidad del retrogusto"@es .
+  
+  :hasAgitationFrequency rdfs:comment "Descripción de la frecuencia de agitación aplicada al biorreactor."@es;
+    rdfs:label "Has agitation frequency"@en, "Frecuencia de agitación"@es .
+  
+  :hasAgitationType rdfs:comment "Patrón de agitación del biorreactor."@es;
+    rdfs:label "Has agitation type"@en, "Tipo de agitación"@es .
+  
+  :hasAnaerobicThreshold rdfs:comment "Valor de oxígeno disuelto por debajo del cual se considera condición anaeróbica."@es;
+    rdfs:label "Has anaerobic threshold"@en, "Umbral anaeróbico"@es .
+  
+  :hasAromaticIntensity rdfs:comment "Fuerza del perfil aromático percibido en el producto."@es;
+    rdfs:label "Has aromatic intensity"@en, "Intensidad aromática"@es .
+  
+  :AromaticProfile rdfs:comment "Conjunto integrado de aromas percibidos en el producto fermentado."@es;
+    rdfs:label "Aromatic profile"@en, "Perfil aromático"@es .
+  
+  :hasBalanceQuality rdfs:comment "Calidad de la armonía entre los atributos sensoriales."@es;
+    rdfs:label "Has balance quality"@en, "Calidad del balance"@es .
+  
+  :hasBitternessQuality rdfs:comment "Calidad del amargor percibido en el producto."@es;
+    rdfs:label "Has bitterness quality"@en, "Calidad del amargor"@es .
+  
+  :Bitterness rdfs:comment "Percepción amarga asociada a compuestos fenólicos y alcaloides del producto."@es;
+    rdfs:label "Bitterness"@en, "Amargor"@es;
+    rdfs:seeAlso obo:PATO_0002474 .
+  
+  :hasChocolateType rdfs:comment "Subcategoría de la nota chocolate."@es;
+    rdfs:label "Has chocolate type"@en, "Tipo de nota chocolate"@es .
+  
+  :ChocolateNote rdfs:comment "Notas de chocolate y cacao en el perfil aromático."@es;
+    rdfs:label "Chocolate note"@en, "Nota chocolate"@es .
+  
+  :hasCupProfile rdfs:comment "Conjunto de características organolépticas del producto evaluado en taza."@es;
+    rdfs:label "Has cup profile"@en, "Perfil en taza"@es .
+  
+  :hasDefectIntensity rdfs:comment "Intensidad del defecto sensorial detectado."@es;
+    rdfs:label "Has defect intensity"@en, "Intensidad del defecto"@es .
+  
+  :hasDefectPresence rdfs:comment "ndica si un defecto sensorial específico está presente en el producto evaluado."@es;
+    rdfs:label "Has defect presence"@en, "Presencia de defecto"@es .
+  
+  :hasDefectThreshold rdfs:comment "Nivel crítico de concentración de ácido acético a partir del cual se genera defecto avinado."@es;
+    rdfs:label "Has defect threshold"@en, "Umbral de defecto"@es .
+  
+  :hasDominantAcidType rdfs:comment "Tipo de ácido que domina la percepción de acidez."@es;
+    rdfs:label "Has dominant acid type"@en, "Tipo de ácido predominante"@es .
+  
+  :hasDryBeansRatio rdfs:comment "Porcentaje de sustrato sin defectos físicos visibles."@es;
+    rdfs:label "Has dry beans ratio"@en, "Proporción de granos secos"@es .
+  
+  :hasDryMatterContent rdfs:comment "Porcentaje de sólidos totales en el sustrato fermentativo."@es;
+    rdfs:label "Has dry matter content"@en, "Contenido de materia seca"@es .
+  
+  :hasEnzymeType rdfs:comment "Tipo de enzima producida por microorganismos durante el proceso."@es;
+    rdfs:label "Has enzyme type"@en, "Tipo de enzima"@es .
+  
+  :hasFermentativeCapacity rdfs:comment "Indica si la levadura produce etanol y CO2 durante la fermentación."@es;
+    rdfs:label "Has fermentative capacity"@en, "Capacidad fermentativa"@es .
+  
+  :hasFinalMoistureContent rdfs:comment "Humedad del sustrato al finalizar la fermentación y antes del secado."@es;
+    rdfs:label "Has final moisture content"@en, "Porcentaje de humedad final"@es .
+  
+  :hasFlavorNoteDevelopment rdfs:comment "Aparición y evolución de características aromáticas específicas durante la fermentación."@es;
+    rdfs:label "Has flavor note development"@en, "Desarrollo de notas"@es .
+  
+  :hasFlowerType rdfs:comment "Subcategoría de la nota floral."@es;
+    rdfs:label "Has flower type"@en, "Tipo de nota floral"@es .
+  
+  :FloralNote rdfs:comment "Notas florales en el perfil aromático. Jazmín, rosa, lavanda."@es;
+    rdfs:label "Floral note"@en, "Nota floral"@es .
+  
+  :hasFruitType rdfs:comment "Subcategoría de la nota frutal."@es;
+    rdfs:label "Has fruit type"@en, "Tipo de nota frutal"@es .
+  
+  :FruityNote rdfs:comment "Notas de frutas en el perfil aromático."@es;
+    rdfs:label "Fruity note"@en, "Nota frutal"@es .
+  
+  :hasGramType rdfs:comment "Clasificación bacteriana por tinción de Gram."@es;
+    rdfs:label "Has Gram type"@en, "Tipo Gram"@es .
+  
+  :Bacterium rdfs:comment "Microorganismos procarióticos del bioproceso."@es;
+    rdfs:label "Bacterium"@en, "Bacteria"@es;
+    rdfs:seeAlso obo:NCBITaxon_2 .
+  
+  :hasInitialState rdfs:comment "Estado del sustrato al inicio del proceso."@es;
+    rdfs:label "Has initial state"@en, "Estado inicial del sustrato"@es .
+  
+  :hasMaxScore rdfs:comment "Puntaje máximo de la categoría de calidad en la escala SCA."@es;
+    rdfs:label "Has maximum score"@en, "Puntaje máximo del rango"@es .
+  
+  :hasMinScore rdfs:comment "Puntaje mínimo de la categoría de calidad en la escala SCA."@es;
+    rdfs:label "Has minimum score"@en, "Puntaje mínimo del rango"@es .
+  
+  :hasMinimumRequiredScore rdfs:comment "Puntaje mínimo para clasificar un producto como alta calidad según el protocolo SCA."@es;
+    rdfs:label "Has minimum required score"@en, "Puntaje mínimo requerido"@es .
+  
+  :HighQuality rdfs:comment "Puntaje SCA igual o mayor a 85, según el protocolo de catación de la SCA."@es;
+    rdfs:label "High quality"@en, "Alta calidad"@es .
+  
+  :hasMucilagePercentage rdfs:comment "Porcentaje de mucílago retenido en el sustrato al inicio del proceso."@es;
+    rdfs:label "Has mucilage percentage"@en, "Porcentaje de mucílago"@es .
+  
+  :hasNoteCount rdfs:comment "Número de notas aromáticas identificadas en el perfil del producto evaluado."@es;
+    rdfs:label "Has note count"@en, "Cantidad de notas aromáticas"@es .
+  
+  :AromaticComplexity rdfs:comment "Diversidad de notas aromáticas perceptibles simultáneamente en el producto evaluado."@es;
+    rdfs:label "Aromatic complexity"@en, "Complejidad aromática"@es;
+    rdfs:seeAlso obo:PATO_0001502 .
+  
+  :hasNoteIntensity rdfs:comment "Intensidad de una nota aromática específica."@es;
+    rdfs:label "Has note intensity"@en, "Intensidad de nota"@es .
+  
+  :hasNotePresence rdfs:comment "Indica si una nota aromática específica está presente en el perfil del producto."@es;
+    rdfs:label "Has note presence"@en, "Presencia de nota"@es .
+  
+  :hasOptimalPH rdfs:comment "pH óptimo de crecimiento de la especie microbiológica."@es;
+    rdfs:label "Has optimal pH"@en, "pH óptimo"@es .
+  
+  :hasOptimalTemperature rdfs:comment "Temperatura óptima de crecimiento de la especie microbiológica."@es;
+    rdfs:label "Has optimal temperature"@en, "Temperatura óptima"@es .
+  
+  :hasOrganicAcidProfile rdfs:comment "Análisis completo de ácidos orgánicos presentes en el producto final de la fermentación."@es;
+    rdfs:label "Has organic acid profile"@en, "Perfil de ácidos orgánicos"@es;
+    rdfs:seeAlso obo:PREFER_0000074 .
+  
+  :hasOxygenTolerance rdfs:comment "Requerimiento de oxígeno para el crecimiento."@es;
+    rdfs:label "Has oxygen tolerance"@en, "Tolerancia al oxígeno"@es .
+  
+  :hasPart rdfs:comment "Indica que un concepto contiene a otro como componente."@es;
+    rdfs:label "Has part"@en, "Tiene como parte"@es;
+    rdfs:seeAlso prov:hadMember .
+  
+  :isPartOf rdfs:comment "Relación mereológica. Indica que un concepto es componente de otro."@es;
+    rdfs:label "Is part of"@en, "Es parte de"@es;
+    rdfs:seeAlso prov:hadMember .
+  
+  :hasPerceivedIntensity rdfs:comment "Intensidad de percepción de un atributo sensorial."@es;
+    rdfs:label "Has perceived intensity"@en, "Intensidad percibida"@es .
+  
+  :hasPerceivedWeight rdfs:comment "Sensación de peso del producto en boca."@es;
+    rdfs:label "Has perceived weight"@en, "Peso percibido"@es .
+  
+  :Body rdfs:comment "Sensación táctil de peso y textura del producto fermentado en boca."@es;
+    rdfs:label "Body"@en, "Cuerpo"@es;
+    rdfs:seeAlso obo:PATO_0000037 .
+  
+  :hasProbableCause rdfs:comment "Causa probable del defecto sensorial identificado en la evaluación."@es;
+    rdfs:label "Has probable cause"@en, "Causa probable"@es .
+  
+  :hasQualityClassification rdfs:comment "Vincula el puntaje SCA con su categoría de calidad correspondiente."@es;
+    rdfs:label "Has quality classification"@en, "Tiene clasificación de calidad"@es .
+  
+  :SCAScore rdfs:comment "Puntuación total SCA en escala 0-100."@es;
+    rdfs:label "SCA score"@en, "Puntaje SCA"@es .
+  
+  :hasResidualSugarContent rdfs:comment "Azúcares no consumidos por los microorganismos al finalizar la fermentación"@es;
+    rdfs:label "Has residual sugar content"@en, "Contenido de azúcares residuales"@es;
+    rdfs:seeAlso obo:PREFER_0000111 .
+  
+  :hasRipenessLevel rdfs:comment "Estado de maduración del sustrato al inicio del proceso."@es;
+    rdfs:label "Has ripeness level"@en, "Nivel de madurez"@es .
+  
+  :hasSCAAttributeScore rdfs:comment "Puntaje individual de cada atributo sensorial en escala 0-10."@es;
+    rdfs:label "Has SCA attribute score"@en, "Puntaje SCA por atributo"@es .
+  
+  :hasSCAScore rdfs:comment "Puntuación total del protocolo SCA en escala 0-100."@es;
+    rdfs:label "Has SCA score"@en, "Puntaje SCA total"@es .
+  
+  :hasSanitaryLevel rdfs:comment "Estado sanitario inicial del sustrato."@es;
+    rdfs:label "Has sanitary level"@en, "Nivel sanitario inicial"@es .
+  
+  :hasScientificName rdfs:comment "Nombre científico binomial de la especie microbiológica según nomenclatura ICBN/ICNB."@es;
+    rdfs:label "Has scientific name"@en, "Nombre científico"@es .
+  
+  :hasShannonIndex rdfs:comment "Índice de diversidad de especies microbianas presentes en el bioproceso."@es;
+    rdfs:label "Has Shannon index"@en, "Índice de diversidad Shannon"@es .
+  
+  :hasSpecies rdfs:comment "Especie botánica de la variedad del sustrato.";
+    rdfs:label "Has species"@en, "Especie"@es .
+  
+  :Variety rdfs:comment "Variedad botánica del sustrato procesado en la fermentación."@es;
+    rdfs:label "Variety"@en, "Variedad del sustrato"@es .
+  
+  :hasSpiceType rdfs:comment "Subcategoría de la nota especiada."@es;
+    rdfs:label "Has spice type"@en, "Tipo de nota especiada"@es .
+  
+  :hasTexture rdfs:comment "Textura percibida del producto en boca."@es;
+    rdfs:label "Has texture"@en, "Textura"@es .
+  
+  :hasTotalTritrableAcidity rdfs:comment "Acidez acumulada en el producto fermentado."@es;
+    rdfs:label "Has total titratable acidity"@en, "Acidez total y titulable"@es .
+  
+  :hasVarietyName rdfs:comment "Nombre de la variedad botánica del sustrato procesado en la fermentación."@es;
+    rdfs:label "Has variety name"@en, "Nombre de variedad"@es .
+  
+  :hosts rdfs:comment "Vincula el biorreactor con la configuración del proceso que aloja."@es;
+    rdfs:label "Hosts"@en, "Aloja proceso"@es .
+  
+  :influences rdfs:comment "Relación general de influencia o dependencia documentada entre conceptos del bioproceso. Puede representar una relación directa o una dependencia indirecta inferida; no especifica el sentido de la variación ni demuestra por sí sola causalidad biológica."@es;
+    rdfs:label "Influences"@en, "Influye en"@es .
+  
+  :meetsCriteria rdfs:comment "Indica si el producto cumple el criterio de alta calidad según el protocolo SCA."@es;
+    rdfs:label "Meets criteria"@en, "Cumple criterio"@es .
+  
+  :participatesIn rdfs:comment "Indica que un microorganismo participa activamente en el bioproceso de fermentación."@es;
+    rdfs:label "Participates in"@en, "Participa en"@es .
+  
+  :producedBy rdfs:comment "Indica qué microorganismo produce un compuesto químico durante el bioproceso."@es;
+    rdfs:label "Produced by"@en, "Producido por"@es .
+  
+  :wasGeneratedBy rdfs:comment "Trazabilidad del compuesto químico. Indica en qué biorreactor fue generado."@es;
+    rdfs:label "Was generated by"@en, "Fue generado por"@es;
+    rdfs:seeAlso prov:wasGeneratedBy .
+  
+  :ClosedSystem rdfs:comment "istema sellado sin contacto con el ambiente. Acumula CO2."@es;
+    rdfs:label "Closed system"@en, "Sistema cerrado"@es .
+  
+  :QualityDescriptor rdfs:comment "Agrupa descriptores cualitativos positivos y defectos sensoriales del producto fermentado evaluado."@es;
+    rdfs:label "Quality descriptor"@en, "Descriptor de calidad"@es;
+    rdfs:seeAlso obo:PATO_0000001 .
+  
+  :positivelyInfluences rdfs:comment "Relación de influencia directa: dentro de las condiciones documentadas, un aumento del sujeto se asocia con un aumento del objeto y una disminución del sujeto con una disminución del objeto. No expresa beneficio ni calidad favorable."@es;
+    rdfs:label "Influye positivamente en"@es, "positively influences"@en .
+  
+  :negativelyInfluences rdfs:comment "Relación de influencia inversa: dentro de las condiciones documentadas, un aumento del sujeto se asocia con una disminución del objeto y una disminución del sujeto con un aumento del objeto. No expresa perjuicio ni deterioro de calidad."@es;
+    rdfs:label "Influye negativamente en"@es, "negatively influences"@en .
+  
+  :produces rdfs:comment "Relates a biological agent or process to a compound or product it generates during  fermentation. SubProperty of influences."@en;
+    rdfs:label "Produce"@es, "produces"@en .
+  
+  :hasCriticalThresholdMax rdfs:comment """Maximum critical threshold for a process variable. Values above this threshold indicate a critical condition requiring operational intervention. 
+Based on: Peñuela-Martínez et al. (2023), Cruz-O'Byrne et al. (2020)."""@en;
+    rdfs:label "has critical threshold maximum"@en, "Umbral crítico máximo"@es;
+    rdfs:isDefinedBy "https://w3id.org/bfpo#" .
+  
+  :hasCriticalThresholdMin rdfs:comment """Minimum critical threshold for a process variable. Values below this threshold indicate a critical condition requiring operational intervention. 
+Based on: Cruz-O'Byrne et al. (2020), Ferreira et al. (2023), 
+Peñuela-Martínez et al. (2023)."""@en;
+    rdfs:label "has critical threshold minimum"@en, "Umbral crítico mínimo"@es;
+    rdfs:isDefinedBy "https://w3id.org/bfpo#" .
+  
+  :ProcessVariable rdfs:comment """Measurable variable of the coffee fermentation process in a bioreactor. Each instance 
+represents a specific variable with its associated optimal operational ranges and critical thresholds documented in the scientific literature."""@en;
+    rdfs:label "Process Variable"@en, "Variable de proceso"@es;
+    rdfs:seeAlso obo:PREFER_0000098 .
+  
+  :AlcoholVariable rdfs:comment "Ethanol concentration produced by yeast activity during coffee fermentation. High alcohol levels may inhibit microbial activity and affect sensory quality. Critical threshold based on Brioschi Junior et al. (2021)."@en;
+    rdfs:label "Alcohol content"@en;
+    :hasOptimalRangeMax "2.0"^^xsd:float;
+    :hasOptimalRangeMin "0.0"^^xsd:float .
+  
+  :BrixVariable rdfs:comment "Soluble solids content of the fermentation medium expressed in degrees Brix. Indicator of substrate availability for microbial activity. Values based on Ferreira et al. (2023)."@en;
+    rdfs:label "Brix degree"@en;
+    :hasOptimalRangeMax "16.0"^^xsd:float;
+    :hasOptimalRangeMin "9.0"^^xsd:float .
+  
+  :DissolvedOxygenVariable rdfs:comment "Dissolved oxygen concentration in the fermentation medium. In SIAF and anaerobic fermentation processes, oxygen decreases progressively as microbial  activity consumes it. Values below 0.5 mg/L indicate anaerobiosis. Based on Ferreira et al. (2023)."@en;
+    rdfs:label "Dissolved oxygen"@en;
+    :hasOptimalRangeMax "2.0"^^xsd:float;
+    :hasOptimalRangeMin "0.0"^^xsd:float .
+  
+  :TemperatureVariable rdfs:comment """Temperature of the fermentation medium in the bioreactor. Controls microbial kinetics and enzymatic activity. Optimal range based on Peñuela-Martínez et al. (2023) and 
+Cruz-O'Byrne et al. (2020) for controlled temperature coffee fermentation."""@en;
+    rdfs:label "Fermentation temperature"@en;
+    :hasOptimalRangeMax "25.0"^^xsd:float;
+    :hasOptimalRangeMin "15.0"^^xsd:float .
+  
+  :TotalAcidityVariable rdfs:comment "Total titratable acidity of the fermentation medium expressed in g/L. Reflects the accumulation of organic acids produced by lactic acid bacteria and yeast during fermentation. Range based on Cruz-O'Byrne et al. (2020)"@en;
+    rdfs:label "Total acidity"@en;
+    :hasOptimalRangeMax "1.18"^^xsd:float;
+    :hasOptimalRangeMin "0.45"^^xsd:float .
+  
+  :pHVariable rdfs:comment """Hydrogen ion concentration in the fermentation medium. Key indicator of microbial activity and fermentation progress in coffee bioreactor fermentation. Optimal range 
+and critical threshold based on Cruz-O'Byrne et al. (2020) and Ferreira et al. (2023)."""@en;
+    rdfs:label "pH"@en;
+    :hasOptimalRangeMax "5.5"^^xsd:float;
+    :hasOptimalRangeMin "4.0"^^xsd:float .
+  
+  :measuresVariable rdfs:comment "Relates a data property used to record an observation to the process variable it measures."@en;
+    rdfs:label "measures variable"@en .
+  
+  :ProcessObservation rdfs:label "Process observation"@en, "Observación del proceso"@es .
+}
+
+<http://w3id.org/bfpo/conocimiento_experto> {
+  :OrganicAcid rdfs:comment "Ácidos orgánicos producidos durante la fermentación. Su acumulación reduce el pH. Ref: Cruz-O'Byrne et al. (2020)."@es;
+    rdfs:label "Organic acid"@en, "Ácido orgánico"@es .
+  
+  :Ester rdfs:comment "Compuestos aromáticos frutales formados por esterificación entre ácidos y alcoholes. Ref: Rocha et al. (2023)."@es;
+    rdfs:label "Ester"@en, "Éster"@es .
+  
+  :Ethanol rdfs:comment "Alcohol etílico producido por levaduras durante la fermentación alcohólica. Precursor de compuestos aromáticos. Ref: Brioschi Junior et al. (2021)."@es;
+    rdfs:label "Ethanol"@en, "Etanol"@es .
+  
+  :WinyDefect rdfs:comment "Defect characterized by wine-like fermented aroma. Caused by acetic acid accumulation and low pH. Ref: Ferreira et al. (2023), Brioschi Junior et al. (2021)."@en;
+    rdfs:label "Winy defect"@en .
+  
+  :AceticDefect rdfs:comment "Defect characterized by vinegar-like aroma and flavor from excessive acetic acid production during prolonged fermentation. Ref: Cenicafé (2010), Cruz-O'Byrne et al. (2020)."@en;
+    rdfs:label "Acetic defect"@en .
+  
+  :MediumQuality rdfs:comment "SCA entre 80 y 84 según protocolo SCA Cupping 2015."@es;
+    rdfs:label "Medium quality"@en .
+  
+  :OverfermentedDefect rdfs:comment "Defect caused by excessive fermentation duration. Results in unpleasant odors and reduced cup quality. Ref: Cenicafé (2010)."@en;
+    rdfs:label "Overfermented defect"@en .
+  
+  :StandardQuality rdfs:comment "SCA < 80 según protocolo SCA Cupping 2015."@es;
+    rdfs:label "Standard quality"@en .
+  
+  :Yeast rdfs:comment "Levaduras fermentativas presentes en la fermentación de café. Géneros: Saccharomyces, Pichia, Candida. Ref: Revelo-Romo et al. (2025)."@es;
+    rdfs:label "Yeast"@en, "Levadura"@es .
+  
+  :HighQuality rdfs:comment "SCA >= 85 según protocolo SCA Cupping 2015."@es;
+    rdfs:label "High quality"@en .
+  
+  :LacticAcidBacteria rdfs:comment "Bacterias del ácido láctico (LAB) presentes en fermentaciones SIAF. Géneros: Leuconostoc, Lactobacillus. Ref: Revelo-Romo et al. (2025)."@es;
+    rdfs:label "Lactic acid bacteria"@en, "Bacterias lácticas"@es .
+  
+  :CO2 rdfs:comment "CO2 producido por microorganismos. Indicador de actividad metabólica. En SIAF crea condiciones anaeróbicas."@es;
+    rdfs:label "Carbon dioxide"@en, "Dióxido de carbono"@es .
+  
+  :AromaticIntensity rdfs:comment "Fuerza del perfil aromático percibido en el producto fermentado."@es;
+    rdfs:label "Aromatic intensity"@en, "Intensidad aromática"@es .
+  
+  :VolatileCompound rdfs:label "Volatile compound"@en .
+  
+  :Microorganism rdfs:label "Microorganism"@en .
+  
+  :LacticAcid rdfs:label "Lactic acid"@en .
+  
+  :AceticAcid rdfs:label "Acetic acid"@en .
+  
+  :Aroma rdfs:label "Aroma"@en;
+    :isPartOf :SCAScore .
+  
+  :Balance rdfs:label "Balance"@en;
+    :isPartOf :SCAScore .
+  
+  :CupClarity rdfs:label "Cup clarity"@en;
+    :isPartOf :SCAScore .
+  
+  :Flavor rdfs:label "Flavor"@en;
+    :isPartOf :SCAScore .
+  
+  :Sweetness rdfs:label "Sweetness"@en;
+    :isPartOf :SCAScore .
+  
+  :Uniformity rdfs:label "Uniformity"@en;
+    :isPartOf :SCAScore .
+  
+  :SensoryAcidity rdfs:label "Sensory acidity"@en;
+    :isPartOf :SCAScore .
+  
+  :Aftertaste rdfs:label "Aftertaste"@en;
+    :isPartOf :SCAScore .
+  
+  :AromaticProfile rdfs:label "Aromatic profile"@en .
+  
+  :Body rdfs:label "Body"@en;
+    :isPartOf :SCAScore .
+  
+  :SCAScore rdfs:label "SCA score"@en .
+  
+  :FermentationDuration rdfs:label "Fermentation duration"@en, "Duración de la fermentación"@es .
+  
+  :BrixDegree rdfs:label "Brix degree"@en, "Grados Brix"@es .
+  
+  :OrganicAcidProfile rdfs:label "Organic acid profile"@en, "Perfil de ácidos orgánicos"@es .
+  
+  :pH rdfs:label "pH"@en, "pH"@es .
+  
+  :FermentationTemperature rdfs:label "Fermentation temperature"@en, "Temperatura de fermentación"@es .
+  
+  :EthanolProduction rdfs:label "Ethanol production"@en, "Producción de etanol"@es .
+  
+  :SIAFFermentation rdfs:label "SIAF fermentation"@en, "Fermentación SIAF"@es .
+}
+
+{
+  :influences rdfs:comment "Relación general de dependencia entre conceptos del bioproceso, directa o indirecta. No especifica el sentido de la variación ni implica causalidad demostrada."@es .
+  
+  :positivelyInfluences rdfs:comment "Relación directa: A y B varían en el mismo sentido dentro de las condiciones documentadas. No implica efecto favorable."@es .
+  
+  :negativelyInfluences rdfs:comment "Relación inversa: A y B varían en sentidos contrarios dentro de las condiciones documentadas. No implica efecto perjudicial."@es .
+}
+
+<http://w3id.org/bfpo/datos_yina> {
+  :MediumQuality rdfs:label "MediumQuality" .
+  
+  :HighQuality rdfs:label "HighQuality" .
+  
+  :BiorreactorYina rdfs:label "BiorreactorYina";
+    :hasObservation :Obs_FERM_23C_2DA_0h, :Obs_FERM_23C_2DA_12h, :Obs_FERM_23C_2DA_24h,
+      :Obs_FERM_23C_2DA_36h, :Obs_FERM_23C_2DA_48h, :Obs_FERM_23C_2DA_60h, :Obs_FERM_23C_2DA_72h,
+      :Obs_FERM_23C_2DA_84h, :Obs_FERM_23C_2DA_96h .
+  
+  :Obs_FERM_23C_2DA_0h :hasBrixDegree "15.633333333333333"^^xsd:float;
+    :hasFermentationDuration "0.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "5.473"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_12h :hasBrixDegree "14.4"^^xsd:float;
+    :hasFermentationDuration "12.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "4.518999999999999"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_24h :hasBrixDegree "13.833333333333334"^^xsd:float;
+    :hasFermentationDuration "24.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "4.415"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_36h :hasBrixDegree "13.4"^^xsd:float;
+    :hasFermentationDuration "36.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "4.063333333333333"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_48h :hasBrixDegree "12.333333333333334"^^xsd:float;
+    :hasFermentationDuration "48.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "4.125666666666667"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_60h :hasBrixDegree "9.733333333333333"^^xsd:float;
+    :hasFermentationDuration "60.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "4.066333333333334"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_72h :hasBrixDegree "9.3"^^xsd:float;
+    :hasFermentationDuration "72.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "3.9200000000000004"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_84h :hasBrixDegree "9.233333333333333"^^xsd:float;
+    :hasFermentationDuration "84.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "3.8543333333333334"^^xsd:float .
+  
+  :Obs_FERM_23C_2DA_96h :hasBrixDegree "8.899999999999999"^^xsd:float;
+    :hasFermentationDuration "96.0"^^xsd:float;
+    :hasFermentationTemperature "23.0"^^xsd:float;
+    :hasPH "3.8480000000000003"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :Aftertaste_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :Aftertaste_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :Aftertaste_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :Aftertaste_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :Aftertaste_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :Aftertaste_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :Aftertaste_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :Aftertaste_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+  
+  :Aroma_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :Aroma_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :Aroma_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :Aroma_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :Aroma_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :Aroma_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :Aroma_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :Aroma_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :Aroma_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+  
+  :Balance_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :Balance_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :Balance_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :Balance_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :Balance_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :Balance_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :Balance_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :Balance_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :Balance_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+  
+  :Body_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :Body_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :Body_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :Body_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :Body_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :Body_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :Body_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :Body_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :Body_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+  
+  :CupClarity_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :CupClarity_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :CupClarity_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :CupClarity_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :CupClarity_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :CupClarity_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :CupClarity_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :CupClarity_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :CupClarity_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+  
+  :Flavor_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :Flavor_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :Flavor_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :Flavor_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :Flavor_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :Flavor_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :Flavor_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :Flavor_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :Flavor_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+  
+  :SensoryAcidity_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h .
+  
+  :SensoryAcidity_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h .
+  
+  :SensoryAcidity_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h .
+  
+  :SensoryAcidity_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h .
+  
+  :SensoryAcidity_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h .
+  
+  :SensoryAcidity_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h .
+  
+  :SensoryAcidity_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h .
+  
+  :SensoryAcidity_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h .
+  
+  :SensoryAcidity_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h .
+}
+
+<http://w3id.org/bfpo/observacion_actual> {
+  :ObservacionActual :hasBrixDegree "10.322"^^xsd:float;
+    :hasFermentationDuration "56.84"^^xsd:float;
+    :hasFermentationTemperature "26.87"^^xsd:float;
+    :hasPH "3.827"^^xsd:float .
+}
+
+<http://w3id.org/bfpo/datos_yina> {
+  :Sweetness_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Sweetness_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_0h :isPartOf :SCA_FERM_23C_2DA_0h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_12h :isPartOf :SCA_FERM_23C_2DA_12h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_24h :isPartOf :SCA_FERM_23C_2DA_24h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_36h :isPartOf :SCA_FERM_23C_2DA_36h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_48h :isPartOf :SCA_FERM_23C_2DA_48h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_60h :isPartOf :SCA_FERM_23C_2DA_60h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_72h :isPartOf :SCA_FERM_23C_2DA_72h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_84h :isPartOf :SCA_FERM_23C_2DA_84h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Uniformity_FERM_23C_2DA_96h :isPartOf :SCA_FERM_23C_2DA_96h;
+    :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_0h :hasQualityClassification :MediumQuality;
+    :hasSCAScore "81.65"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_12h :hasQualityClassification :MediumQuality;
+    :hasSCAScore "83.4"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_24h :hasQualityClassification :MediumQuality;
+    :hasSCAScore "84.25999999999999"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_36h :hasQualityClassification :HighQuality;
+    :hasSCAScore "85.28"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_48h :hasQualityClassification :HighQuality;
+    :hasSCAScore "86.13"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_60h :hasQualityClassification :HighQuality;
+    :hasSCAScore "85.28"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_72h :hasQualityClassification :MediumQuality;
+    :hasSCAScore "84.13999999999999"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_84h :hasQualityClassification :MediumQuality;
+    :hasSCAScore "82.75"^^xsd:float .
+  
+  :SCA_FERM_23C_2DA_96h :hasQualityClassification :MediumQuality;
+    :hasSCAScore "81.0"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_0h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_12h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_24h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_36h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_48h :hasSCAAttributeScore "8.0"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_60h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_72h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_84h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Aftertaste_FERM_23C_2DA_96h :hasSCAAttributeScore "7.25"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_0h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_12h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_24h :hasSCAAttributeScore "8.0"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_36h :hasSCAAttributeScore "8.13"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_48h :hasSCAAttributeScore "8.25"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_60h :hasSCAAttributeScore "8.13"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_72h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_84h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Aroma_FERM_23C_2DA_96h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_0h :hasSCAAttributeScore "7.13"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_12h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_24h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_36h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_48h :hasSCAAttributeScore "8.0"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_60h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_72h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_84h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Balance_FERM_23C_2DA_96h :hasSCAAttributeScore "7.25"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_0h :hasSCAAttributeScore "7.38"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_12h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_24h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_36h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_48h :hasSCAAttributeScore "8.0"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_60h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_72h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_84h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Body_FERM_23C_2DA_96h :hasSCAAttributeScore "7.25"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_0h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_12h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_24h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_36h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_48h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_60h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_72h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_84h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :CupClarity_FERM_23C_2DA_96h :hasSCAAttributeScore "10.0"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_0h :hasSCAAttributeScore "7.38"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_12h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_24h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_36h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_48h :hasSCAAttributeScore "8.0"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_60h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_72h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_84h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :Flavor_FERM_23C_2DA_96h :hasSCAAttributeScore "7.25"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_0h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_12h :hasSCAAttributeScore "7.63"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_24h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_36h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_48h :hasSCAAttributeScore "8.0"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_60h :hasSCAAttributeScore "7.88"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_72h :hasSCAAttributeScore "7.75"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_84h :hasSCAAttributeScore "7.5"^^xsd:float .
+  
+  :SensoryAcidity_FERM_23C_2DA_96h :hasSCAAttributeScore "7.25"^^xsd:float .
+  
+  :BiorreactorYina :hosts :SIAFFermentation .
+  
+  :Obs_FERM_23C_2DA_0h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_12h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_24h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_36h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_48h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_60h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_72h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_84h sosa:hasFeatureOfInterest :BiorreactorYina .
+  
+  :Obs_FERM_23C_2DA_96h sosa:hasFeatureOfInterest :BiorreactorYina .
+}
+
+<http://w3id.org/bfpo/conocimiento_experto> {
+  :FermentationDuration :influences :SCAScore;
+    :positivelyInfluences :VolatileCompound, :Ester, :LacticAcid, :AceticAcid, :AceticDefect,
+      :OverfermentedDefect, :OrganicAcidProfile;
+    :negativelyInfluences :BrixDegree, :pH .
+  
+  :pH :influences :Microorganism, :Yeast, :SCAScore, :LacticAcidBacteria;
+    :negativelyInfluences :WinyDefect, :OverfermentedDefect, :SensoryAcidity .
+  
+  :VolatileCompound :positivelyInfluences :Aroma, :Flavor, :AromaticProfile, :AromaticIntensity .
+  
+  :OrganicAcid :positivelyInfluences :OrganicAcidProfile;
+    :negativelyInfluences :pH .
+  
+  :Ester :positivelyInfluences :Aroma, :Flavor, :SCAScore .
+  
+  :Ethanol :positivelyInfluences :VolatileCompound, :Ester, :Aroma .
+  
+  :LacticAcid :positivelyInfluences :Aroma, :SensoryAcidity;
+    :negativelyInfluences :pH .
+  
+  :AceticAcid :positivelyInfluences :WinyDefect, :AceticDefect, :SensoryAcidity;
+    :negativelyInfluences :CupClarity, :SCAScore, :pH .
+  
+  :Aroma :positivelyInfluences :SCAScore .
+  
+  :Balance :positivelyInfluences :SCAScore .
+  
+  :CupClarity :positivelyInfluences :SCAScore .
+  
+  :Flavor :positivelyInfluences :SCAScore .
+  
+  :Sweetness :positivelyInfluences :SCAScore .
+  
+  :Uniformity :positivelyInfluences :SCAScore .
+  
+  :SensoryAcidity :positivelyInfluences :SCAScore .
+  
+  :Aftertaste :positivelyInfluences :SCAScore .
+  
+  :AromaticProfile :positivelyInfluences :SCAScore .
+  
+  :Body :positivelyInfluences :SCAScore .
+  
+  :BrixDegree :positivelyInfluences :Microorganism, :Yeast, :SCAScore, :EthanolProduction .
+  
+  :OrganicAcidProfile :positivelyInfluences :Flavor, :SensoryAcidity, :SCAScore .
+  
+  :FermentationTemperature :positivelyInfluences :Microorganism;
+    :negativelyInfluences :FermentationDuration, :BrixDegree, :pH .
+  
+  :SIAFFermentation :positivelyInfluences :VolatileCompound, :LacticAcid, :SCAScore;
+    :negativelyInfluences :AceticAcid, :pH .
+  
+  :LacticAcidBacteria :positivelyInfluences :SCAScore;
+    :negativelyInfluences :BrixDegree, :pH;
+    :produces :LacticAcid .
+  
+  :AromaticIntensity :positivelyInfluences :SCAScore .
+  
+  :Microorganism :negativelyInfluences :BrixDegree, :pH;
+    :produces :VolatileCompound, :LacticAcid, :AceticAcid, :EthanolProduction, :CO2 .
+  
+  :WinyDefect :negativelyInfluences :CupClarity, :SCAScore .
+  
+  :AceticDefect :negativelyInfluences :CupClarity, :SCAScore .
+  
+  :OverfermentedDefect :negativelyInfluences :CupClarity, :SCAScore .
+  
+  :Yeast :negativelyInfluences :BrixDegree;
+    :produces :VolatileCompound, :Ester, :Ethanol, :EthanolProduction, :CO2 .
+}
+
+<http://w3id.org/bfpo/ontology> {
+  :AlcoholVariable :hasCriticalThresholdMax "2.0"^^xsd:float .
+  
+  :TemperatureVariable :hasCriticalThresholdMax "25.0"^^xsd:float .
+  
+  :TotalAcidityVariable :hasCriticalThresholdMax "1.2"^^xsd:float .
+  
+  :BrixVariable :hasCriticalThresholdMin "8.0"^^xsd:float .
+  
+  :DissolvedOxygenVariable :hasCriticalThresholdMin "0.1"^^xsd:float .
+  
+  :pHVariable :hasCriticalThresholdMin "3.6"^^xsd:float .
+  
+  :hasBrixDegree :measuresVariable :BrixDegree .
+  
+  :hasFermentationDuration :measuresVariable :FermentationDuration .
+  
+  :hasFermentationTemperature :measuresVariable :FermentationTemperature .
+  
+  :hasPH :measuresVariable :pH .
+  
+  :VolatileCompound skos:altLabel "VOCs"@en .
+  
+  :ChlorogenicAcid skos:altLabel "CQA"@en .
+  
+  :hasDissolvedOxygen skos:altLabel "DO"@en .
+  
+  :hasRedoxPotential skos:altLabel "ORP"@en .
+  
+  :CupClarity skos:altLabel "Claridad de taza"@es, "Clean cup"@en .
+  
+  :Aftertaste skos:altLabel "Finish"@en, "Postgusto"@es .
+  
+  :SCAScore skos:altLabel "Cupping score"@en, "Score de catación"@es .
+  
+  :ProcessObservation skos:definition "Registro de las variables del proceso de fermentación tomado en un instante determinado."@es,
+      "Record of the fermentation process variables taken at a given time."@en .
+  
+  <https://w3id.org/bfpo> skos:changeNote "Versión 1.3: Nueva clase ProcessObservation, subclase de sosa:Observation; ProcessVariable pasa a ser subclase de sosa:ObservableProperty (antes de Bioreactor); Bioreactor, subclase de sosa:FeatureOfInterest; Dominio de 14 propiedades de medición: ProcessObservation (antes Bioreactor); Dominio de rangos óptimos y umbrales críticos: ProcessVariable; Axioma AllDisjointClasses entre 14 clases principales."@es .
+}
+
+<http://w3id.org/bfpo/procedencia> {
+  :Rel_R01 dcterms:identifier "R01";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee .
+  
+  :Fuente_cruzobyrne2020physicochemical dcterms:identifier "cruzobyrne2020physicochemical";
+    dcterms:type "Bibliográfica"@es;
+    dcterms:bibliographicCitation "Cruz-O'Byrne, Piraneque-Gambasica y Aguirre-Forero (2020). Coffee Science, 15, e151797."@es .
+  
+  :Fuente_ferreira2023coffee dcterms:identifier "ferreira2023coffee";
+    dcterms:type "Bibliográfica"@es;
+    dcterms:bibliographicCitation "Ferreira et al. (2023). Coffee fermentation process: A review. Food Research International, 169, 112793."@es .
+  
+  :Rel_R02 dcterms:identifier "R02";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R03 dcterms:identifier "R03";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R04 dcterms:identifier "R04";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R05 dcterms:identifier "R05";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R06 dcterms:identifier "R06";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R07 dcterms:identifier "R07";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R08 dcterms:identifier "R08";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R09 dcterms:identifier "R09";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_penuela2010remocion .
+  
+  :Fuente_penuela2010remocion dcterms:identifier "penuela2010remocion";
+    dcterms:type "Bibliográfica"@es;
+    dcterms:bibliographicCitation "Peñuela-Martínez, Oliveros-Tascón y Sanz-Uribe (2010). Remoción del mucílago de café a través de fermentación natural. Revista Cenicafé, 61(2), 159-173."@es .
+  
+  :Rel_R10 dcterms:identifier "R10";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2, :Fuente_penuela2010remocion .
+  
+  :Rel_R11 dcterms:identifier "R11";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R12 dcterms:identifier "R12";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R13 dcterms:identifier "R13";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee .
+  
+  :Rel_R14 dcterms:identifier "R14";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R15 dcterms:identifier "R15";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee .
+  
+  :Rel_R16 dcterms:identifier "R16";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R17 dcterms:identifier "R17";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R18 dcterms:identifier "R18";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R19 dcterms:identifier "R19";
+    dcterms:type "Bibliográfico"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee .
+  
+  :Rel_R20 dcterms:identifier "R20";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee, :Fuente_Entrevista2 .
+  
+  :Rel_R21 dcterms:identifier "R21";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R22 dcterms:identifier "R22";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_ferreira2023coffee .
+  
+  :Rel_R23 dcterms:identifier "R23";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R24 dcterms:identifier "R24";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee,
+      :Fuente_Entrevista2 .
+  
+  :Rel_R25 dcterms:identifier "R25";
+    dcterms:type "Bibliográfico"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_ferreira2023coffee .
+  
+  :Rel_R26 dcterms:identifier "R26";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Fuente_revelo2025omics dcterms:identifier "revelo2025omics";
+    dcterms:type "Bibliográfica"@es;
+    dcterms:bibliographicCitation "Revelo-Romo et al. (2025). Omics approaches to explore the coffee fermentation microecosystem and its effects on cup quality. Food Research International, 206, 116035."@es .
+  
+  :Rel_R27 dcterms:identifier "R27";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R28 dcterms:identifier "R28";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R29 dcterms:identifier "R29";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R30 dcterms:identifier "R30";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R31 dcterms:identifier "R31";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R32 dcterms:identifier "R32";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R33 dcterms:identifier "R33";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R34 dcterms:identifier "R34";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R35 dcterms:identifier "R35";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R36 dcterms:identifier "R36";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R37 dcterms:identifier "R37";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R38 dcterms:identifier "R38";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R39 dcterms:identifier "R39";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R40 dcterms:identifier "R40";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R41 dcterms:identifier "R41";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_cruzobyrne2020physicochemical,
+      :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R42 dcterms:identifier "R42";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_cruzobyrne2020physicochemical, :Fuente_Entrevista2, :Fuente_revelo2025omics .
+  
+  :Rel_R43 dcterms:identifier "R43";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Fuente_brioschi2021microbial dcterms:identifier "brioschi2021microbial";
+    dcterms:type "Bibliográfica"@es;
+    dcterms:bibliographicCitation "Brioschi Junior et al. (2021). Microbial fermentation affects sensorial, chemical, and microbial profile of coffee under carbonic maceration. Food Chemistry, 342, 128296."@es .
+  
+  :Rel_R44 dcterms:identifier "R44";
+    dcterms:type "Bibliográfico"@es;
+    prov:wasDerivedFrom :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R45 dcterms:identifier "R45";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R46 dcterms:identifier "R46";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R47 dcterms:identifier "R47";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R48 dcterms:identifier "R48";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_brioschi2021microbial .
+  
+  :Rel_R49 dcterms:identifier "R49";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R50 dcterms:identifier "R50";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R51 dcterms:identifier "R51";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R52 dcterms:identifier "R52";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R53 dcterms:identifier "R53";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R54 dcterms:identifier "R54";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R55 dcterms:identifier "R55";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R56 dcterms:identifier "R56";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_brioschi2021microbial .
+  
+  :Rel_R57 dcterms:identifier "R57";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_brioschi2021microbial .
+  
+  :Rel_R58 dcterms:identifier "R58";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R59 dcterms:identifier "R59";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R60 dcterms:identifier "R60";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R61 dcterms:identifier "R61";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_Entrevista2, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R62 dcterms:identifier "R62";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R63 dcterms:identifier "R63";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R64 dcterms:identifier "R64";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R65 dcterms:identifier "R65";
+    dcterms:type "Bibliográfico"@es;
+    prov:wasDerivedFrom :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R66 dcterms:identifier "R66";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_revelo2025omics, :Fuente_brioschi2021microbial .
+  
+  :Rel_R67 dcterms:identifier "R67";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Fuente_sca2015cupping dcterms:identifier "sca2015cupping";
+    dcterms:type "Normativa"@es;
+    dcterms:bibliographicCitation "SCAA (2015). Protocols: Cupping Specialty Coffee."@es .
+  
+  :Rel_R68 dcterms:identifier "R68";
+    dcterms:type "Normativo (protocolo SCA)"@es;
+    prov:wasDerivedFrom :Fuente_sca2015cupping .
+  
+  :Rel_R69 dcterms:identifier "R69";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R70 dcterms:identifier "R70";
+    dcterms:type "Normativo (protocolo SCA)"@es;
+    prov:wasDerivedFrom :Fuente_sca2015cupping .
+  
+  :Rel_R71 dcterms:identifier "R71";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R72 dcterms:identifier "R72";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R73 dcterms:identifier "R73";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R74 dcterms:identifier "R74";
+    dcterms:type "Normativo (protocolo SCA)"@es;
+    prov:wasDerivedFrom :Fuente_sca2015cupping .
+  
+  :Rel_R75 dcterms:identifier "R75";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R76 dcterms:identifier "R76";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R77 dcterms:identifier "R77";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R78 dcterms:identifier "R78";
+    dcterms:type "Normativo (protocolo SCA)"@es;
+    prov:wasDerivedFrom :Fuente_sca2015cupping .
+  
+  :Rel_R79 dcterms:identifier "R79";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R80 dcterms:identifier "R80";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R81 dcterms:identifier "R81";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R82 dcterms:identifier "R82";
+    dcterms:type "Normativo (protocolo SCA)"@es;
+    prov:wasDerivedFrom :Fuente_sca2015cupping .
+  
+  :Rel_R83 dcterms:identifier "R83";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R84 dcterms:identifier "R84";
+    dcterms:type "Normativo (protocolo SCA)"@es;
+    prov:wasDerivedFrom :Fuente_sca2015cupping .
+  
+  :Rel_R85 dcterms:identifier "R85";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R86 dcterms:identifier "R86";
+    dcterms:type "Normativo (protocolo SCA) y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_sca2015cupping .
+  
+  :Rel_R87 dcterms:identifier "R87";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_ferreira2023coffee, :Fuente_Entrevista2,
+      :Fuente_brioschi2021microbial .
+  
+  :Rel_R88 dcterms:identifier "R88";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_ferreira2023coffee, :Fuente_brioschi2021microbial .
+  
+  :Rel_R89 dcterms:identifier "R89";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_ferreira2023coffee, :Fuente_Entrevista2,
+      :Fuente_brioschi2021microbial .
+  
+  :Rel_R90 dcterms:identifier "R90";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_ferreira2023coffee, :Fuente_brioschi2021microbial .
+  
+  :Rel_R91 dcterms:identifier "R91";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_ferreira2023coffee, :Fuente_Entrevista2,
+      :Fuente_brioschi2021microbial .
+  
+  :Rel_R92 dcterms:identifier "R92";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_MapeoDeVariables, :Fuente_ferreira2023coffee, :Fuente_brioschi2021microbial .
+  
+  :Rel_R93 dcterms:identifier "R93";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_ferreira2023coffee, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_vale2023siaf .
+  
+  :Fuente_vale2023siaf dcterms:identifier "vale2023siaf";
+    dcterms:type "Bibliográfica"@es;
+    dcterms:bibliographicCitation "Vale et al. (2023). Understanding the Effects of Self-Induced Anaerobic Fermentation on Coffee Beans Quality. Foods, 12(1), 37."@es .
+  
+  :Rel_R94 dcterms:identifier "R94";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_ferreira2023coffee, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_vale2023siaf .
+  
+  :Rel_R95 dcterms:identifier "R95";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_ferreira2023coffee, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_vale2023siaf .
+  
+  :Rel_R96 dcterms:identifier "R96";
+    dcterms:type "Bibliográfico y experto"@es;
+    prov:wasDerivedFrom :Fuente_ferreira2023coffee, :Fuente_Entrevista2, :Fuente_revelo2025omics,
+      :Fuente_vale2023siaf .
+  
+  :Rel_R97 dcterms:identifier "R97";
+    dcterms:type "Bibliográfico"@es;
+    prov:wasDerivedFrom :Fuente_ferreira2023coffee, :Fuente_revelo2025omics, :Fuente_vale2023siaf .
+  
+  :Fuente_MapeoDeVariables dcterms:type "Experta"@es;
+    dcterms:bibliographicCitation "Mapeo de variables y relaciones de la ontología (archivo MAPEO_VARIABLES_ONTOLOGIA, hojas 3 y 6)."@es;
+    prov:wasAttributedTo :ExpertaDominio .
+  
+  :Fuente_Entrevista2 dcterms:type "Experta"@es;
+    dcterms:bibliographicCitation "Entrevista sobre relaciones entre variables con la experta del dominio (archivo Entrevista_2__Relaciones_entre_variables)."@es;
+    prov:wasAttributedTo :ExpertaDominio .
+}
