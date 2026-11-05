@@ -1,0 +1,487 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.129 0.042 264.695);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.129 0.042 264.695);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.208 0.042 265.755);
+  --primary-foreground: oklch(0.984 0.003 247.858);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+.dark {
+  --background: rgb(3, 7, 22);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.208 0.042 265.755);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.float-tooltip-kap {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+:root {
+  font-family: 'Manrope', sans-serif;
+  color: #202a25;
+  background: #edf1ed;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.bioreactor-app {
+  --ink: #202a25;
+  --muted: #6e7972;
+  --line: #d6ded8;
+  --green: #19785b;
+  --danger: #b43f35;
+  --amber: #a56813;
+  min-height: 100vh;
+  padding: 0 34px 24px;
+  background-color: #edf1ed;
+  background-image: linear-gradient(#4a66530a 1px, transparent 1px), linear-gradient(90deg, #4a66530a 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink);
+}
+
+.topbar,
+.process-banner,
+.dashboard-grid,
+.dashboard-footer {
+  width: min(1600px, 100%);
+  margin-inline: auto;
+}
+
+.topbar {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-lockup,
+.topbar-status,
+.process-clock,
+.section-heading,
+.metric-title-row,
+.alert-row-heading,
+.actuator-heading,
+.simulated-pill,
+.scene-caption,
+.schematic-tag {
+  display: flex;
+  align-items: center;
+}
+
+.brand-lockup { gap: 12px; }
+.brand-mark { width: 38px; height: 38px; display: grid; place-items: center; background: #dce9df; color: var(--green); }
+.brand-lockup h1 { margin: 2px 0 0; font-size: 17px; font-weight: 700; }
+.eyebrow { display: block; color: var(--muted); font: 500 10px/1.4 'DM Mono', monospace; letter-spacing: 0.08em; }
+.topbar-status { gap: 17px; }
+.status-pill { display: inline-flex; align-items: center; gap: 8px; padding: 7px 10px; font: 500 11px 'DM Mono', monospace; }
+.status-critical { color: #8c3028; background: #f8e2de; }
+.status-ok { color: #176144; background: #deeee4; }
+.status-dot { width: 7px; height: 7px; display: inline-block; border-radius: 50%; background: currentColor; }
+.status-critical .status-dot { box-shadow: 0 0 0 3px #b43f3520; }
+.topbar-divider { width: 1px; height: 24px; background: var(--line); }
+.process-clock { gap: 7px; color: #59655d; font: 500 12px 'DM Mono', monospace; }
+.connection-pill { display: inline-flex; align-items: center; gap: 6px; color: #6e7972; font: 500 9px 'DM Mono', monospace; }
+.connection-dot { width: 6px; height: 6px; border-radius: 50%; background: #a3ada6; }
+.connection-live { color: #176144; }
+.connection-live .connection-dot { background: #19885b; box-shadow: 0 0 0 3px #19885b20; }
+
+.process-banner { display: grid; grid-template-columns: minmax(210px, 0.7fr) minmax(320px, 1.3fr); margin-top: 21px; border: 1px solid var(--line); background: #f8faf7; }
+.phase-block, .recommendation-block { min-height: 68px; display: flex; justify-content: center; flex-direction: column; padding: 12px 18px; }
+.phase-block { border-right: 1px solid var(--line); }
+.phase-block strong, .recommendation-block strong { margin-top: 5px; font-size: 13px; font-weight: 650; }
+.recommendation-block { flex-direction: row; align-items: center; justify-content: flex-start; gap: 12px; }
+.recommendation-icon { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; color: var(--danger); background: #f8e5e0; }
+
+.dashboard-grid { display: grid; grid-template-columns: 228px minmax(340px, 1fr) 294px; gap: 17px; margin-top: 17px; align-items: stretch; }
+.readings-panel, .alerts-panel { min-width: 0; padding: 18px 16px; border: 1px solid var(--line); background: #f8faf7; }
+.section-heading { justify-content: space-between; padding-bottom: 15px; border-bottom: 1px solid var(--line); color: #537064; }
+.section-heading h2, .scene-heading h2 { margin: 3px 0 0; color: var(--ink); font-size: 17px; font-weight: 700; }
+.metric-list { display: grid; }
+.metric-row { display: flex; gap: 11px; padding: 17px 0; border-bottom: 1px solid #e2e8e3; }
+.metric-icon { width: 31px; height: 31px; flex: 0 0 auto; display: grid; place-items: center; color: #45685a; background: #e7eee8; }
+.metric-content { min-width: 0; flex: 1; }
+.metric-title-row { justify-content: space-between; gap: 5px; }
+.metric-title-row h3 { margin: 0; font-size: 12px; font-weight: 650; }
+.metric-flag { color: var(--danger); font: 500 9px 'DM Mono', monospace; }
+.metric-value { margin-top: 6px; font: 500 26px/1 'DM Mono', monospace; color: #283b32; }
+.metric-value span { padding-left: 4px; color: #79857e; font-size: 12px; }
+.metric-content p { margin: 6px 0 0; color: var(--muted); font-size: 10px; line-height: 1.45; }
+.reading-footnote { display: flex; align-items: center; gap: 7px; padding-top: 14px; color: var(--muted); font-size: 10px; }
+.status-dot-muted { color: #9da9a1; }
+
+.scene-panel { min-width: 0; min-height: 480px; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #cfd9d2; background: #e2eae4; }
+.scene-heading { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px 0; }
+.schematic-tag { gap: 6px; padding: 6px 8px; border: 1px solid #c9d6cc; color: #536b5d; background: #edf3ee; font: 500 9px 'DM Mono', monospace; }
+.bioreactor-scene { width: 100%; min-height: 0; flex: 1; touch-action: none; }
+.bioreactor-scene canvas { display: block; width: 100%; height: 100%; outline: none; }
+.scene-caption { justify-content: space-between; gap: 12px; padding: 10px 16px; border-top: 1px solid #cfd9d2; color: #66736b; background: #e8efe9; font: 400 10px 'DM Mono', monospace; }
+
+.alert-count { min-width: 26px; height: 26px; display: grid; place-items: center; color: #8c3028; background: #f8e2de; font: 500 11px 'DM Mono', monospace; }
+.alert-list { display: grid; }
+.alert-row { padding: 13px 0 12px; border-bottom: 1px solid #e2e8e3; }
+.alert-row-heading { gap: 7px; color: var(--danger); }
+.alert-row-heading strong { color: var(--ink); font-size: 12px; }
+.alert-row-heading span { margin-left: auto; font: 500 9px 'DM Mono', monospace; }
+.alert-alerta .alert-row-heading { color: var(--amber); }
+.alert-row p { margin: 7px 0 5px; color: #4e5a53; font-size: 11px; line-height: 1.5; }
+.alert-row small, .actuator-section small { color: var(--muted); font-size: 9px; line-height: 1.5; }
+.risk-section { padding: 15px 0; border-bottom: 1px solid var(--line); }
+.risk-section ul { display: grid; gap: 8px; margin: 11px 0 0; padding: 0; list-style: none; }
+.risk-section li { display: flex; align-items: center; gap: 8px; color: #48554d; font-size: 11px; }
+.risk-section li span { width: 5px; height: 5px; border-radius: 50%; background: #b54a3e; }
+.actuator-section { padding-top: 14px; }
+.actuator-heading { justify-content: space-between; gap: 8px; }
+.actuator-heading strong { display: block; margin-top: 4px; font: 600 12px 'DM Mono', monospace; color: #19684c; }
+.simulated-pill { gap: 4px; padding: 4px 6px; color: #386a51; background: #e3eee6; font: 500 8px 'DM Mono', monospace; }
+.actuator-action { margin: 10px 0 3px; color: #425148; font: 500 10px/1.45 'DM Mono', monospace; }
+
+.dashboard-footer { display: flex; justify-content: space-between; gap: 16px; padding: 12px 2px 0; color: #657169; font-size: 10px; line-height: 1.5; }
+.dashboard-footer .sensory-count { flex: 0 0 auto; font-family: 'DM Mono', monospace; }
+
+@media (max-width: 1120px) {
+  .bioreactor-app { padding-inline: 20px; }
+  .dashboard-grid { grid-template-columns: 205px minmax(0, 1fr); }
+  .alerts-panel { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0 20px; }
+  .alerts-panel > .section-heading { grid-column: 1 / -1; }
+  .alert-list { align-content: start; }
+  .risk-section { border-bottom: 0; }
+  .actuator-section { padding: 15px 0; border-top: 1px solid var(--line); }
+}
+
+@media (max-width: 680px) {
+  .bioreactor-app { padding: 0 14px 20px; }
+  .topbar { min-height: 68px; align-items: center; }
+  .brand-mark { width: 34px; height: 34px; }
+  .brand-lockup h1 { font-size: 14px; }
+  .topbar-status { gap: 9px; }
+  .topbar-divider, .process-clock svg { display: none; }
+  .process-clock { font-size: 10px; }
+  .connection-pill { max-width: 105px; font-size: 8px; line-height: 1.3; }
+  .status-pill { padding: 6px 7px; font-size: 9px; }
+  .process-banner { grid-template-columns: 1fr; margin-top: 14px; }
+  .phase-block { min-height: 54px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .recommendation-block { min-height: 62px; padding-inline: 14px; }
+  .phase-block strong, .recommendation-block strong { font-size: 11px; }
+  .dashboard-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 12px; }
+  .readings-panel { padding: 14px; }
+  .metric-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+  .metric-row { display: block; padding: 12px 0 8px; border-bottom: 0; }
+  .metric-icon { width: 27px; height: 27px; margin-bottom: 9px; }
+  .metric-title-row { align-items: flex-start; flex-direction: column; gap: 3px; }
+  .metric-title-row h3 { font-size: 10px; }
+  .metric-value { font-size: 22px; }
+  .metric-content p { font-size: 9px; }
+  .reading-footnote { border-top: 1px solid #e2e8e3; }
+  .scene-panel { min-height: 370px; }
+  .alerts-panel { grid-column: auto; display: block; padding: 14px; }
+  .alerts-panel > .section-heading { grid-column: auto; }
+  .risk-section { border-bottom: 1px solid var(--line); }
+  .actuator-section { border-top: 0; }
+  .scene-caption { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .dashboard-footer { flex-direction: column; gap: 5px; }
+}
+
+/* CDT: interpretación para el caficultor */
+.status-warning { color: #81500b; background: #fff0d4; }
+.status-unknown { color: #5f6b65; background: #e4e9e5; }
+.data-unavailable {
+  width: min(1600px, 100%); margin: 18px auto 0;
+  padding: 14px 18px; border: 1px solid #dfb67b;
+  background: #fff5e7; color: #785018; font-size: 12px;
+}
+.interpretation-panel {
+  width: min(1600px, 100%); margin: 18px auto 0;
+  padding: 20px; border: 1px solid #d6ded8; background: #f8faf7;
+}
+.interpretation-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 22px;
+}
+.interpretation-item { padding: 18px 0; border-bottom: 1px solid #e2e8e3; min-width: 0; }
+.interpretation-item h3 { margin: 0 0 11px; font-size: 13px; font-weight: 700; }
+.interpretation-item p { margin: 0 0 8px; color: #34483d; font-size: 13px; line-height: 1.6; }
+.interpretation-item small { display: block; margin-top: 9px; color: #64736a; font-size: 11px; line-height: 1.6; }
+.attribute-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.attribute-tag { display: inline-block; padding: 7px 10px; background: #e4eee7; color: #215c42; font-size: 12px; border-radius: 5px; }
+.sca-value { display: block; font: 500 32px/1.25 'DM Mono', monospace; color: #245941; }
+.no-alerts { margin: 18px 0; color: #50705b; font-size: 12px; }
+@media (max-width: 1120px) { .interpretation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 680px) {
+  .interpretation-panel { padding: 14px; margin-top: 12px; }
+  .interpretation-grid { grid-template-columns: minmax(0, 1fr); }
+  .topbar { flex-wrap: wrap; padding: 12px 0; gap: 10px; }
+  .topbar-status { flex-wrap: wrap; }
+}
+
+/* Ajustes de presentación solicitados: fondo neutro y encabezado blanco */
+.bioreactor-app {
+  background-color: #f4f5f6;
+  background-image: none;
+}
+.topbar {
+  background: #ffffff;
+  border: 1px solid #e0e4e1;
+  padding: 0 20px;
+  margin-top: 12px;
+  border-radius: 8px;
+}
+/* La interpretación se integra en el panel derecho, no debajo del modelo 3D. */
+.dashboard-grid { grid-template-columns: 228px minmax(340px, 1fr) minmax(330px, 370px); align-items: start; }
+.alerts-panel { display: flex; flex-direction: column; gap: 0; }
+.alerts-panel .interpretation-panel {
+  width: 100%; margin: 0; padding: 0 0 16px;
+  border: 0; background: transparent;
+}
+.alerts-panel .interpretation-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+.alerts-panel .interpretation-item { padding: 13px 0; }
+.alerts-panel .interpretation-item h3 { margin-bottom: 7px; }
+.alerts-panel > .section-heading { margin-top: 12px; }
+@media (max-width: 1120px) {
+  .dashboard-grid { grid-template-columns: 205px minmax(0, 1fr); }
+  .alerts-panel { grid-column: 1 / -1; display: flex; }
+  .alerts-panel .interpretation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 22px; }
+}
+@media (max-width: 680px) {
+  .topbar { margin-top: 8px; padding: 12px; }
+  .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+  .alerts-panel { grid-column: auto; }
+  .alerts-panel .interpretation-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Ajustes finales: presentación exclusivamente desde info_usuario. */
+@media (min-width: 1121px) {
+  .dashboard-grid { grid-template-columns: 228px minmax(340px, 1fr) minmax(340px, 380px); }
+}
+.scene-panel { min-height: 0; align-self: start; }
+.scene-model-frame { height: 390px; max-height: 390px; min-height: 0; display: flex; overflow: hidden; }
+.scene-model-frame > .bioreactor-scene { flex: 1 1 auto; height: 100%; min-height: 0; }
+.alerts-panel .interpretation-item { padding: 15px 0; }
+.alerts-panel .interpretation-item h3 { font-size: 13px; font-weight: 700; color: #283b32; }
+.alerts-panel .interpretation-item small { font-size: 11px; }
+.alerts-panel .attribute-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.alerts-panel .attribute-tag {
+  display: inline-flex; align-items: center; padding: 9px 11px; border: 1px solid #d8e2db;
+  background: #f1f5f1; border-radius: 8px; color: #283b32;
+  font: 650 12px/1.35 'Manrope', sans-serif; white-space: normal;
+}
+.alerts-panel .sca-value { display: block; margin: 5px 0; color: #283b32; font: 600 27px/1.2 'DM Mono', monospace; }
+.info-pending { padding: 12px; background: #fff5e9; border-radius: 8px; font-size: 12px; }
+.actuator-section { margin-top: 18px; padding: 17px 14px; border: 1px solid #d8e2db; border-radius: 10px; background: #f1f5f1; }
+.actuator-title-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.actuator-title-row h2 { margin: 0; font-size: 15px; font-weight: 800; color: #283b32; }
+.actuator-state { padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #e1e6e2; color: #425148; }
+.actuator-state.actuator-active { background: #fde5d7; color: #9a402a; }
+.actuator-section .actuator-action { margin: 13px 0 0; font: 700 15px/1.45 'Manrope', sans-serif; color: #283b32; }
+@media (max-width: 680px) { .scene-model-frame { height: 340px; max-height: 340px; } }
+@media (min-width: 1121px) {
+
+  /* Distribución de las tres columnas */
+  .dashboard-grid {
+    grid-template-columns: 210px minmax(340px, 1fr) 390px;
+    gap: 14px;
+    margin-top: 14px;
+    align-items: start;
+  }
+
+  /* Paneles laterales más compactos */
+  .readings-panel,
+  .alerts-panel {
+    padding: 14px;
+  }
+
+  /* Reducir altura del visor 3D */
+  .scene-model-frame {
+    height: 310px;
+    max-height: 310px;
+  }
+
+  /* Encabezado del biorreactor */
+  .scene-heading {
+    padding: 13px 16px 0;
+  }
+
+  /* Actuador debajo del modelo 3D */
+  .scene-panel .actuator-section {
+    margin: 10px 14px 14px;
+    padding: 12px 14px;
+  }
+
+  .scene-panel .actuator-title-row h2 {
+    font-size: 12px;
+  }
+
+  .scene-panel .actuator-section .actuator-action {
+    margin-top: 7px;
+    font-size: 12px;
+  }
+
+  /* Compactar interpretación del proceso */
+  .alerts-panel .interpretation-panel {
+    padding-bottom: 8px;
+  }
+
+  .alerts-panel .interpretation-item {
+    padding: 9px 0;
+  }
+
+  .alerts-panel .interpretation-item h3 {
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+
+  .alerts-panel .interpretation-item small {
+    margin-top: 5px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .alerts-panel .attribute-tags {
+    gap: 5px;
+  }
+
+  .alerts-panel .attribute-tag {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+
+  .alerts-panel .sca-value {
+    margin: 3px 0;
+    font-size: 24px;
+  }
+
+  /* Acercar las alertas a la interpretación */
+  .alerts-panel > .section-heading {
+    margin-top: 8px;
+    padding-bottom: 10px;
+  }
+  .alerts-panel .no-alerts {
+    margin: 10px 0 0;
+  }
+
+  .alerts-panel .alert-row {
+    padding: 9px 0;
+  }
+}

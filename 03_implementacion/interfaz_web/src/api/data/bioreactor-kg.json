@@ -1,0 +1,46 @@
+{
+  "estado_proceso": "CRITICO",
+  "fase_proceso": "Fermentacion inicial - hora 0",
+  "resumen": "pH=0 por debajo del umbral operacional 4.0. Defectos sensoriales detectados por KG: ['Winy defect', 'Acetic defect', 'Overfermented defect'].",
+  "atributos_sensoriales_potenciales": [
+    "Aroma",
+    "Aromatic profile",
+    "Cup clarity",
+    "Flavor",
+    "Sensory acidity"
+  ],
+  "defectos_en_riesgo": [
+    "Winy defect",
+    "Acetic defect",
+    "Overfermented defect"
+  ],
+  "alertas": [
+    {
+      "variable": "pH",
+      "valor_actual": 0,
+      "umbral_operacional": 4,
+      "umbral_critico_absoluto": 3.6,
+      "rango_optimo": "4.0 - 5.5",
+      "descripcion": "pH=0 por debajo del umbral operacional 4.0",
+      "defectos_relacionados_kg": [
+        "Winy defect",
+        "Acetic defect",
+        "Overfermented defect"
+      ],
+      "nivel": "CRITICO"
+    },
+    {
+      "variable": "Brix",
+      "valor_actual": 0,
+      "umbral_critico": 8,
+      "rango_optimo": "9.0 - 16.0",
+      "descripcion": "Brix=0 por debajo del umbral 8.0",
+      "nivel": "ALERTA"
+    }
+  ],
+  "recomendacion": "Detener proceso - defectos sensoriales en riesgo",
+  "ph_evaluado": 0,
+  "brix_evaluado": 0,
+  "temp_evaluada": 0,
+  "hora_proceso": 0
+}
