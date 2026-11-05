@@ -1,0 +1,25 @@
+PREFIX bfpo: <https://w3id.org/bfpo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?propiedad ?valor ?variable ?variableProceso ?label
+       ?rangoMin ?rangoMax ?umbralMin ?umbralMax WHERE {
+  GRAPH <http://w3id.org/bfpo/observacion_actual> {
+    bfpo:ObservacionActual ?propiedad ?valor .
+  }
+  OPTIONAL {
+    GRAPH <http://w3id.org/bfpo/ontology> { ?propiedad bfpo:measuresVariable ?variable . }
+  }
+  OPTIONAL {
+    VALUES (?propiedad ?variableProceso) {
+      (bfpo:hasPH                       bfpo:pHVariable)
+      (bfpo:hasBrixDegree               bfpo:BrixVariable)
+      (bfpo:hasFermentationTemperature  bfpo:TemperatureVariable)
+    }
+    ?variableProceso a bfpo:ProcessVariable .
+    OPTIONAL { ?variableProceso rdfs:label ?label . FILTER(LANG(?label) = "en") }
+    OPTIONAL { ?variableProceso bfpo:hasOptimalRangeMin ?rangoMin . }
+    OPTIONAL { ?variableProceso bfpo:hasOptimalRangeMax ?rangoMax . }
+    OPTIONAL { ?variableProceso bfpo:hasCriticalThresholdMin ?umbralMin . }
+    OPTIONAL { ?variableProceso bfpo:hasCriticalThresholdMax ?umbralMax . }
+  }
+}
+ORDER BY ?propiedad

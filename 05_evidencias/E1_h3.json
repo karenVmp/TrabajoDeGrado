@@ -1,0 +1,1801 @@
+{
+  "execution_id": "33SAONPinQehViv7rJQ7UC",
+  "execution_start": "2026-11-02T17:46:01.417736Z",
+  "escenario": "1",
+  "hora": 3.51,
+  "timestamp_lectura": "2026-11-02T17:45:59.881290441Z",
+  "observaciones": {
+    "fuente": "MEDIDO (simulador → InfluxDB)",
+    "ph": 5.193,
+    "brix": 15.16,
+    "temperatura": 23.2,
+    "hora": 3.51,
+    "sca_estimado": 82.46,
+    "nota_sca": "Valor estimado por el simulador a partir de la trayectoria de referencia; no es una medición."
+  },
+  "estado_actual": {
+    "pregunta": "¿Qué está pasando?",
+    "fase": {
+      "valor": "Fermentación inicial",
+      "fuente": "KESTRA (regla temporal; no es inferencia OWL)"
+    },
+    "variables": [
+      {
+        "propiedad": "hasBrixDegree",
+        "variable": "BrixDegree",
+        "variable_label": "Brix degree",
+        "valor_medido": 15.16,
+        "fuente_valor": "MEDIDO",
+        "variable_proceso": "BrixVariable",
+        "rango_optimo": [
+          9.0,
+          16.0
+        ],
+        "umbral_critico_min": 8.0,
+        "umbral_critico_max": null,
+        "fuente_criterio": "KG (bfpo:ProcessVariable)",
+        "estado": "EN_RANGO",
+        "direccion": 0,
+        "estado_calculado_por": "KESTRA"
+      },
+      {
+        "propiedad": "hasFermentationDuration",
+        "variable": "FermentationDuration",
+        "variable_label": "Fermentation duration",
+        "valor_medido": 3.51,
+        "fuente_valor": "MEDIDO",
+        "criterio": "vigilancia >= 48 h; prolongada >= 72 h",
+        "fuente_criterio": "KESTRA (criterios temporales operacionales)",
+        "estado": "EN_CURSO",
+        "direccion": 0
+      },
+      {
+        "propiedad": "hasFermentationTemperature",
+        "variable": "FermentationTemperature",
+        "variable_label": "Fermentation temperature",
+        "valor_medido": 23.2,
+        "fuente_valor": "MEDIDO",
+        "variable_proceso": "TemperatureVariable",
+        "rango_optimo": [
+          15.0,
+          25.0
+        ],
+        "umbral_critico_min": null,
+        "umbral_critico_max": 25.0,
+        "fuente_criterio": "KG (bfpo:ProcessVariable)",
+        "estado": "EN_RANGO",
+        "direccion": 0,
+        "estado_calculado_por": "KESTRA"
+      },
+      {
+        "propiedad": "hasPH",
+        "variable": "pH",
+        "variable_label": "pH",
+        "valor_medido": 5.193,
+        "fuente_valor": "MEDIDO",
+        "variable_proceso": "pHVariable",
+        "rango_optimo": [
+          4.0,
+          5.5
+        ],
+        "umbral_critico_min": 3.6,
+        "umbral_critico_max": null,
+        "fuente_criterio": "KG (bfpo:ProcessVariable)",
+        "estado": "EN_RANGO",
+        "direccion": 0,
+        "estado_calculado_por": "KESTRA"
+      }
+    ],
+    "requieren_atencion": []
+  },
+  "interpretacion": {
+    "pregunta": "¿Qué más relaciona el KG? (exploración bajo demanda)",
+    "tipo": "EXPLORACION_KG",
+    "advertencia": "Entidades alcanzables en el KG desde las variables observadas, por rutas de 1 a 3 saltos e independientemente de su estado. Una ruta indirecta no es una influencia del origen sobre el destino final. No indican que un microorganismo esté activo, que un compuesto esté presente ni que un defecto se haya producido.",
+    "microorganismos": [
+      {
+        "entidad": "LacticAcidBacteria",
+        "label": "Lactic acid bacteria",
+        "interpretacion": "Lactic acid bacteria: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "pH —influences→ Lactic acid bacteria",
+        "rutas": [
+          {
+            "ruta": "pH —influences→ Lactic acid bacteria",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 1,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "Yeast",
+        "label": "Yeast",
+        "interpretacion": "Yeast: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Brix degree —positivelyInfluences→ Yeast",
+        "rutas": [
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast",
+            "saltos": 1,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 2,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      }
+    ],
+    "compuestos": [
+      {
+        "entidad": "AceticAcid",
+        "label": "Acetic acid",
+        "interpretacion": "Acetic acid: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Acetic acid",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Acetic acid",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Acetic acid",
+            "saltos": 2,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Acetic acid",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 4,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "CO2",
+        "label": "Carbon dioxide",
+        "interpretacion": "Carbon dioxide: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Brix degree —positivelyInfluences→ Microorganism —produces→ Carbon dioxide",
+        "rutas": [
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Carbon dioxide",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Carbon dioxide",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Carbon dioxide",
+            "saltos": 2,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Carbon dioxide",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Carbon dioxide",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 5,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "Ester",
+        "label": "Ester",
+        "interpretacion": "Ester: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Ester",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Ester",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ester",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ester",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ethanol —positivelyInfluences→ Ester",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ethanol —positivelyInfluences→ Ester",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 5,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "Ethanol",
+        "label": "Ethanol",
+        "interpretacion": "Ethanol: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Brix degree —positivelyInfluences→ Yeast —produces→ Ethanol",
+        "rutas": [
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ethanol",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ethanol",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 2,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "LacticAcid",
+        "label": "Lactic acid",
+        "interpretacion": "Lactic acid: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Lactic acid",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Lactic acid",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Lactic acid",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Lactic acid",
+            "saltos": 2,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Lactic acid bacteria —produces→ Lactic acid",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Lactic acid",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 5,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "VolatileCompound",
+        "label": "Volatile compound",
+        "interpretacion": "Volatile compound: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Volatile compound",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Volatile compound",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Volatile compound",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Volatile compound",
+            "saltos": 2,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Volatile compound",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Volatile compound",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ethanol —positivelyInfluences→ Volatile compound",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ethanol —positivelyInfluences→ Volatile compound",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 8,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      }
+    ],
+    "atributos_sensoriales": [
+      {
+        "entidad": "Aroma",
+        "label": "Aroma",
+        "interpretacion": "Aroma: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ Aroma",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ Aroma",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Lactic acid —positivelyInfluences→ Aroma",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aroma",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Lactic acid —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ester —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ethanol —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Lactic acid —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Lactic acid bacteria —produces→ Lactic acid —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Lactic acid —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ester —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ethanol —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Aroma",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 16,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "AromaticIntensity",
+        "label": "Aromatic intensity",
+        "interpretacion": "Aromatic intensity: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Aromatic intensity",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 6,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "AromaticProfile",
+        "label": "Aromatic profile",
+        "interpretacion": "Aromatic profile: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aromatic profile",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aromatic profile",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aromatic profile",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Aromatic profile",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aromatic profile",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Aromatic profile",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Aromatic profile",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 6,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "CupClarity",
+        "label": "Cup clarity",
+        "interpretacion": "Cup clarity: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Acetic acid —negativelyInfluences→ Cup clarity",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —negativelyInfluences→ Cup clarity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic defect —negativelyInfluences→ Cup clarity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Overfermented defect —negativelyInfluences→ Cup clarity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Overfermented defect —negativelyInfluences→ Cup clarity",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Winy defect —negativelyInfluences→ Cup clarity",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Acetic acid —negativelyInfluences→ Cup clarity",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Acetic defect —negativelyInfluences→ Cup clarity",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Winy defect —negativelyInfluences→ Cup clarity",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Acetic acid —negativelyInfluences→ Cup clarity",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Acetic acid —negativelyInfluences→ Cup clarity",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 10,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "Flavor",
+        "label": "Flavor",
+        "interpretacion": "Flavor: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 2,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ Flavor",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ Flavor",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Organic acid profile —positivelyInfluences→ Flavor",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Flavor",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ester —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Volatile compound —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ester —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Volatile compound —positivelyInfluences→ Flavor",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 10,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "SensoryAcidity",
+        "label": "Sensory acidity",
+        "interpretacion": "Sensory acidity: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "pH —negativelyInfluences→ Sensory acidity",
+        "rutas": [
+          {
+            "ruta": "pH —negativelyInfluences→ Sensory acidity",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Lactic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Organic acid profile —positivelyInfluences→ Sensory acidity",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Lactic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Lactic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Lactic acid bacteria —produces→ Lactic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Lactic acid —positivelyInfluences→ Sensory acidity",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 11,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      }
+    ],
+    "defectos": [
+      {
+        "entidad": "AceticDefect",
+        "label": "Acetic defect",
+        "interpretacion": "Acetic defect: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Acetic defect",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic defect",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Acetic defect",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Acetic defect",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Acetic defect",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Acetic defect",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 5,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "OverfermentedDefect",
+        "label": "Overfermented defect",
+        "interpretacion": "Overfermented defect: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Overfermented defect",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Overfermented defect",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Overfermented defect",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 2,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "WinyDefect",
+        "label": "Winy defect",
+        "interpretacion": "Winy defect: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "pH —negativelyInfluences→ Winy defect",
+        "rutas": [
+          {
+            "ruta": "pH —negativelyInfluences→ Winy defect",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Winy defect",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Winy defect",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Winy defect",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Acetic acid —positivelyInfluences→ Winy defect",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 5,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      }
+    ],
+    "calidad": [
+      {
+        "entidad": "SCAScore",
+        "label": "SCA score",
+        "interpretacion": "SCA score: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Brix degree —positivelyInfluences→ SCA score",
+        "rutas": [
+          {
+            "ruta": "Brix degree —positivelyInfluences→ SCA score",
+            "saltos": 1,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation duration —influences→ SCA score",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "pH —influences→ SCA score",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —negativelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic defect —negativelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Organic acid profile —positivelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Overfermented defect —negativelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "pH —influences→ Lactic acid bacteria —positivelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Overfermented defect —negativelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Sensory acidity —positivelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Winy defect —negativelyInfluences→ SCA score",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Acetic acid —negativelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ester —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —negativelyInfluences→ Cup clarity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Acetic defect —negativelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Sensory acidity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic acid —positivelyInfluences→ Winy defect —negativelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Acetic defect —negativelyInfluences→ Cup clarity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ Aroma —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Ester —positivelyInfluences→ Flavor —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Lactic acid —positivelyInfluences→ Aroma —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Lactic acid —positivelyInfluences→ Sensory acidity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Organic acid profile —positivelyInfluences→ Flavor —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Organic acid profile —positivelyInfluences→ Sensory acidity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Overfermented defect —negativelyInfluences→ Cup clarity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aroma —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aromatic intensity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Aromatic profile —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Volatile compound —positivelyInfluences→ Flavor —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Acetic acid —negativelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Acetic acid —negativelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ester —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Overfermented defect —negativelyInfluences→ Cup clarity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —negativelyInfluences→ Winy defect —negativelyInfluences→ Cup clarity —positivelyInfluences→ SCA score",
+            "saltos": 3,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 35,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      }
+    ],
+    "otros": [
+      {
+        "entidad": "EthanolProduction",
+        "label": "Ethanol production",
+        "interpretacion": "Ethanol production: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Brix degree —positivelyInfluences→ Ethanol production",
+        "rutas": [
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Ethanol production",
+            "saltos": 1,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism —produces→ Ethanol production",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Yeast —produces→ Ethanol production",
+            "saltos": 2,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism —produces→ Ethanol production",
+            "saltos": 2,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism —produces→ Ethanol production",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Yeast —produces→ Ethanol production",
+            "saltos": 2,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 6,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "Microorganism",
+        "label": "Microorganism",
+        "interpretacion": "Microorganism: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Brix degree —positivelyInfluences→ Microorganism",
+        "rutas": [
+          {
+            "ruta": "Brix degree —positivelyInfluences→ Microorganism",
+            "saltos": 1,
+            "variable_origen": "BrixDegree",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "Fermentation temperature —positivelyInfluences→ Microorganism",
+            "saltos": 1,
+            "variable_origen": "FermentationTemperature",
+            "estado_variable": "EN_RANGO"
+          },
+          {
+            "ruta": "pH —influences→ Microorganism",
+            "saltos": 1,
+            "variable_origen": "pH",
+            "estado_variable": "EN_RANGO"
+          }
+        ],
+        "cantidad_rutas": 3,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      },
+      {
+        "entidad": "OrganicAcidProfile",
+        "label": "Organic acid profile",
+        "interpretacion": "Organic acid profile: entidad alcanzable en el KG desde las variables observadas (exploración; no es una influencia directa del origen)",
+        "tipo_evidencia": "RUTA_EXPLORATORIA",
+        "saltos_ruta_mas_corta": 1,
+        "ruta_explicativa": "Fermentation duration —positivelyInfluences→ Organic acid profile",
+        "rutas": [
+          {
+            "ruta": "Fermentation duration —positivelyInfluences→ Organic acid profile",
+            "saltos": 1,
+            "variable_origen": "FermentationDuration",
+            "estado_variable": "EN_CURSO"
+          }
+        ],
+        "cantidad_rutas": 1,
+        "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"
+      }
+    ],
+    "total_entidades_relacionadas": 21
+  },
+  "interpretacion_contextual": {
+    "pregunta": "¿Qué significa?",
+    "criterio": "Relaciones explícitas directas (un salto) del KG desde variables con estado desviado según BFPO, o con duración PROLONGADA según la regla operacional de Kestra",
+    "tipo_evidencia": "RELACION_DIRECTA_KG",
+    "origenes_activos": [],
+    "relaciones_directas": [],
+    "total_relaciones_directas": 0,
+    "conteo_por_categoria": {
+      "variable_proceso": 0,
+      "microorganismo": 0,
+      "compuesto": 0,
+      "calidad": 0,
+      "defecto": 0,
+      "atributo": 0,
+      "otro": 0
+    },
+    "defectos_potenciales": [],
+    "atributos_sensoriales_relacionados": [],
+    "rutas_exploratorias": "Ver la sección interpretacion (rutas de 1 a 3 saltos; solo exploración).",
+    "advertencia": "Relaciones documentadas en el KG para las variables señaladas. No predicen efectos, no demuestran causalidad ni indican presencia de defectos o cambios sensoriales."
+  },
+  "resumen_interpretativo": {
+    "advertencia_general": "Este resumen combina las lecturas del biorreactor (simuladas) con relaciones documentadas en el conocimiento del sistema (BFPO). Esas relaciones son posibilidades conocidas, no mediciones de este lote ni causas comprobadas.",
+    "texto_para_caficultor": {
+      "como_esta_la_fermentacion": "La fermentación está en etapa inicial (3,5 h desde el inicio). El pH (5,19) está dentro del rango configurado; los azúcares (15,2 °Brix) están dentro del rango configurado; la temperatura (23,2 °C) está dentro del rango configurado. Es una sola lectura: no indica si los valores están subiendo o bajando.",
+      "que_relaciona_el_sistema_con_este_momento": [
+        "El conocimiento del sistema relaciona con el consumo de azúcares (menos °Brix): bacterias lácticas, microorganismos en general y levaduras.",
+        "El conocimiento del sistema asocia las bacterias lácticas con la formación de ácido láctico.",
+        "El conocimiento del sistema asocia las levaduras con la formación de dióxido de carbono, ésteres, etanol y compuestos volátiles.",
+        "El conocimiento del sistema asocia los microorganismos en general con la formación de ácido acético, dióxido de carbono, etanol, ácido láctico y compuestos volátiles."
+      ],
+      "relacion_con_la_taza": [
+        "Por la etapa inicial, con azúcares disponibles, el sistema destaca los compuestos asociados con las levaduras y su relación con la taza: el aroma se relaciona con compuestos volátiles, etanol y ésteres; el perfil aromático se relaciona con compuestos volátiles; el sabor se relaciona con compuestos volátiles y ésteres; la intensidad aromática se relaciona con compuestos volátiles."
+      ],
+      "que_vigilar": [
+        "Sin desviaciones. Conviene seguir el pH y los °Brix: el conocimiento del sistema los relaciona con bacterias lácticas, microorganismos en general y levaduras."
+      ],
+      "ten_en_cuenta": "Estas son relaciones documentadas en el conocimiento del sistema. No son mediciones de microorganismos, compuestos ni sabor de este lote, ni una predicción de su calidad."
+    },
+    "info_usuario": {
+      "atributos_sensoriales": [
+        "Aroma",
+        "Intensidad aromática",
+        "Perfil aromático",
+        "Sabor"
+      ],
+      "microorganismos_relacionados": [
+        "Bacterias lácticas",
+        "Levaduras"
+      ],
+      "defectos_a_vigilar": [],
+      "nota_sensorial": "Asociaciones potenciales, no atributos medidos.",
+      "nota_sca": "Valor estimado",
+      "nota_defectos": "Asociaciones potenciales, no defectos confirmados.",
+      "fuentes": {
+        "atributos_sensoriales": "posibles_implicaciones_sensoriales.priorizadas_por_estado (ASOCIACION_BFPO)",
+        "microorganismos_relacionados": "contexto_microbiologico_bioquimico.puntos (ASOCIACION_BFPO; excluye clases genéricas)",
+        "defectos_a_vigilar": "interpretacion_contextual.relaciones_directas (categoria_destino = defecto)"
+      }
+    },
+    "estado_del_proceso": {
+      "texto": "La fermentación está en etapa inicial (3,5 h desde el inicio). El pH (5,19) está dentro del rango configurado; los azúcares (15,2 °Brix) están dentro del rango configurado; la temperatura (23,2 °C) está dentro del rango configurado. Es una sola lectura: no indica si los valores están subiendo o bajando.",
+      "etapa": "inicial",
+      "fuentes": [
+        "DATO_SIMULADO",
+        "RANGOS_BFPO (estado calculado por Kestra)",
+        "REGLA_KESTRA (etapa por tiempo)"
+      ],
+      "datos": {
+        "hora": 3.51,
+        "ph": 5.193,
+        "brix": 15.16,
+        "temperatura": 23.2,
+        "estados": {
+          "ph": "EN_RANGO",
+          "brix": "EN_RANGO",
+          "temp": "EN_RANGO",
+          "dur": "EN_CURSO"
+        }
+      }
+    },
+    "contexto_microbiologico_bioquimico": {
+      "criterio_prioridad": "Etapa inicial: azúcares antes que acidificación (reglas de presentación de Kestra, no conocimiento del grafo).",
+      "puntos": [
+        {
+          "texto": "El conocimiento del sistema relaciona con el consumo de azúcares (menos °Brix): bacterias lácticas, microorganismos en general y levaduras.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Relaciones del grafo que llegan a los °Brix desde microorganismos",
+          "tripletas": [
+            [
+              "LacticAcidBacteria",
+              "negativelyInfluences",
+              "BrixDegree"
+            ],
+            [
+              "Microorganism",
+              "negativelyInfluences",
+              "BrixDegree"
+            ],
+            [
+              "Yeast",
+              "negativelyInfluences",
+              "BrixDegree"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema asocia las bacterias lácticas con la formación de ácido láctico.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Relaciones de producción documentadas en el grafo",
+          "tripletas": [
+            [
+              "LacticAcidBacteria",
+              "produces",
+              "LacticAcid"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema asocia las levaduras con la formación de dióxido de carbono, ésteres, etanol y compuestos volátiles.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Relaciones de producción documentadas en el grafo",
+          "tripletas": [
+            [
+              "Yeast",
+              "produces",
+              "CO2"
+            ],
+            [
+              "Yeast",
+              "produces",
+              "Ester"
+            ],
+            [
+              "Yeast",
+              "produces",
+              "Ethanol"
+            ],
+            [
+              "Yeast",
+              "produces",
+              "EthanolProduction"
+            ],
+            [
+              "Yeast",
+              "produces",
+              "VolatileCompound"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema asocia los microorganismos en general con la formación de ácido acético, dióxido de carbono, etanol, ácido láctico y compuestos volátiles.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Relaciones de producción documentadas en el grafo",
+          "tripletas": [
+            [
+              "Microorganism",
+              "produces",
+              "AceticAcid"
+            ],
+            [
+              "Microorganism",
+              "produces",
+              "CO2"
+            ],
+            [
+              "Microorganism",
+              "produces",
+              "EthanolProduction"
+            ],
+            [
+              "Microorganism",
+              "produces",
+              "LacticAcid"
+            ],
+            [
+              "Microorganism",
+              "produces",
+              "VolatileCompound"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona con valores de pH más bajos: ácido acético, ácido láctico, bacterias lácticas, microorganismos en general y ácidos orgánicos.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Relaciones del grafo que llegan al pH",
+          "tripletas": [
+            [
+              "AceticAcid",
+              "negativelyInfluences",
+              "pH"
+            ],
+            [
+              "LacticAcid",
+              "negativelyInfluences",
+              "pH"
+            ],
+            [
+              "LacticAcidBacteria",
+              "negativelyInfluences",
+              "pH"
+            ],
+            [
+              "Microorganism",
+              "negativelyInfluences",
+              "pH"
+            ],
+            [
+              "OrganicAcid",
+              "negativelyInfluences",
+              "pH"
+            ]
+          ]
+        },
+        {
+          "texto": "En fermentaciones SIAF (tipo de proceso configurado en el sistema), el conocimiento del sistema asocia más ácido láctico y compuestos volátiles, y menos ácido acético.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Relaciones del grafo desde el tipo de proceso configurado",
+          "tripletas": [
+            [
+              "SIAFFermentation",
+              "negativelyInfluences",
+              "AceticAcid"
+            ],
+            [
+              "SIAFFermentation",
+              "positivelyInfluences",
+              "LacticAcid"
+            ],
+            [
+              "SIAFFermentation",
+              "positivelyInfluences",
+              "VolatileCompound"
+            ]
+          ]
+        }
+      ],
+      "nota": "Son relaciones documentadas en el conocimiento del sistema (BFPO). No indican que estos microorganismos o compuestos estén presentes o activos en este lote: no hay mediciones microbiológicas ni químicas."
+    },
+    "posibles_implicaciones_sensoriales": {
+      "priorizadas_por_estado": [
+        {
+          "texto": "Por la etapa inicial, con azúcares disponibles, el sistema destaca los compuestos asociados con las levaduras y su relación con la taza: el aroma se relaciona con compuestos volátiles, etanol y ésteres; el perfil aromático se relaciona con compuestos volátiles; el sabor se relaciona con compuestos volátiles y ésteres; la intensidad aromática se relaciona con compuestos volátiles.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "RS-AZUCARES",
+          "tripletas": [
+            [
+              "Ethanol",
+              "positivelyInfluences",
+              "Aroma"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "Aroma"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "AromaticIntensity"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "AromaticProfile"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "Flavor"
+            ],
+            [
+              "Ester",
+              "positivelyInfluences",
+              "Aroma"
+            ],
+            [
+              "Ester",
+              "positivelyInfluences",
+              "Flavor"
+            ]
+          ]
+        }
+      ],
+      "generales_bfpo": [
+        {
+          "texto": "El conocimiento del sistema relaciona defecto acético (avinagrado) con la taza limpia.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "AceticDefect",
+              "negativelyInfluences",
+              "CupClarity"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona defecto vinoso con la taza limpia.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "WinyDefect",
+              "negativelyInfluences",
+              "CupClarity"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona el etanol con el aroma.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "Ethanol",
+              "positivelyInfluences",
+              "Aroma"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona el pH con la acidez en taza.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "pH",
+              "negativelyInfluences",
+              "SensoryAcidity"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona el perfil de ácidos orgánicos con el sabor y la acidez en taza.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "OrganicAcidProfile",
+              "positivelyInfluences",
+              "Flavor"
+            ],
+            [
+              "OrganicAcidProfile",
+              "positivelyInfluences",
+              "SensoryAcidity"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona el ácido acético con la taza limpia y la acidez en taza.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "AceticAcid",
+              "negativelyInfluences",
+              "CupClarity"
+            ],
+            [
+              "AceticAcid",
+              "positivelyInfluences",
+              "SensoryAcidity"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona el ácido láctico con el aroma y la acidez en taza.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "LacticAcid",
+              "positivelyInfluences",
+              "Aroma"
+            ],
+            [
+              "LacticAcid",
+              "positivelyInfluences",
+              "SensoryAcidity"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona los compuestos volátiles con el aroma, la intensidad aromática, el perfil aromático y el sabor.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "Aroma"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "AromaticIntensity"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "AromaticProfile"
+            ],
+            [
+              "VolatileCompound",
+              "positivelyInfluences",
+              "Flavor"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona los ésteres con el aroma y el sabor.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "Ester",
+              "positivelyInfluences",
+              "Aroma"
+            ],
+            [
+              "Ester",
+              "positivelyInfluences",
+              "Flavor"
+            ]
+          ]
+        },
+        {
+          "texto": "El conocimiento del sistema relaciona sobrefermentación con la taza limpia.",
+          "tipo": "ASOCIACION_BFPO",
+          "regla_presentacion": "Asociaciones sensoriales directas disponibles en BFPO",
+          "tripletas": [
+            [
+              "OverfermentedDefect",
+              "negativelyInfluences",
+              "CupClarity"
+            ]
+          ]
+        }
+      ],
+      "nota": "Son relaciones del conocimiento del sistema (BFPO) entre compuestos y atributos de taza. No se midieron en este lote y no indican que el aroma, el sabor o la calidad hayan cambiado."
+    },
+    "aspectos_a_vigilar": [
+      {
+        "texto": "Sin desviaciones. Conviene seguir el pH y los °Brix: el conocimiento del sistema los relaciona con bacterias lácticas, microorganismos en general y levaduras.",
+        "tipo": "ASOCIACION_BFPO",
+        "regla_presentacion": "Seguimiento general en condición normal",
+        "tripletas": [
+          [
+            "LacticAcidBacteria",
+            "negativelyInfluences",
+            "pH"
+          ],
+          [
+            "Microorganism",
+            "negativelyInfluences",
+            "pH"
+          ],
+          [
+            "LacticAcidBacteria",
+            "negativelyInfluences",
+            "BrixDegree"
+          ],
+          [
+            "Microorganism",
+            "negativelyInfluences",
+            "BrixDegree"
+          ],
+          [
+            "Yeast",
+            "negativelyInfluences",
+            "BrixDegree"
+          ]
+        ],
+        "fuente": "ASOCIACION_BFPO"
+      }
+    ],
+    "calidad_de_referencia": {
+      "mostrar_en_resumen_principal": false,
+      "uso": "Trazabilidad y evaluación técnica. No describe la calidad del lote simulado.",
+      "texto_tecnico": "Catación registrada en el ensayo SIAF de referencia (muestra de 0 h, la más cercana a la hora simulada) y puntaje SCA que el simulador interpola de ese mismo ensayo. No son mediciones del lote simulado, no predicen su calidad y no se calculan con el grafo.",
+      "sca_referencia_simulador": {
+        "valor": 82.46,
+        "fuente": "REFERENCIA_EXPERIMENTAL_INTERPOLADA (simulador)"
+      },
+      "catacion_muestra_cercana": {
+        "hora_muestra": 0,
+        "diferencia_h": 3.51,
+        "valores": {
+          "ph_muestra": 5.473,
+          "brix_muestra": 15.633,
+          "fragancia_aroma": 7.63,
+          "sabor": 7.38,
+          "sabor_residual": 7.5,
+          "acidez": 7.5,
+          "cuerpo": 7.38,
+          "uniformidad": 10,
+          "balance": 7.13,
+          "taza_limpia": 10,
+          "dulzor": 10,
+          "puntaje_catador": 7.13,
+          "total_sca": 81.65
+        },
+        "ensayo": {
+          "id": "2DA_FERM_23C",
+          "descripcion": "Fermentación SIAF experimental a 23 °C (datos de Yina)",
+          "archivo": "TODA_LA_INFO_DEL_MONITOREO.xlsx",
+          "hoja": "2DA FERM 23°c",
+          "uso": "Trayectoria de referencia del simulador"
+        },
+        "fuente": "REFERENCIA_EXPERIMENTAL (valores registrados, sin interpolar)"
+      },
+      "escenario_se_aparta_de_la_referencia": false
+    },
+    "trazabilidad": {
+      "fuente_relaciones": "q3_aristas_explicitas (infer=false); solo relaciones directas",
+      "relaciones_usadas": 39,
+      "relaciones_contextuales": [],
+      "reglas_presentacion_aplicadas": [
+        "Etapa inicial: azúcares antes que acidificación",
+        "RS-AZUCARES: la etapa inicial, con azúcares disponibles"
+      ],
+      "tipos_de_fuente": [
+        "DATO_SIMULADO",
+        "ASOCIACION_BFPO",
+        "REGLA_KESTRA",
+        "REFERENCIA_EXPERIMENTAL"
+      ]
+    }
+  },
+  "inferencia": {
+    "consulta": "misma SPARQL (vars.q3_sparql), infer=false vs infer=true",
+    "resultados_sin_inferencia": 0,
+    "resultados_con_inferencia": 0,
+    "resultados_adicionales": 0,
+    "incremento_relativo_pct": null,
+    "m4_aporte_inferencia_pct": null,
+    "adicionales_con_variable_fuera_de_rango": 0,
+    "adicionales_por_mecanismo": [],
+    "control_solo_en_off": [],
+    "adicionales": [],
+    "fuente": "Resultados adicionales con infer=true (reglas del repositorio por verificar)",
+    "pares_off": [],
+    "pares_on": []
+  },
+  "alertas": [],
+  "estado_proceso": "NORMAL",
+  "actuador": {
+    "estado": "INACTIVO",
+    "accion": "NINGUNA"
+  }
+}

@@ -1,0 +1,15 @@
+PREFIX bfpo: <https://w3id.org/bfpo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?entidad ?categoria ?label WHERE {
+  {
+    VALUES ?categoria { bfpo:Microorganism bfpo:ChemicalCompound bfpo:SensoryAttribute
+                        bfpo:SensoryDefect bfpo:QualityEvaluation bfpo:QualityClassification }
+    ?entidad a ?clase .
+    ?clase rdfs:subClassOf* ?categoria .
+  }
+  UNION
+  {
+    ?entidad rdfs:label ?label .
+    FILTER(LANG(?label) = "en" && STRSTARTS(STR(?entidad), "https://w3id.org/bfpo#"))
+  }
+}

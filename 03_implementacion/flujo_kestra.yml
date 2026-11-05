@@ -1,0 +1,1289 @@
+id: cdt_fermentacion
+namespace: cafe
+concurrency:
+  behavior: CANCEL        
+  limit: 1
+
+variables:
+ 
+  influx_token: "nombre_token"
+  influx_url: "http://influxdb:8086"
+  graphdb_repo: "http://host.docker.internal:7200/repositories/bfpo"
+  ditto_thing: "http://host.docker.internal:8080/api/2/things/org.cafe:biorreactor-kg"
+
+  # Criterios operacionales propios de Kestra (no provienen del KG)
+  ph_operacional: "4.0"        # vigilancia de pH (regla Kestra); la detención solo ocurre bajo el umbral crítico del KG (3,6)
+  hora_inicio_riesgo: "48"     # vigilancia por duración. No equivale a fermentación prolongada
+  hora_prolongada: "72"        # fermentación prolongada (misma frontera que la fase temporal)
+
+  q3_sparql: |
+    PREFIX bfpo: <https://w3id.org/bfpo#>
+    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT DISTINCT ?variable ?var_label ?efecto ?efecto_label WHERE {
+      GRAPH <http://w3id.org/bfpo/observacion_actual> {
+        bfpo:ObservacionActual ?propiedad_medicion ?valor .
+      }
+      VALUES (?propiedad_medicion ?variable_rango ?variable) {
+        (bfpo:hasPH bfpo:pHVariable bfpo:pH)
+        (bfpo:hasFermentationTemperature bfpo:TemperatureVariable bfpo:FermentationTemperature)
+      }
+      ?variable_rango bfpo:hasOptimalRangeMin ?minimo ;
+                      bfpo:hasOptimalRangeMax ?maximo .
+      FILTER(xsd:decimal(?valor) < xsd:decimal(?minimo) ||
+             xsd:decimal(?valor) > xsd:decimal(?maximo))
+      ?variable bfpo:influences ?efecto .
+      FILTER EXISTS {
+        ?variable ?relacion_original ?efecto .
+        FILTER(?relacion_original IN (bfpo:positivelyInfluences, bfpo:negativelyInfluences))
+      }
+      OPTIONAL { ?variable rdfs:label ?var_label . FILTER(LANG(?var_label) = "en") }
+      OPTIONAL { ?efecto rdfs:label ?efecto_label . FILTER(LANG(?efecto_label) = "en") }
+    }
+    ORDER BY ?variable ?efecto
+
+# Escenario experimental que se evalúa en esta corrida (E1–E4).
+inputs:
+  - id: escenario
+    type: STRING
+    defaults: "1"
+    validator: "^[1-4]$"
+    description: "Escenario experimental en evaluación (1, 2, 3 o 4)"
+
+triggers:
+  - id: cada_minuto
+    type: io.kestra.plugin.core.trigger.Schedule
+    cron: "* * * * *"          # 1 min real ≈ 1 h de proceso simulado
+    inputs:
+      escenario: "1"   # cambiar a 2, 3 o 4 al pasar a cada escenario
+
+tasks:
+
+  # ─────────────────────────────────────────────────────────────
+  # PASO 1 — Datos de entrada (mismo instante y escenario)
+  # ─────────────────────────────────────────────────────────────
+  - id: leer_influxdb
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.influx_url }}/api/v2/query?org=cafe"
+    method: POST
+    contentType: application/vnd.flux
+    headers:
+      Authorization: "Token {{ vars.influx_token }}"
+      Accept: application/csv
+    body: >-
+      from(bucket: "biorreactor")
+      |> range(start: -10m)
+      |> filter(fn: (r) => r._measurement == "fermentacion")
+      |> filter(fn: (r) => r.escenario == "{{ inputs.escenario }}")
+      |> filter(fn: (r) => r._field == "ph" or r._field == "brix" or r._field == "temperature"
+                        or r._field == "hora_simulada" or r._field == "sca_estimado")
+      |> pivot(rowKey: ["_time", "escenario"], columnKey: ["_field"], valueColumn: "_value")
+      |> group()
+      |> sort(columns: ["_time"], desc: true)
+      |> limit(n: 1)
+
+  - id: parsear_sensores
+    type: io.kestra.plugin.scripts.python.Script
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    inputFiles:
+      influx.csv: "{{ outputs.leer_influxdb.body }}"
+    outputFiles:
+      - sensores.json
+    env:
+      DITTO_THING: "{{ vars.ditto_thing }}"
+      ESCENARIO_ESPERADO: "{{ inputs.escenario }}"
+    script: |
+      import csv, json, base64, os, math, urllib.request
+
+      esperado = os.environ["ESCENARIO_ESPERADO"].strip()
+      CAMPOS = ["ph", "brix", "temperature", "hora_simulada", "sca_estimado"]
+
+      with open("influx.csv", encoding="utf-8") as f:
+          lineas = [l for l in f.read().splitlines() if l.strip() and not l.startswith("#")]
+      if not lineas:
+          raise ValueError(f"InfluxDB no devolvió lecturas del escenario {esperado} en los últimos 10 minutos. "
+                           "¿Está corriendo el simulador con ese ESCENARIO?")
+      lector = csv.DictReader(lineas)
+      columnas = [c for c in (lector.fieldnames or []) if c]
+      print(f"Columnas recibidas de InfluxDB: {columnas}")
+
+      # Verificación del CSV real
+      ausentes = [c for c in ["_time", "escenario"] + CAMPOS if c not in columnas]
+      if ausentes:
+          raise ValueError(f"El CSV de InfluxDB no tiene las columnas esperadas: {ausentes}. Columnas: {columnas}")
+
+     
+      filas = list(lector)
+      if any(r.get("_time") == "_time" for r in filas):
+          raise ValueError("CSV con encabezados repetidos: posible respuesta de múltiples tablas")
+      if any(not r.get("_time") for r in filas):
+          raise ValueError("CSV con filas sin _time: estructura inesperada")
+      if len(filas) != 1:
+          raise ValueError(f"Se esperaba exactamente una lectura (limit 1) y llegaron {len(filas)}.")
+      fila = filas[0]
+
+      
+      escenario = (fila.get("escenario") or "").strip()
+      if escenario != esperado:
+          raise ValueError(f"Lectura del escenario '{escenario}' cuando se evalúa el escenario '{esperado}'. "
+                           "No se puede atribuir el resultado: se detiene la ejecución.")
+
+      
+    
+      valores, faltantes = {}, []
+      for c in CAMPOS:
+          texto = (fila.get(c) or "").strip()
+          try:
+              v = float(texto)
+              if math.isnan(v) or math.isinf(v):
+                  raise ValueError
+              valores[c] = round(v, 3)
+          except ValueError:
+              faltantes.append(c)
+      if faltantes:
+          raise ValueError(f"Lectura incompleta en el instante {fila['_time']}: faltan o no son numéricos {faltantes}")
+
+      datos = {
+          "timestamp_lectura": fila["_time"],
+          "escenario": escenario,
+          "ph": valores["ph"],
+          "brix": valores["brix"],
+          "temp": valores["temperature"],
+          "hora": valores["hora_simulada"],
+          "sca_estimado": valores["sca_estimado"],
+          "verificacion_lectura": {
+              "fila_unica": True,
+              "mismo_instante_para_todos_los_campos": True,
+              "escenario_coincide": True,
+              "ventana_consulta": "últimos 10 min, lectura más reciente del escenario evaluado",
+          },
+      }
+      with open("sensores.json", "w", encoding="utf-8") as f:
+          json.dump(datos, f, ensure_ascii=False)
+
+      payload = json.dumps({
+          "ph": datos["ph"], "brix": datos["brix"],
+          "temperature": datos["temp"], "hora_simulada": datos["hora"],
+          "sca_estimado": datos["sca_estimado"],
+          "escenario": datos["escenario"],
+          "timestamp_lectura": datos["timestamp_lectura"],
+      }).encode("utf-8")
+      creds = base64.b64encode(b"ditto:ditto").decode("utf-8")
+      req = urllib.request.Request(
+          os.environ["DITTO_THING"] + "/features/sensores/properties",
+          data=payload,
+          headers={"Content-Type": "application/json", "Authorization": f"Basic {creds}"},
+          method="PUT",
+      )
+      with urllib.request.urlopen(req) as resp:
+          print(f"Sensores actualizados en Ditto: {resp.status}")
+      print(f"E{datos['escenario']} h={datos['hora']} pH={datos['ph']} Brix={datos['brix']} "
+            f"T={datos['temp']} SCA_est={datos['sca_estimado']} (instante {datos['timestamp_lectura']})")
+
+  - id: insertar_observacion_kg
+    type: io.kestra.plugin.scripts.python.Script
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    inputFiles:
+      sensores.json: "{{ outputs.parsear_sensores.outputFiles['sensores.json'] }}"
+    env:
+      GRAPHDB_REPO: "{{ vars.graphdb_repo }}"
+    script: |
+      import json, os, urllib.request, urllib.error
+
+      with open("sensores.json", encoding="utf-8") as f:
+          d = json.load(f)
+
+     
+      sparql = (
+          "PREFIX bfpo: <https://w3id.org/bfpo#> "
+          "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> "
+          "DROP SILENT GRAPH <http://w3id.org/bfpo/observacion_actual> ; "
+          "INSERT DATA { GRAPH <http://w3id.org/bfpo/observacion_actual> { "
+          f"bfpo:ObservacionActual bfpo:hasPH \"{d['ph']}\"^^xsd:float ; "
+          f"bfpo:hasBrixDegree \"{d['brix']}\"^^xsd:float ; "
+          f"bfpo:hasFermentationTemperature \"{d['temp']}\"^^xsd:float ; "
+          f"bfpo:hasFermentationDuration \"{d['hora']}\"^^xsd:float . "
+          "} }"
+      )
+      req = urllib.request.Request(
+          os.environ["GRAPHDB_REPO"] + "/statements",
+          data=sparql.encode("utf-8"),
+          headers={"Content-Type": "application/sparql-update"},
+          method="POST",
+      )
+      print("SPARQL Update enviado a GraphDB:")
+      print(sparql)
+      try:
+          with urllib.request.urlopen(req) as resp:
+              print(f"Observación insertada: {resp.status}")
+      except urllib.error.HTTPError as err:
+          cuerpo = err.read().decode("utf-8", "replace")
+          raise RuntimeError(
+              f"GraphDB rechazó la actualización (HTTP {err.code} {err.reason}) en {req.full_url}\n"
+              f"Respuesta de GraphDB:\n{cuerpo[:4000]}"
+          ) from None
+      except urllib.error.URLError as err:
+          raise RuntimeError(f"No se pudo conectar con GraphDB en {req.full_url}: {err.reason}") from None
+
+  
+  # PASO 2 - Q1. Estado y condiciones
+
+  - id: q1_estado_proceso
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.graphdb_repo }}?infer=false"
+    method: POST
+    headers:
+      Content-Type: application/sparql-query
+      Accept: application/sparql-results+json
+    body: |
+      PREFIX bfpo: <https://w3id.org/bfpo#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT ?propiedad ?valor ?variable ?variableProceso ?label
+             ?rangoMin ?rangoMax ?umbralMin ?umbralMax WHERE {
+        GRAPH <http://w3id.org/bfpo/observacion_actual> {
+          bfpo:ObservacionActual ?propiedad ?valor .
+        }
+        OPTIONAL {
+          GRAPH <http://w3id.org/bfpo/ontology> { ?propiedad bfpo:measuresVariable ?variable . }
+        }
+        OPTIONAL {
+          VALUES (?propiedad ?variableProceso) {
+            (bfpo:hasPH                       bfpo:pHVariable)
+            (bfpo:hasBrixDegree               bfpo:BrixVariable)
+            (bfpo:hasFermentationTemperature  bfpo:TemperatureVariable)
+          }
+          ?variableProceso a bfpo:ProcessVariable .
+          OPTIONAL { ?variableProceso rdfs:label ?label . FILTER(LANG(?label) = "en") }
+          OPTIONAL { ?variableProceso bfpo:hasOptimalRangeMin ?rangoMin . }
+          OPTIONAL { ?variableProceso bfpo:hasOptimalRangeMax ?rangoMax . }
+          OPTIONAL { ?variableProceso bfpo:hasCriticalThresholdMin ?umbralMin . }
+          OPTIONAL { ?variableProceso bfpo:hasCriticalThresholdMax ?umbralMax . }
+        }
+      }
+      ORDER BY ?propiedad
+
+  
+  # PASO 3 - Q2. Interpretación contextual (solo conocimiento explícito, infer=false)
+
+  - id: q2_rutas_contextuales
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.graphdb_repo }}?infer=false"
+    method: POST
+    headers:
+      Content-Type: application/sparql-query
+      Accept: application/sparql-results+json
+    body: |
+      PREFIX bfpo: <https://w3id.org/bfpo#>
+      SELECT DISTINCT ?variable ?p1 ?n1 ?p2 ?n2 ?p3 ?n3 WHERE {
+        GRAPH <http://w3id.org/bfpo/observacion_actual> {
+          bfpo:ObservacionActual ?propiedad ?valor .
+        }
+        GRAPH <http://w3id.org/bfpo/ontology> {
+          ?propiedad bfpo:measuresVariable ?variable .
+        }
+        GRAPH <http://w3id.org/bfpo/conocimiento_experto> {
+          VALUES ?p1 { bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces bfpo:influences}
+          ?variable ?p1 ?n1 .
+          OPTIONAL {
+            VALUES ?p2 { bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces bfpo:influences}
+            ?n1 ?p2 ?n2 .
+            OPTIONAL {
+              VALUES ?p3 { bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces bfpo:influences}
+              ?n2 ?p3 ?n3 .
+            }
+          }
+        }
+      }
+
+  # Categoría semántica y etiqueta de cada entidad
+ 
+  - id: q2_categorias_entidades
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.graphdb_repo }}?infer=false"
+    method: POST
+    headers:
+      Content-Type: application/sparql-query
+      Accept: application/sparql-results+json
+    body: |
+      PREFIX bfpo: <https://w3id.org/bfpo#>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      SELECT DISTINCT ?entidad ?categoria ?label WHERE {
+        {
+          VALUES ?categoria { bfpo:Microorganism bfpo:ChemicalCompound bfpo:SensoryAttribute
+                              bfpo:SensoryDefect bfpo:QualityEvaluation bfpo:QualityClassification }
+          ?entidad a ?clase .
+          ?clase rdfs:subClassOf* ?categoria .
+        }
+        UNION
+        {
+          ?entidad rdfs:label ?label .
+          FILTER(LANG(?label) = "en" && STRSTARTS(STR(?entidad), "https://w3id.org/bfpo#"))
+        }
+      }
+
+
+  # PASO 4 - Q3. Aporte de inferencia
+
+  - id: q3_inferencia_off
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.graphdb_repo }}?infer=false"
+    method: POST
+    headers:
+      Content-Type: application/sparql-query
+      Accept: application/sparql-results+json
+    body: "{{ vars.q3_sparql }}"
+
+  - id: q3_inferencia_on
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.graphdb_repo }}?infer=true"
+    method: POST
+    headers:
+      Content-Type: application/sparql-query
+      Accept: application/sparql-results+json
+    body: "{{ vars.q3_sparql }}"
+
+ 
+  - id: q3_aristas_explicitas
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ vars.graphdb_repo }}?infer=false"
+    method: POST
+    headers:
+      Content-Type: application/sparql-query
+      Accept: application/sparql-results+json
+    body: |
+      PREFIX bfpo: <https://w3id.org/bfpo#>
+      SELECT DISTINCT ?s ?p ?o WHERE {
+        GRAPH ?g {
+          VALUES ?p { bfpo:influences bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces }
+          ?s ?p ?o .
+        }
+      }
+
+  
+  # PASO 5 — Construcción del contexto para el usuario
+  - id: construir_contexto
+    type: io.kestra.plugin.scripts.python.Script
+    taskRunner:
+      type: io.kestra.plugin.core.runner.Process
+    inputFiles:
+      sensores.json: "{{ outputs.parsear_sensores.outputFiles['sensores.json'] }}"
+      q1.json: "{{ outputs.q1_estado_proceso.body }}"
+      q2_rutas.json: "{{ outputs.q2_rutas_contextuales.body }}"
+      q2_categorias.json: "{{ outputs.q2_categorias_entidades.body }}"
+      q3_off.json: "{{ outputs.q3_inferencia_off.body }}"
+      q3_on.json: "{{ outputs.q3_inferencia_on.body }}"
+      q3_aristas.json: "{{ outputs.q3_aristas_explicitas.body }}"
+    outputFiles:
+      - evidencia_ejecucion.json
+    env:
+      DITTO_THING: "{{ vars.ditto_thing }}"
+      PH_OPERACIONAL: "{{ vars.ph_operacional }}"
+      HORA_INICIO_RIESGO: "{{ vars.hora_inicio_riesgo }}"
+      HORA_PROLONGADA: "{{ vars.hora_prolongada }}"
+      EXECUTION_ID: "{{ execution.id }}"
+      EXECUTION_START: "{{ execution.startDate }}"
+    script: |
+      import json, os, base64, urllib.request, urllib.error
+      from collections import deque, defaultdict
+
+      BFPO = "https://w3id.org/bfpo#"
+      POS, NEG, PROD, INF = (BFPO + "positivelyInfluences", BFPO + "negativelyInfluences",
+                             BFPO + "produces", BFPO + "influences")
+      SIGNO = {POS: 1, NEG: -1, PROD: 1}
+      CORTO = {POS: "positivelyInfluences", NEG: "negativelyInfluences", PROD: "produces", INF: "influences"}
+
+      def cargar(nombre):
+          with open(nombre, encoding="utf-8") as f:
+              return json.load(f)
+
+      def filas(nombre):
+          return cargar(nombre).get("results", {}).get("bindings", [])
+
+      def val(b, k):
+          return b.get(k, {}).get("value")
+
+      def fnum(x):
+          try:
+              return float(x)
+          except (TypeError, ValueError):
+              return None
+
+      def frag(iri):
+          return iri.split("#")[-1] if iri else iri
+
+      d = cargar("sensores.json")
+      ph_operacional = float(os.environ["PH_OPERACIONAL"])
+      hora_inicio_riesgo = float(os.environ["HORA_INICIO_RIESGO"])
+      hora_prolongada = float(os.environ["HORA_PROLONGADA"])
+
+    
+      ETIQ, CATS = {}, defaultdict(set)
+      for b in filas("q2_categorias.json"):
+          e = val(b, "entidad")
+          if val(b, "label"):
+              ETIQ[e] = val(b, "label")
+          if val(b, "categoria"):
+              CATS[e].add(frag(val(b, "categoria")))
+      PRIORIDAD = [("SensoryDefect", "defecto"), ("SensoryAttribute", "atributo"),
+                   ("Microorganism", "microorganismo"), ("ChemicalCompound", "compuesto"),
+                   ("QualityEvaluation", "calidad"), ("QualityClassification", "calidad")]
+      def categoria(e):
+          for clase, nombre in PRIORIDAD:
+              if clase in CATS.get(e, set()):
+                  return nombre
+          return "otro"
+      def etiqueta(e):
+          return ETIQ.get(e) or frag(e)
+
+     
+      VAR_DE_PROP, estado_vars = {}, []
+      for b in filas("q1.json"):
+          prop, var = val(b, "propiedad"), val(b, "variable")
+          valor = fnum(val(b, "valor"))
+          if var:
+              VAR_DE_PROP[prop] = var
+          r = {"min": fnum(val(b, "rangoMin")), "max": fnum(val(b, "rangoMax")),
+               "cmin": fnum(val(b, "umbralMin")), "cmax": fnum(val(b, "umbralMax"))}
+          item = {"propiedad": frag(prop), "variable": frag(var), "variable_label": etiqueta(var) if var else frag(prop),
+                  "valor_medido": valor, "fuente_valor": "MEDIDO"}
+
+          if prop == BFPO + "hasFermentationDuration":
+              # Sin umbral en el KG: se usa la regla temporal de Kestra.
+              vigilancia = valor is not None and valor >= hora_inicio_riesgo
+              prolongada = valor is not None and valor >= hora_prolongada
+              item.update({"criterio": f"vigilancia >= {hora_inicio_riesgo:g} h; prolongada >= {hora_prolongada:g} h",
+                           "fuente_criterio": "KESTRA (criterios temporales operacionales)",
+                           "estado": "PROLONGADA" if prolongada else ("VIGILANCIA" if vigilancia else "EN_CURSO"),
+                           "direccion": 0})
+          elif val(b, "variableProceso"):
+        
+              if not any(x is not None for x in r.values()):
+                  estado = "SIN_CRITERIO"
+              elif r["min"] is not None and r["max"] is not None:
+                  estado = "EN_RANGO"
+              else:
+                  estado = "CRITERIO_INCOMPLETO"
+              direccion = 0
+              if valor is not None:
+                  if r["cmin"] is not None and valor < r["cmin"]:
+                      estado, direccion = "SUPERA_UMBRAL_CRITICO", -1
+                  elif r["cmax"] is not None and valor > r["cmax"]:
+                      estado, direccion = "SUPERA_UMBRAL_CRITICO", 1
+                  elif r["min"] is not None and valor < r["min"]:
+                      estado, direccion = "FUERA_RANGO_OPTIMO", -1
+                  elif r["max"] is not None and valor > r["max"]:
+                      estado, direccion = "FUERA_RANGO_OPTIMO", 1
+              item.update({"variable_proceso": frag(val(b, "variableProceso")),
+                           "rango_optimo": [r["min"], r["max"]],
+                           "umbral_critico_min": r["cmin"], "umbral_critico_max": r["cmax"],
+                           "fuente_criterio": "KG (bfpo:ProcessVariable)",
+                           "estado": estado, "direccion": direccion,
+                           "estado_calculado_por": "KESTRA"})
+          else:
+              item.update({"estado": "SIN_CRITERIO", "direccion": 0,
+                           "fuente_criterio": "ninguna (no hay rango/umbral para esta variable)"})
+          estado_vars.append(item)
+
+      por_prop = {e["propiedad"]: e for e in estado_vars}
+      requeridas = {"hasPH": "umbral_critico_min", "hasBrixDegree": "umbral_critico_min",
+                    "hasFermentationTemperature": "umbral_critico_max"}
+      faltan = [f"{p}.{u}" for p, u in requeridas.items() if por_prop.get(p, {}).get(u) is None]
+      if faltan:
+          raise ValueError(f"Umbrales requeridos no encontrados en el KG: {faltan}")
+
+      ph_i, brix_i, temp_i = por_prop["hasPH"], por_prop["hasBrixDegree"], por_prop["hasFermentationTemperature"]
+      dur_i = por_prop.get("hasFermentationDuration", {})
+      hora = d["hora"]
+
+      if hora < 24:
+          fase = "Fermentación inicial"
+      elif hora < 48:
+          fase = "Fermentación activa"
+      elif hora < hora_prolongada:
+          fase = "Fermentación avanzada"
+      else:
+          fase = "Fermentación prolongada — riesgo de sobrefermentación"
+
+     
+      vars_obs = set(VAR_DE_PROP.values())
+      dir_var = {VAR_DE_PROP[BFPO + e["propiedad"]]: e for e in estado_vars if BFPO + e["propiedad"] in VAR_DE_PROP}
+      TXT_DIR = {1: "alto", -1: "bajo", 0: "en rango"}
+
+      rutas = set()
+      for b in filas("q2_rutas.json"):
+          v = val(b, "variable")
+          tramo = []
+          for i in (1, 2, 3):
+              p, n = val(b, f"p{i}"), val(b, f"n{i}")
+              if not p or not n:
+                  break
+              tramo.append((p, n))
+              rutas.add((v, tuple(tramo)))
+
+      def ruta_valida(v, tramo):
+          nodos = [v] + [n for _, n in tramo]
+          if len(set(nodos)) != len(nodos):
+              return False                          # ciclos
+          return not any(n in vars_obs for _, n in tramo)   
+
+     
+      interpretacion = {k: [] for k in ["microorganismos", "compuestos", "atributos_sensoriales", "defectos", "calidad", "otros"]}
+      CLAVE = {"microorganismo": "microorganismos", "compuesto": "compuestos", "atributo": "atributos_sensoriales",
+               "defecto": "defectos", "calidad": "calidad", "otro": "otros"}
+      por_entidad = defaultdict(list)
+      for v, tramo in sorted(rutas):
+          if not ruta_valida(v, tramo):
+              continue
+          destino = tramo[-1][1]
+          texto = etiqueta(v)
+          for p, n in tramo:
+              texto += f" —{CORTO[p]}→ {etiqueta(n)}"
+          por_entidad[destino].append({"ruta": texto, "saltos": len(tramo),
+              "variable_origen": frag(v), "estado_variable": dir_var.get(v, {}).get("estado", "SIN_CRITERIO")})
+      for e, rr in por_entidad.items():
+          rr.sort(key=lambda r: (r["saltos"], r["ruta"]))
+          cat = categoria(e)
+          interpretacion[CLAVE[cat]].append({
+              "entidad": frag(e), "label": etiqueta(e),
+              "interpretacion": (f"{etiqueta(e)}: entidad alcanzable en el KG desde las variables observadas "
+                                 "(exploración; no es una influencia directa del origen)"),
+              "tipo_evidencia": "RUTA_EXPLORATORIA",
+              "saltos_ruta_mas_corta": rr[0]["saltos"],
+              "ruta_explicativa": rr[0]["ruta"], "rutas": rr,
+              "cantidad_rutas": len(rr), "fuente": "KG (relaciones explícitas; no evidencia de presencia ni actividad)"})
+      for lista in interpretacion.values():
+          lista.sort(key=lambda x: x["label"])
+      defectos_relacionados = [x["label"] for x in interpretacion["defectos"]]
+      atributos_potenciales = [x["label"] for x in interpretacion["atributos_sensoriales"]]
+
+    
+
+      if BFPO + "hasFermentationDuration" not in VAR_DE_PROP:
+          raise ValueError("hasFermentationDuration sin bfpo:measuresVariable en el KG: "
+                           "la duración no puede identificarse como variable de origen.")
+      ESTADOS_KG = {"FUERA_RANGO_OPTIMO", "SUPERA_UMBRAL_CRITICO"}
+      ESTADOS_KESTRA = {"PROLONGADA"}
+      ALCANCE_Q3 = {BFPO + "pH", BFPO + "FermentationTemperature"}   # mismas variables que vars.q3_sparql
+      CAT_ORDEN = ["variable_proceso", "microorganismo", "compuesto", "calidad", "defecto", "atributo", "otro"]
+      LECTURA = {
+          POS: "El KG documenta variación en el mismo sentido entre origen y destino.",
+          NEG: "El KG documenta variación inversa entre origen y destino.",
+          PROD: "El KG documenta que el origen produce el destino.",
+          "https://w3id.org/bfpo#influences": "El KG documenta una relación entre origen y destino sin una dirección de cambio definida.",
+      }
+      NOTA_RELACION = ("Dependencia general documentada en el KG; no implica beneficio, perjuicio, "
+                       "causalidad demostrada ni presencia medida del destino.")
+      TXT_DESV = {1: "por encima del rango", -1: "por debajo del rango"}
+
+      def activacion(v):
+          e = dir_var.get(v)
+          if not e:
+              return None
+          if e["estado"] in ESTADOS_KG:
+              r = e.get("rango_optimo") or [None, None]
+              crit = f"rango óptimo BFPO [{r[0]}, {r[1]}]"
+              if e.get("umbral_critico_min") is not None:
+                  crit += f"; umbral crítico mínimo {e['umbral_critico_min']}"
+              if e.get("umbral_critico_max") is not None:
+                  crit += f"; umbral crítico máximo {e['umbral_critico_max']}"
+              procedencia = "KG_BFPO"
+          elif e["estado"] in ESTADOS_KESTRA:
+              crit = e.get("criterio", "")
+              procedencia = "REGLA_OPERACIONAL_KESTRA"
+          else:
+              return None
+          return {"variable": frag(v), "variable_label": e["variable_label"],
+                  "valor_medido": e["valor_medido"], "estado": e["estado"],
+                  "desviacion": TXT_DESV.get(e.get("direccion", 0), ""),
+                  "criterio_activacion": crit, "procedencia_criterio": procedencia,
+                  "fuente_criterio": e["fuente_criterio"]}
+
+      origenes_activos = [a for a in (activacion(v) for v in sorted(dir_var)) if a]
+      pares_q3_on = {(val(b, "variable"), val(b, "efecto")) for b in filas("q3_on.json")}
+      directas = sorted({(v, tramo[0][0], tramo[0][1]) for v, tramo in rutas})   # primer salto de Q2
+
+      relaciones_directas = []
+      for v, p, n in directas:
+          act = activacion(v)
+          if act is None:
+              continue
+          if v not in ALCANCE_Q3:
+              corr_q3 = "FUERA_DEL_ALCANCE_Q3"
+          else:
+              corr_q3 = "PRESENTE_EN_Q3" if (v, n) in pares_q3_on else "AUSENTE_EN_Q3"
+          item = {
+              "id": f"{frag(v)}__{CORTO[p]}__{frag(n)}",
+              "tipo_evidencia": "RELACION_DIRECTA_KG",
+              "tripleta": {"sujeto": frag(v), "propiedad": CORTO[p], "objeto": frag(n),
+                           "grafo": "conocimiento_experto"},
+              "saltos": 1,
+              "variable_origen": act["variable"], "variable_origen_label": act["variable_label"],
+              "valor_origen": act["valor_medido"], "estado_origen": act["estado"],
+              "desviacion_origen": act["desviacion"],
+              "criterio_activacion": act["criterio_activacion"],
+              "procedencia_criterio": act["procedencia_criterio"],
+              "destino": frag(n), "destino_label": etiqueta(n),
+              "categoria_destino": "variable_proceso" if n in vars_obs else categoria(n),
+              "relacion_texto": f"{etiqueta(v)} —{CORTO[p]}→ {etiqueta(n)}",
+              "lectura": LECTURA[p], "nota": NOTA_RELACION,
+              "correspondencia_q3": corr_q3,
+          }
+          if n in dir_var:
+              item["destino_medido"] = {
+                  "valor": dir_var[n]["valor_medido"], "estado": dir_var[n]["estado"], "fuente": "MEDIDO",
+                  "nota": "Dato de la misma observación; no confirma ni explica la relación."}
+          relaciones_directas.append(item)
+      relaciones_directas.sort(key=lambda x: (x["variable_origen"], CAT_ORDEN.index(x["categoria_destino"]),
+                                              x["destino_label"]))
+
+      def compat(cat):   
+          return [{"id": x["id"], "entidad": x["destino"], "label": x["destino_label"],
+                   "variable_origen": x["variable_origen"], "estado_variable": x["estado_origen"],
+                   "ruta_explicativa": x["relacion_texto"], "tipo_evidencia": x["tipo_evidencia"]}
+                  for x in relaciones_directas if x["categoria_destino"] == cat]
+      defectos_contextuales = compat("defecto")
+      atributos_contextuales = compat("atributo")
+
+      def defectos_desde(variable):
+          return list(dict.fromkeys(x["destino_label"] for x in relaciones_directas
+                                    if x["categoria_destino"] == "defecto" and x["variable_origen"] == variable))
+      
+
+
+     
+      def pares(nombre):
+          s = set()
+          for b in filas(nombre):
+              v, e = val(b, "variable"), val(b, "efecto")
+              if v and e:
+                  s.add((v, e))
+                  ETIQ.setdefault(v, val(b, "var_label") or frag(v))
+                  ETIQ.setdefault(e, val(b, "efecto_label") or frag(e))
+          return s
+      q3_off, q3_on = pares("q3_off.json"), pares("q3_on.json")
+      adicionales = sorted(q3_on - q3_off)
+      solo_off = sorted(q3_off - q3_on)          
+
+      ady, explicitas = defaultdict(list), defaultdict(set)
+      for b in filas("q3_aristas.json"):
+          s, p, o = val(b, "s"), val(b, "p"), val(b, "o")
+          ady[s].append((p, o))
+          explicitas[(s, o)].add(p)
+
+      def camino(origen, destino, max_saltos=6):
+          cola, visto = deque([(origen, [])]), {origen}
+          while cola:
+              nodo, cam = cola.popleft()
+              if len(cam) >= max_saltos:
+                  continue
+              for p, o in ady.get(nodo, []):
+                  if o == destino:
+                      return cam + [(p, o)]
+                  if o not in visto:
+                      visto.add(o)
+                      cola.append((o, cam + [(p, o)]))
+          return None
+
+      def derivacion(v, e):
+        
+          directas = explicitas.get((v, e), set()) - {INF}
+          if directas:
+              p = sorted(directas)[0]
+              return {
+                  "mecanismo": "SUBPROPERTY",
+                  "explicacion": (f"{etiqueta(v)} {CORTO[p]} {etiqueta(e)} "
+                                  f"⇒ {etiqueta(v)} influences {etiqueta(e)}"),
+                  "saltos": 1,
+              }
+          return {"mecanismo": "NO_VERIFICADO", "explicacion": "", "saltos": None}
+
+      condicion_var = {v: e["estado"] for v, e in dir_var.items()}
+      lista_adicionales = []
+      for v, e in adicionales:
+          der = derivacion(v, e)
+          lista_adicionales.append({
+              "variable": frag(v), "variable_label": etiqueta(v),
+              "efecto": frag(e), "efecto_label": etiqueta(e),
+              "categoria_efecto": categoria(e),
+              "condicion_variable": condicion_var.get(v, "SIN_CRITERIO"),
+              "variable_fuera_de_rango": dir_var.get(v, {}).get("estado") in ("FUERA_RANGO_OPTIMO", "SUPERA_UMBRAL_CRITICO"),
+              **der,
+          })
+     
+      MECANISMOS = {
+          "SUBPROPERTY": "SUBPROPERTY", 
+          "NO_VERIFICADO": "NO_VERIFICADO",
+      }
+      for x in lista_adicionales:
+          x["mecanismo_codigo"] = MECANISMOS.get(x["mecanismo"], "OTRO")
+      por_mecanismo = defaultdict(int)
+      for x in lista_adicionales:
+          por_mecanismo[x["mecanismo_codigo"]] += 1
+      n_off, n_on = len(q3_off), len(q3_on)
+      inferencia = {
+          "consulta": "misma SPARQL (vars.q3_sparql), infer=false vs infer=true",
+          "resultados_sin_inferencia": n_off,
+          "resultados_con_inferencia": n_on,
+          "resultados_adicionales": len(adicionales),
+          "incremento_relativo_pct": round(100 * len(adicionales) / n_off, 1) if n_off else None,
+          "m4_aporte_inferencia_pct": round(100 * len(adicionales) / n_on, 1) if n_on else None,
+          "adicionales_con_variable_fuera_de_rango": sum(1 for x in lista_adicionales if x["variable_fuera_de_rango"]),
+          "adicionales_por_mecanismo": [
+              {"codigo": c, "descripcion": next(t for t, k in MECANISMOS.items() if k == c) if c != "OTRO" else "otro",
+               "cantidad": n} for c, n in sorted(por_mecanismo.items())],
+          "control_solo_en_off": [[frag(v), frag(e)] for v, e in solo_off],
+          "adicionales": lista_adicionales,
+          "fuente": "Resultados adicionales con infer=true (reglas del repositorio por verificar)",
+      }
+
+     
+      alertas = []
+      actuador_accion, actuador_estado = "NINGUNA", "INACTIVO"
+      ph, brix, temp = d["ph"], d["brix"], d["temp"]
+
+      # pH en dos niveles: vigilancia (regla Kestra, pH < 4,0) y crítico (umbral del KG, pH < 3,6).
+      # Solo el nivel crítico activa la detención simulada.
+      ph_critico = ph_i["umbral_critico_min"]
+      if ph_critico is not None and ph < ph_critico:
+          alertas.append({
+              "variable": "pH", "valor_actual": ph, "nivel": "CRITICO",
+              "criterio": f"pH < {ph_critico} (umbral crítico KG)",
+              "rango_optimo": ph_i["rango_optimo"],
+              "descripcion": f"pH={ph} por debajo del umbral crítico {ph_critico}",
+              "defectos_potencialmente_relacionados": defectos_desde("pH"),
+          })
+          actuador_accion, actuador_estado = "DETENER_FERMENTACION_SIMULADA", "ACTIVO"
+      elif ph < ph_operacional:
+          alertas.append({
+              "variable": "pH", "valor_actual": ph, "nivel": "ALERTA",
+              "criterio": f"pH < {ph_operacional} (vigilancia, regla KESTRA) | umbral crítico KG = {ph_critico}",
+              "rango_optimo": ph_i["rango_optimo"],
+              "descripcion": f"pH={ph} en vigilancia: por debajo de {ph_operacional}, sin alcanzar el umbral crítico {ph_critico}",
+              "defectos_potencialmente_relacionados": defectos_desde("pH"),
+          })
+      if temp > temp_i["umbral_critico_max"]:
+          alertas.append({
+              "variable": "Temperatura", "valor_actual": temp, "nivel": "ALERTA",
+              "criterio": f"T > {temp_i['umbral_critico_max']} °C (umbral crítico KG)",
+              "rango_optimo": temp_i["rango_optimo"],
+              "descripcion": f"Temperatura={temp} °C por encima del umbral {temp_i['umbral_critico_max']} °C",
+          })
+          if actuador_estado == "INACTIVO":
+              actuador_accion, actuador_estado = "ACTIVAR_ENFRIAMIENTO_SIMULADO", "ACTIVO"
+      if brix < brix_i["umbral_critico_min"]:
+          alertas.append({
+              "variable": "Brix", "valor_actual": brix, "nivel": "ALERTA",
+              "criterio": f"°Brix < {brix_i['umbral_critico_min']} (umbral crítico KG)",
+              "rango_optimo": brix_i["rango_optimo"],
+              "descripcion": f"°Brix={brix} por debajo del umbral {brix_i['umbral_critico_min']}",
+          })
+      
+      atencion = list(dict.fromkeys(
+          e["variable_label"] for e in estado_vars
+          if e["estado"] in ("FUERA_RANGO_OPTIMO", "SUPERA_UMBRAL_CRITICO", "VIGILANCIA", "PROLONGADA")
+      ))
+
+      niveles = [a["nivel"] for a in alertas]
+      if "CRITICO" in niveles:
+          estado_general = "CRITICO"
+          recomendacion = "Revisar la detención simulada: el pH alcanzó el umbral crítico del KG"
+      elif "ALERTA" in niveles:
+          estado_general = "ALERTA"
+          recomendacion = "Monitoreo intensivo: una o más variables superan su umbral crítico"
+      else:
+          estado_general = "NORMAL"
+          recomendacion = "Continuar el proceso" if not atencion else "Continuar el proceso y vigilar las variables señaladas"
+
+      partes = [f"{fase} (hora {hora:g})."]
+      if alertas:
+          partes.append("Alertas: " + "; ".join(a["descripcion"] for a in alertas) + ".")
+      elif atencion:
+          partes.append("Sin alertas; requieren atención: " + ", ".join(atencion) + ".")
+      else:
+          partes.append("No se detectaron alertas según los criterios operacionales disponibles.")
+      defectos_resumen = [x for x in relaciones_directas if x["categoria_destino"] == "defecto"]
+      if defectos_resumen:
+          partes.append("Defectos con relación directa en el KG con las variables señaladas (sin evidencia de ocurrencia): "
+                        + ", ".join(f"{x['destino_label']} ({x['variable_origen_label']})" for x in defectos_resumen) + ".")
+      resumen = " ".join(partes)
+
+      # Resumen interpretativo 
+    
+      TIPO_PROCESO = BFPO + "SIAFFermentation"      
+      GENERICOS = {BFPO + "Microorganism"}           
+      MARGEN_PH_INFERIOR = 0.2                      
+      NOMBRE_ES = {
+          "pH": "el pH", "BrixDegree": "los °Brix", "FermentationTemperature": "la temperatura",
+          "FermentationDuration": "la duración", "Yeast": "las levaduras",
+          "LacticAcidBacteria": "las bacterias lácticas", "Microorganism": "los microorganismos en general",
+          "LacticAcid": "el ácido láctico", "AceticAcid": "el ácido acético", "OrganicAcid": "los ácidos orgánicos",
+          "OrganicAcidProfile": "el perfil de ácidos orgánicos", "Ester": "los ésteres", "Ethanol": "el etanol",
+          "EthanolProduction": "la producción de etanol", "CO2": "el dióxido de carbono",
+          "VolatileCompound": "los compuestos volátiles", "Aroma": "el aroma",
+          "AromaticIntensity": "la intensidad aromática", "AromaticProfile": "el perfil aromático",
+          "Flavor": "el sabor", "SensoryAcidity": "la acidez en taza", "CupClarity": "la taza limpia",
+          "SCAScore": "el puntaje SCA", "AceticDefect": "defecto acético (avinagrado)",
+          "OverfermentedDefect": "sobrefermentación", "WinyDefect": "defecto vinoso",
+          "SIAFFermentation": "la fermentación SIAF",
+      }
+      NOMBRE_VAR = {"hasPH": ("pH", ""), "hasBrixDegree": ("°Brix", ""),
+                    "hasFermentationTemperature": ("Temperatura", " °C"), "hasFermentationDuration": ("Duración", " h")}
+    
+      REF_ENSAYO = {"id": "2DA_FERM_23C", "descripcion": "Fermentación SIAF experimental a 23 °C (datos de Yina)",
+                    "archivo": "TODA_LA_INFO_DEL_MONITOREO.xlsx", "hoja": "2DA FERM 23°c",
+                    "uso": "Trayectoria de referencia del simulador"}
+      REF_COLS = ["ph_muestra", "brix_muestra", "fragancia_aroma", "sabor", "sabor_residual", "acidez", "cuerpo",
+                  "uniformidad", "balance", "taza_limpia", "dulzor", "puntaje_catador", "total_sca"]
+      REF_CATACION = {
+          0:  [5.473, 15.633, 7.63, 7.38, 7.5, 7.5, 7.38, 10, 7.13, 10, 10, 7.13, 81.65],
+          12: [4.519, 14.4, 7.88, 7.63, 7.63, 7.63, 7.63, 10, 7.5, 10, 10, 7.5, 83.4],
+          24: [4.415, 13.833, 8, 7.75, 7.75, 7.75, 7.75, 10, 7.63, 10, 10, 7.63, 84.26],
+          36: [4.063, 13.4, 8.13, 7.88, 7.88, 7.88, 7.88, 10, 7.88, 10, 10, 7.75, 85.28],
+          48: [4.126, 12.333, 8.25, 8, 8, 8, 8, 10, 8, 10, 10, 7.88, 86.13],
+          60: [4.066, 9.733, 8.13, 7.88, 7.88, 7.88, 7.88, 10, 7.88, 10, 10, 7.75, 85.28],
+          72: [3.92, 9.3, 7.88, 7.75, 7.75, 7.75, 7.75, 10, 7.63, 10, 10, 7.63, 84.14],
+          84: [3.854, 9.233, 7.75, 7.5, 7.5, 7.5, 7.5, 10, 7.5, 10, 10, 7.5, 82.75],
+          96: [3.848, 8.9, 7.5, 7.25, 7.25, 7.25, 7.25, 10, 7.25, 10, 10, 7.25, 81.0],
+      }
+
+      def nom(e):
+          return NOMBRE_ES.get(frag(e), etiqueta(e))
+      def nom_s(e):   
+          n = nom(e)
+          for a in ("el ", "la ", "los ", "las "):
+              if n.startswith(a):
+                  return n[len(a):]
+          return n
+      def num(x, dec=1):
+          return f"{x:.{dec}f}".replace(".", ",")
+      def lista_es(xs):
+          xs = list(dict.fromkeys(xs))
+          return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " y " + xs[-1]
+      def tri(t):
+          return [frag(t[0]), CORTO[t[1]], frag(t[2])]
+
+      KG = sorted({(val(b, "s"), val(b, "p"), val(b, "o")) for b in filas("q3_aristas.json")
+                   if val(b, "p") in (POS, NEG, PROD)})
+      def entrantes(o):
+          return [t for t in KG if t[2] == o]
+      def salientes(s):
+          return [t for t in KG if t[0] == s]
+      MICROBIOS = {s for s, p, o in KG if p == PROD}
+      V = {k: VAR_DE_PROP.get(BFPO + p) for k, p in [("ph", "hasPH"), ("brix", "hasBrixDegree"),
+                                                       ("temp", "hasFermentationTemperature"),
+                                                       ("dur", "hasFermentationDuration")]}
+      ATENCION = {"FUERA_RANGO_OPTIMO", "SUPERA_UMBRAL_CRITICO", "VIGILANCIA", "PROLONGADA"}
+      DESV = {"FUERA_RANGO_OPTIMO", "SUPERA_UMBRAL_CRITICO"}
+      def est(k):
+          return dir_var.get(V[k], {}).get("estado", "SIN_CRITERIO")
+      etapa = ("inicial" if hora < 24 else "activa" if hora < 48 else
+               "avanzada" if hora < hora_prolongada else "prolongada")
+      reglas_aplicadas = []
+      usadas = set()
+
+      def punto(texto, triples, regla, tipo="ASOCIACION_BFPO"):
+          usadas.update(triples)
+          return {"texto": texto, "tipo": tipo, "regla_presentacion": regla,
+                  "tripletas": [tri(t) for t in triples]}
+
+    
+      def frase_var(nombre, e, unidad, dec, verbo="está"):
+          v, r = e["valor_medido"], e.get("rango_optimo") or [None, None]
+          base = f"{nombre} ({num(v, dec)}{unidad})"
+          if e["estado"] in DESV:
+              lado = "por debajo" if e.get("direccion") == -1 else "por encima"
+              return f"{base} {verbo} {lado} del rango configurado ({num(r[0], 1)}–{num(r[1], 1)}{unidad})"
+          return f"{base} {verbo} dentro del rango configurado"
+      frases = [frase_var("El pH", ph_i, "", 2), frase_var("los azúcares", brix_i, " °Brix", 1, "están"),
+                frase_var("la temperatura", temp_i, " °C", 1)]
+      texto_estado = (f"La fermentación está en etapa {etapa} ({num(hora)} h desde el inicio). "
+                      + frases[0] + "; " + frases[1] + "; " + frases[2] + ".")
+      if est("dur") == "VIGILANCIA":
+          texto_estado += f" La duración superó las {hora_inicio_riesgo:g} h de vigilancia."
+      elif est("dur") == "PROLONGADA":
+          texto_estado += f" La duración superó las {hora_prolongada:g} h (fermentación prolongada)."
+      texto_estado += " Es una sola lectura: no indica si los valores están subiendo o bajando."
+      estado_del_proceso = {
+          "texto": texto_estado, "etapa": etapa,
+          "fuentes": ["DATO_SIMULADO", "RANGOS_BFPO (estado calculado por Kestra)", "REGLA_KESTRA (etapa por tiempo)"],
+          "datos": {"hora": hora, "ph": d["ph"], "brix": d["brix"], "temperatura": d["temp"],
+                    "estados": {k: est(k) for k in V}},
+      }
+
+     
+      bloques = {}
+      inc_ph = [t for t in entrantes(V["ph"]) if t[0] not in vars_obs and t[0] != TIPO_PROCESO]
+      if inc_ph:
+          bajos = [t for t in inc_ph if t[1] == NEG]
+          altos = [t for t in inc_ph if t[1] == POS]
+          partes = []
+          if bajos:
+              partes.append(f"El conocimiento del sistema relaciona con valores de pH más bajos: {lista_es([nom_s(t[0]) for t in bajos])}.")
+          if altos:
+              partes.append(f"El conocimiento del sistema relaciona con valores de pH más altos: {lista_es([nom_s(t[0]) for t in altos])}.")
+          bloques["acidificacion"] = punto(" ".join(partes), inc_ph, "Relaciones del grafo que llegan al pH")
+      inc_bx = [t for t in entrantes(V["brix"]) if t[0] in MICROBIOS]
+      if inc_bx:
+          bloques["azucares"] = punto("El conocimiento del sistema relaciona con el consumo de azúcares (menos °Brix): "
+                                      f"{lista_es([nom_s(t[0]) for t in inc_bx])}.", inc_bx,
+                                      "Relaciones del grafo que llegan a los °Brix desde microorganismos")
+      productores = [m for m in sorted(MICROBIOS, key=nom) if any(t[0] == m for t in inc_ph + inc_bx)]
+      prods = []
+      for m in productores:
+          ts = [t for t in salientes(m) if t[1] == PROD]
+          if ts:
+              nombres = [("etanol" if frag(t[2]) == "EthanolProduction" else nom_s(t[2])) for t in ts]
+              prods.append(punto(f"El conocimiento del sistema asocia {nom(m)} con la formación de {lista_es(nombres)}.",
+                                 ts, "Relaciones de producción documentadas en el grafo"))
+      siaf = [t for t in salientes(TIPO_PROCESO) if t[2] not in vars_obs and categoria(t[2]) != "calidad"]
+      if siaf:
+          mas = [nom_s(t[2]) for t in siaf if t[1] == POS]
+          menos = [nom_s(t[2]) for t in siaf if t[1] == NEG]
+          txt = "En fermentaciones SIAF (tipo de proceso configurado en el sistema), el conocimiento del sistema asocia"
+          txt += (f" más {lista_es(mas)}" if mas else "") + (", y" if mas and menos else "")
+          txt += (f" menos {lista_es(menos)}" if menos else "") + "."
+          bloques["siaf"] = punto(txt, siaf, "Relaciones del grafo desde el tipo de proceso configurado")
+      if est("dur") in ("VIGILANCIA", "PROLONGADA"):
+          dur_c = [t for t in salientes(V["dur"]) if t[2] not in vars_obs
+                   and categoria(t[2]) not in ("defecto", "calidad") and t[1] == POS]
+          if dur_c:
+              bloques["duracion"] = punto("El conocimiento del sistema asocia un mayor tiempo de fermentación con más "
+                                          f"{lista_es([nom_s(t[2]) for t in dur_c])}.", dur_c,
+                                          "Duración en vigilancia o prolongada")
+      if est("temp") in DESV:
+          t_mic = [t for t in salientes(V["temp"]) if t[2] in MICROBIOS or t[2] in GENERICOS]
+          if t_mic:
+              bloques["temperatura"] = punto("El conocimiento del sistema documenta una relación entre la temperatura y "
+                                             f"{lista_es([nom_s(t[2]) for t in t_mic])} (sin distinguir grupos). "
+                                             "Esta relación no indica actividad microbiana en este lote.",
+                                             t_mic, "Temperatura fuera de rango")
+      orden = []
+      if est("ph") in DESV:
+          orden.append("acidificacion"); reglas_aplicadas.append("pH fuera de rango: primero la acidificación")
+      if est("brix") in DESV:
+          orden.append("azucares"); reglas_aplicadas.append("°Brix fuera de rango: primero los azúcares")
+      if est("temp") in DESV:
+          orden.append("temperatura"); reglas_aplicadas.append("Temperatura fuera de rango: primero la temperatura")
+      if etapa in ("inicial", "activa"):
+          orden += ["azucares", "produccion", "acidificacion"]
+          reglas_aplicadas.append(f"Etapa {etapa}: azúcares antes que acidificación")
+      else:
+          orden += ["acidificacion", "produccion", "azucares"]
+          reglas_aplicadas.append(f"Etapa {etapa}: acidificación antes que azúcares")
+      orden += ["duracion", "siaf"]
+      puntos_mb = []
+      for clave in dict.fromkeys(orden):
+          if clave == "produccion":
+              puntos_mb += prods
+          elif clave in bloques:
+              puntos_mb.append(bloques[clave])
+      contexto_mb = {
+          "criterio_prioridad": "; ".join(reglas_aplicadas) + " (reglas de presentación de Kestra, no conocimiento del grafo).",
+          "puntos": puntos_mb,
+          "nota": ("Son relaciones documentadas en el conocimiento del sistema (BFPO). No indican que estos microorganismos o compuestos "
+                   "estén presentes o activos en este lote: no hay mediciones microbiológicas ni químicas."),
+      }
+
+     
+      SENS = {o for s, p, o in KG if categoria(o) == "atributo"}
+      def enlaces_sens(compuestos):
+          return [t for c in sorted(compuestos, key=nom) for t in salientes(c) if t[2] in SENS]
+      def frase_por_atributo(ts):
+          por_attr = defaultdict(lambda: {POS: [], NEG: []})
+          for s, p, o in ts:
+              por_attr[o][p if p in (POS, NEG) else POS].append(nom_s(s))
+          partes = []
+          for a in sorted(por_attr, key=nom):
+              if por_attr[a][POS]:
+                  partes.append(f"{nom(a)} se relaciona con {lista_es(sorted(por_attr[a][POS]))}")
+              if por_attr[a][NEG]:
+                  partes.append(f"{nom(a)} se relaciona de forma inversa con {lista_es(sorted(por_attr[a][NEG]))}")
+          return "; ".join(partes)
+      fuentes_sens = sorted({s for s, p, o in KG if o in SENS and categoria(s) != "atributo"}, key=nom)
+      generales = []
+      for c in fuentes_sens:
+          ts = [t for t in salientes(c) if t[2] in SENS]
+          if ts:
+              generales.append(punto(f"El conocimiento del sistema relaciona {nom(c)} con {lista_es([nom(t[2]) for t in ts])}.", ts,
+                                     "Asociaciones sensoriales directas disponibles en BFPO"))
+      acidos = {t[0] for t in inc_ph if t[0] not in MICROBIOS}
+      levaduras = {m for m in MICROBIOS if m not in GENERICOS
+                   and any(t[0] == V["brix"] and t[2] == m for t in KG) and any(t[0] == m and t[2] == V["brix"] for t in KG)}
+      reglas_sens = []
+      if est("ph") in DESV or etapa in ("avanzada", "prolongada"):
+          reglas_sens.append(("RS-ACIDOS", "el pH por debajo del rango" if est("ph") in DESV else f"la etapa {etapa}",
+                              "los ácidos relacionados con el pH", acidos))
+      if etapa in ("inicial", "activa") and est("brix") not in DESV:
+          reglas_sens.append(("RS-AZUCARES", f"la etapa {etapa}, con azúcares disponibles",
+                              f"los compuestos asociados con {lista_es([nom(m) for m in levaduras])}",
+                              {t[2] for m in levaduras for t in salientes(m) if t[1] == PROD}))
+      if est("temp") in DESV:
+          reglas_sens.append(("RS-TEMPERATURA", "la temperatura por encima del rango",
+                              "los compuestos asociados con los microorganismos en general",
+                              {t[2] for m in MICROBIOS if any(t[0] == V["temp"] and t[2] == m for t in KG)
+                               for t in salientes(m) if t[1] == PROD}))
+      if est("dur") in ("VIGILANCIA", "PROLONGADA"):
+          reglas_sens.append(("RS-DURACION", "la duración en vigilancia",
+                              "los compuestos asociados con un mayor tiempo de fermentación",
+                              {t[2] for t in salientes(V["dur"]) if t[1] == POS and t[2] not in vars_obs
+                               and categoria(t[2]) not in ("defecto", "calidad")}))
+      priorizadas, ya = [], set()
+      for rid, motivo, origen, comps in reglas_sens:
+          ts = enlaces_sens(set(comps) - ya)
+          ya |= set(comps)
+          if ts:
+              priorizadas.append(punto(f"Por {motivo}, el sistema destaca {origen} y su relación con la taza: "
+                                       f"{frase_por_atributo(ts)}.", ts, rid))
+              reglas_aplicadas.append(f"{rid}: {motivo}")
+      implicaciones_sensoriales = {
+          "priorizadas_por_estado": priorizadas,
+          "generales_bfpo": generales,
+          "nota": ("Son relaciones del conocimiento del sistema (BFPO) entre compuestos y atributos de taza. No se midieron en este lote "
+                   "y no indican que el aroma, el sabor o la calidad hayan cambiado."),
+      }
+
+      
+      aspectos = []
+      for e in estado_vars:
+          if e["estado"] in DESV:
+              n_, u_ = NOMBRE_VAR.get(e["propiedad"], (e["variable_label"], ""))
+              if e["estado"] == "SUPERA_UMBRAL_CRITICO":
+                  lado = "por debajo" if e.get("direccion") == -1 else "por encima"
+                  crit = e.get("umbral_critico_min") if e.get("direccion") == -1 else e.get("umbral_critico_max")
+                  txt_var = f"{n_}: {num(e['valor_medido'], 2)}{u_}, {lado} del umbral crítico ({num(crit, 1)}{u_})."
+              else:
+                  txt_var = f"{n_}: {num(e['valor_medido'], 2)}{u_}, fuera del rango configurado."
+              aspectos.append({"texto": txt_var,
+                               "fuente": "RANGOS_BFPO (estado calculado por Kestra)"})
+      r_ph, v_ph = ph_i.get("rango_optimo") or [None, None], ph_i.get("valor_medido")
+      if ph_i.get("estado") == "EN_RANGO" and r_ph[0] is not None and v_ph is not None and v_ph - r_ph[0] <= MARGEN_PH_INFERIOR:
+          aspectos.append({"texto": f"pH ({num(v_ph, 2)}) cerca del límite inferior del rango configurado ({num(r_ph[0], 1)}): conviene vigilarlo.",
+                           "fuente": f"REGLA_KESTRA (vigilancia preventiva, margen {MARGEN_PH_INFERIOR})"})
+      if est("dur") in ("VIGILANCIA", "PROLONGADA"):
+          lim = hora_prolongada if est("dur") == "PROLONGADA" else hora_inicio_riesgo
+          aspectos.append({"texto": f"Duración de {num(hora)} h: superó las {lim:g} h"
+                                    + (" (fermentación prolongada)." if est("dur") == "PROLONGADA" else " de vigilancia."),
+                           "fuente": "REGLA_KESTRA (criterio temporal)"})
+      TXT_EST = {"FUERA_RANGO_OPTIMO": "fuera de rango", "SUPERA_UMBRAL_CRITICO": "por encima del umbral",
+                 "VIGILANCIA": "en vigilancia", "PROLONGADA": "prolongada", "EN_RANGO": "en rango",
+                 "EN_CURSO": "en curso"}
+      def txt_estado(e):
+          if e["estado"] == "SUPERA_UMBRAL_CRITICO":
+              return "por debajo del umbral crítico" if e.get("direccion") == -1 else "por encima del umbral crítico"
+          return TXT_EST.get(e["estado"], e["estado"])
+      for df in sorted({o for s, p, o in KG if categoria(o) == "defecto"}, key=nom):
+          orig = [t for t in entrantes(df) if t[0] in vars_obs]
+          if any(dir_var.get(t[0], {}).get("estado") in ATENCION for t in orig):
+              det = lista_es([f"{nom(t[0])} (hoy {txt_estado(dir_var[t[0]])})" for t in orig])
+              aspectos.append({**punto(f"Asociación a vigilar ({nom(df)}): el conocimiento del sistema documenta una relación con {det}. "
+                                       "El sistema no ha detectado este defecto ni ha calculado su probabilidad.",
+                                       orig, "Defecto con al menos un origen del grafo fuera de rango o en vigilancia"),
+                               "fuente": "ASOCIACION_BFPO"})
+      if alertas:
+          aspectos.append({"texto": ("Hay 1 alerta operacional activa" if len(alertas) == 1
+                                     else f"Hay {len(alertas)} alertas operacionales activas") + "; ver la sección de alertas.",
+                           "fuente": "REGLA_KESTRA"})
+      if not any(e["estado"] in DESV for e in estado_vars) and not alertas:
+          seguimiento = [t for t in inc_ph + inc_bx if t[0] in MICROBIOS]
+          aspectos.append({**punto("Sin desviaciones. Conviene seguir el pH y los °Brix: el conocimiento del sistema los relaciona con "
+                                   f"{lista_es([nom_s(t[0]) for t in seguimiento])}.", seguimiento,
+                                   "Seguimiento general en condición normal"),
+                           "fuente": "ASOCIACION_BFPO"})
+
+     
+      t_ref = min(REF_CATACION, key=lambda t: (abs(t - hora), t))
+      calidad_de_referencia = {
+          "mostrar_en_resumen_principal": False,
+          "uso": "Trazabilidad y evaluación técnica. No describe la calidad del lote simulado.",
+          "texto_tecnico": (f"Catación registrada en el ensayo SIAF de referencia (muestra de {t_ref} h, la más cercana "
+                            f"a la hora simulada) y puntaje SCA que el simulador interpola de ese mismo ensayo. "
+                            "No son mediciones del lote simulado, no predicen su calidad y no se calculan con el grafo."),
+          "sca_referencia_simulador": {"valor": d["sca_estimado"],
+                                       "fuente": "REFERENCIA_EXPERIMENTAL_INTERPOLADA (simulador)"},
+          "catacion_muestra_cercana": {"hora_muestra": t_ref, "diferencia_h": round(abs(t_ref - hora), 2),
+                                       "valores": dict(zip(REF_COLS, REF_CATACION[t_ref])), "ensayo": REF_ENSAYO,
+                                       "fuente": "REFERENCIA_EXPERIMENTAL (valores registrados, sin interpolar)"},
+          "escenario_se_aparta_de_la_referencia": bool(origenes_activos),
+      }
+
+      
+      texto_para_caficultor = {
+          "como_esta_la_fermentacion": texto_estado,
+          "que_relaciona_el_sistema_con_este_momento": [p["texto"] for p in puntos_mb[:4]],
+          "relacion_con_la_taza": [p["texto"] for p in priorizadas],
+          "que_vigilar": [a["texto"] for a in aspectos],
+          "ten_en_cuenta": ("Estas son relaciones documentadas en el conocimiento del sistema. No son mediciones de "
+                            "microorganismos, compuestos ni sabor de este lote, ni una predicción de su calidad."),
+      }
+
+      
+      def cap(s):
+          return s[:1].upper() + s[1:] if s else s
+      atributos_info = []
+      for p_ in priorizadas:                      # asociaciones sensoriales priorizadas por estado y etapa
+          for s_, r_, o_ in p_["tripletas"]:
+              n_ = cap(nom_s(BFPO + o_))
+              if n_ not in atributos_info:
+                  atributos_info.append(n_)
+      microorganismos_info = []
+      for p_ in puntos_mb:                        # asociaciones microbiológicas y bioquímicas priorizadas
+          for s_, r_, o_ in p_["tripletas"]:
+              for e_ in (BFPO + s_, BFPO + o_):
+                  if (e_ in MICROBIOS or categoria(e_) == "microorganismo") and e_ not in GENERICOS:
+                      n_ = cap(nom_s(e_))
+                      if n_ not in microorganismos_info:
+                          microorganismos_info.append(n_)
+      defectos_info = []
+      for x in relaciones_directas:               # solo relaciones contextuales (variables desviadas)
+          if x["categoria_destino"] == "defecto":
+              n_ = cap(nom_s(BFPO + x["destino"]))
+              if n_ not in defectos_info:
+                  defectos_info.append(n_)
+      info_usuario = {
+          "atributos_sensoriales": atributos_info,
+          "microorganismos_relacionados": microorganismos_info,
+          "defectos_a_vigilar": defectos_info,
+          "nota_sensorial": "Asociaciones potenciales, no atributos medidos.",
+          "nota_sca": "Valor estimado",
+          "nota_defectos": "Asociaciones potenciales, no defectos confirmados.",
+          "fuentes": {
+              "atributos_sensoriales": "posibles_implicaciones_sensoriales.priorizadas_por_estado (ASOCIACION_BFPO)",
+              "microorganismos_relacionados": "contexto_microbiologico_bioquimico.puntos (ASOCIACION_BFPO; excluye clases genéricas)",
+              "defectos_a_vigilar": "interpretacion_contextual.relaciones_directas (categoria_destino = defecto)",
+          },
+      }
+
+      resumen_interpretativo = {
+          "advertencia_general": ("Este resumen combina las lecturas del biorreactor (simuladas) con relaciones "
+                                  "documentadas en el conocimiento del sistema (BFPO). Esas relaciones son "
+                                  "posibilidades conocidas, no mediciones de este lote ni causas comprobadas."),
+          "texto_para_caficultor": texto_para_caficultor,
+          "info_usuario": info_usuario,
+          "estado_del_proceso": estado_del_proceso,
+          "contexto_microbiologico_bioquimico": contexto_mb,
+          "posibles_implicaciones_sensoriales": implicaciones_sensoriales,
+          "aspectos_a_vigilar": aspectos,
+          "calidad_de_referencia": calidad_de_referencia,
+          "trazabilidad": {
+              "fuente_relaciones": "q3_aristas_explicitas (infer=false); solo relaciones directas",
+              "relaciones_usadas": len(usadas),
+              "relaciones_contextuales": [x["id"] for x in relaciones_directas],
+              "reglas_presentacion_aplicadas": reglas_aplicadas,
+              "tipos_de_fuente": ["DATO_SIMULADO", "ASOCIACION_BFPO", "REGLA_KESTRA", "REFERENCIA_EXPERIMENTAL"],
+          },
+      }
+
+      # Salida para la interfaz 
+      contexto = {
+         
+          "estado_proceso": estado_general,
+          "fase_proceso": f"{fase} - hora {hora:g}",
+          "resumen": resumen,
+          "recomendacion": recomendacion,
+          "alertas": alertas,
+          "defectos_en_riesgo": [],
+          "defectos_relacionados_kg": list(dict.fromkeys(x["label"] for x in defectos_contextuales)),
+          "atributos_sensoriales_potenciales": list(dict.fromkeys(x["label"] for x in atributos_contextuales)),
+          "ph_evaluado": ph, "brix_evaluado": brix, "temp_evaluada": temp, "hora_proceso": hora,
+          
+          "escenario": d["escenario"],
+          "timestamp_lectura": d["timestamp_lectura"],
+          "observaciones": {
+              "fuente": "MEDIDO (simulador → InfluxDB)",
+              "ph": ph, "brix": brix, "temperatura": temp, "hora": hora,
+              "sca_estimado": d["sca_estimado"],
+              "nota_sca": "Valor estimado por el simulador a partir de la trayectoria de referencia; no es una medición.",
+          },
+          "estado_actual": {
+              "pregunta": "¿Qué está pasando?",
+              "fase": {"valor": fase, "fuente": "KESTRA (regla temporal; no es inferencia OWL)"},
+              "variables": estado_vars,
+              "requieren_atencion": atencion,
+          },
+          "interpretacion": {
+              "pregunta": "¿Qué más relaciona el KG? (exploración bajo demanda)",
+              "tipo": "EXPLORACION_KG",
+              "advertencia": ("Entidades alcanzables en el KG desde las variables observadas, por rutas de 1 a 3 "
+                              "saltos e independientemente de su estado. Una ruta indirecta no es una influencia "
+                              "del origen sobre el destino final. No indican que un microorganismo esté activo, "
+                              "que un compuesto esté presente ni que un defecto se haya producido."),
+              
+              **{k: [{c: x[c] for c in x if c != "rutas"} for x in lista] for k, lista in interpretacion.items()},
+              "total_entidades_relacionadas": len(por_entidad),
+          },
+          "interpretacion_contextual": {
+              "pregunta": "¿Qué significa?",
+              "criterio": ("Relaciones explícitas directas (un salto) del KG desde variables con estado desviado "
+                           "según BFPO, o con duración PROLONGADA según la regla operacional de Kestra"),
+              "tipo_evidencia": "RELACION_DIRECTA_KG",
+              "origenes_activos": origenes_activos,
+              "relaciones_directas": relaciones_directas,
+              "total_relaciones_directas": len(relaciones_directas),
+              "conteo_por_categoria": {c: sum(1 for x in relaciones_directas if x["categoria_destino"] == c)
+                                       for c in CAT_ORDEN},
+              "defectos_potenciales": defectos_contextuales,
+              "atributos_sensoriales_relacionados": atributos_contextuales,
+              "rutas_exploratorias": "Ver la sección interpretacion (rutas de 1 a 3 saltos; solo exploración).",
+              "advertencia": ("Relaciones documentadas en el KG para las variables señaladas. No predicen efectos, "
+                              "no demuestran causalidad ni indican presencia de defectos o cambios sensoriales."),
+          },
+          "resumen_interpretativo": resumen_interpretativo,
+          "inferencia": {
+              "pregunta": "¿Qué aporta el razonamiento?",
+              **{k: v for k, v in inferencia.items() if k != "adicionales"},
+              "ejemplos": lista_adicionales[:15],
+          },
+      }
+
+      evidencia = {
+          "execution_id": os.environ.get("EXECUTION_ID"),
+          "execution_start": os.environ.get("EXECUTION_START"),
+          "escenario": d["escenario"], "hora": hora, "timestamp_lectura": d["timestamp_lectura"],
+          "observaciones": contexto["observaciones"],
+          "estado_actual": contexto["estado_actual"],
+          "interpretacion": {**contexto["interpretacion"], **interpretacion},   # incluye todas las rutas
+          "interpretacion_contextual": contexto["interpretacion_contextual"],
+          "resumen_interpretativo": contexto["resumen_interpretativo"],
+          "inferencia": {**inferencia,
+                         "pares_off": [[frag(v), frag(e)] for v, e in sorted(q3_off)],
+                         "pares_on": [[frag(v), frag(e)] for v, e in sorted(q3_on)]},
+          "alertas": alertas, "estado_proceso": estado_general,
+          "actuador": {"estado": actuador_estado, "accion": actuador_accion},
+      }
+      with open("evidencia_ejecucion.json", "w", encoding="utf-8") as f:
+          json.dump(evidencia, f, ensure_ascii=False, indent=2)
+
+      payload_actuador = {"estado": actuador_estado, "accion": actuador_accion, "modo": "SIMULADO",
+                          "timestamp": os.environ.get("EXECUTION_START")}
+
+      creds = base64.b64encode(b"ditto:ditto").decode("utf-8")
+      def put(feature, cuerpo):
+          datos_json = json.dumps(cuerpo, ensure_ascii=False).encode("utf-8")
+          print(f"Ditto {feature}: enviando {len(datos_json) / 1024:.1f} KB")
+          req = urllib.request.Request(
+              os.environ["DITTO_THING"] + f"/features/{feature}/properties",
+              data=datos_json,
+              headers={"Content-Type": "application/json", "Authorization": f"Basic {creds}"},
+              method="PUT")
+          try:
+              with urllib.request.urlopen(req) as resp:
+                  print(f"Ditto {feature}: {resp.status}")
+          except urllib.error.HTTPError as err:
+              raise RuntimeError(f"Ditto rechazó '{feature}' (HTTP {err.code}): "
+                                 f"{err.read().decode('utf-8', 'replace')}") from None
+      put("contexto_kg", contexto)
+      put("actuador", payload_actuador)
+
+      print(f"Escenario {d['escenario']} | hora {hora:g} | estado {estado_general}")
+      for e in estado_vars:
+          print(f"  Q1 {e['variable_label']}: {e['valor_medido']} → {e['estado']} [{e['fuente_criterio']}]")
+      print(f"  Q2 defectos relacionados (no riesgo demostrado): {defectos_relacionados}")
+      print(f"  Q2 microorganismos relacionados: {[x['interpretacion'] for x in interpretacion['microorganismos']]}")
+      print(f"  Q3 OFF={n_off} ON={n_on} adicionales={len(adicionales)} por mecanismo={dict(por_mecanismo)}")
+      if solo_off:
+          print(f"  ADVERTENCIA: {len(solo_off)} resultados aparecen solo con infer=false")
+      print(f"  Actuador: {actuador_accion} ({actuador_estado})")
+
+  

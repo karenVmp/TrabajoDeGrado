@@ -1,0 +1,2288 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://w3id.org/bfpo#"
+     xml:base="https://w3id.org/bfpo"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:mod="http://www.isibang.ac.in/ns/mod#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:bfpo="https://w3id.org/bfpo#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#">
+    <owl:Ontology rdf:about="https://w3id.org/bfpo">
+        <owl:versionIRI rdf:resource="https://w3id.org/bfpo/1.3"/>
+        <dc:creator>Karen Viviana Muñoz Portilla</dc:creator>
+        <dc:date>2026-11</dc:date>
+        <dc:description xml:lang="es">Ontología de dominio que formaliza el conocimiento del bioproceso de fermentación en biorreactor. Desarrollada como parte del trabajo de grado en la Universidad del Cauca.</dc:description>
+        <dc:language>es</dc:language>
+        <dc:publisher>Universidad del Cauca</dc:publisher>
+        <dc:rights>CC BY 4.0</dc:rights>
+        <dc:title>Bioreactor Fermentation Process Ontology</dc:title>
+        <mod:acronym>BFPO</mod:acronym>
+        <mod:formalityLevel>OWL 2 DL</mod:formalityLevel>
+        <mod:naturalLanguage>es (etiquetas) , en (identificadores técnicos)</mod:naturalLanguage>
+        <mod:noOfClasses>75</mod:noOfClasses>
+        <mod:noOfProperties rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">87</mod:noOfProperties>
+        <mod:ontologyType>Domain Ontology</mod:ontologyType>
+        <mod:status>stable</mod:status>
+        <rdfs:comment xml:lang="es">Bioreactor Fermentation Process Ontology - Ontología del bioproceso de fermentación en biorreactor</rdfs:comment>
+        <owl:priorVersion rdf:resource="https://w3id.org/bfpo/1.2"/>
+        <owl:versionInfo>1.3</owl:versionInfo>
+        <skos:changeNote xml:lang="es">Versión 1.3: Nueva clase ProcessObservation, subclase de sosa:Observation; ProcessVariable pasa a ser subclase de sosa:ObservableProperty (antes de Bioreactor); Bioreactor, subclase de sosa:FeatureOfInterest; Dominio de 14 propiedades de medición: ProcessObservation (antes Bioreactor); Dominio de rangos óptimos y umbrales críticos: ProcessVariable; Axioma AllDisjointClasses entre 14 clases principales.</skos:changeNote>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/creator -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/creator"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/date -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/date"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/description -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/description"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/language -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/language"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/publisher -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/publisher"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/rights -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/rights"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/title -->
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/title"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#acronym -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#acronym"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#formalityLevel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#formalityLevel"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#naturalLanguage -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#naturalLanguage"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#noOfClasses -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#noOfClasses"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#noOfProperties -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#noOfProperties"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#ontologyType -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#ontologyType"/>
+    
+
+
+    <!-- http://www.isibang.ac.in/ns/mod#status -->
+
+    <owl:AnnotationProperty rdf:about="http://www.isibang.ac.in/ns/mod#status"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#altLabel -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#altLabel"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#changeNote -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#changeNote"/>
+    
+
+
+    <!-- http://www.w3.org/2004/02/skos/core#definition -->
+
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2004/02/skos/core#definition"/>
+    
+
+
+    <!-- https://w3id.org/bfpo#measuresVariable -->
+
+    <owl:AnnotationProperty rdf:about="https://w3id.org/bfpo#measuresVariable">
+        <rdfs:comment xml:lang="en">Relates a data property used to record an observation to the process variable it measures.</rdfs:comment>
+        <rdfs:label xml:lang="en">measures variable</rdfs:label>
+    </owl:AnnotationProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/hasFeatureOfInterest -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/sosa/hasFeatureOfInterest"/>
+    
+
+
+    <!-- https://w3id.org/bfpo#conditions -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#conditions">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment xml:lang="es">Relación de condicionamiento entre dos conceptos del bioproceso.</rdfs:comment>
+        <rdfs:label xml:lang="es">Condiciona</rdfs:label>
+        <rdfs:label xml:lang="en">Conditions</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasObservation -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#hasObservation">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:comment xml:lang="es">Vincula el biorreactor con las observaciones registradas por los sensores del sistema.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has observation</rdfs:label>
+        <rdfs:label xml:lang="es">Tiene observación</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
+        <rdfs:seeAlso rdf:resource="https://saref.etsi.org/core/Observation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasPart -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#hasPart">
+        <owl:inverseOf rdf:resource="https://w3id.org/bfpo#isPartOf"/>
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment xml:lang="es">Indica que un concepto contiene a otro como componente.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has part</rdfs:label>
+        <rdfs:label xml:lang="es">Tiene como parte</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/prov#hadMember"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasQualityClassification -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#hasQualityClassification">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SCAScore"/>
+        <rdfs:range rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+        <rdfs:comment xml:lang="es">Vincula el puntaje SCA con su categoría de calidad correspondiente.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has quality classification</rdfs:label>
+        <rdfs:label xml:lang="es">Tiene clasificación de calidad</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hosts -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#hosts">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="https://w3id.org/bfpo#FermentationSystemConfiguration"/>
+        <rdfs:comment xml:lang="es">Vincula el biorreactor con la configuración del proceso que aloja.</rdfs:comment>
+        <rdfs:label xml:lang="es">Aloja proceso</rdfs:label>
+        <rdfs:label xml:lang="en">Hosts</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#influences -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#influences">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment xml:lang="es">Relación general de influencia o dependencia documentada entre conceptos del bioproceso. Puede representar una relación directa o una dependencia indirecta inferida; no especifica el sentido de la variación ni demuestra por sí sola causalidad biológica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Influences</rdfs:label>
+        <rdfs:label xml:lang="es">Influye en</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#isPartOf -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#isPartOf">
+        <rdfs:domain rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+        <rdfs:comment xml:lang="es">Relación mereológica. Indica que un concepto es componente de otro.</rdfs:comment>
+        <rdfs:label xml:lang="es">Es parte de</rdfs:label>
+        <rdfs:label xml:lang="en">Is part of</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/prov#hadMember"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#negativelyInfluences -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#negativelyInfluences">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/bfpo#influences"/>
+        <rdfs:comment xml:lang="es">Relación de influencia inversa: dentro de las condiciones documentadas, un aumento del sujeto se asocia con una disminución del objeto y una disminución del sujeto con un aumento del objeto. No expresa perjuicio ni deterioro de calidad.</rdfs:comment>
+        <rdfs:label xml:lang="es">Influye negativamente en</rdfs:label>
+        <rdfs:label xml:lang="en">negatively influences</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#participatesIn -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#participatesIn">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:range rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:comment xml:lang="es">Indica que un microorganismo participa activamente en el bioproceso de fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Participa en</rdfs:label>
+        <rdfs:label xml:lang="en">Participates in</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#positivelyInfluences -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#positivelyInfluences">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/bfpo#influences"/>
+        <rdfs:comment xml:lang="es">Relación de influencia directa: dentro de las condiciones documentadas, un aumento del sujeto se asocia con un aumento del objeto y una disminución del sujeto con una disminución del objeto. No expresa beneficio ni calidad favorable.</rdfs:comment>
+        <rdfs:label xml:lang="es">Influye positivamente en</rdfs:label>
+        <rdfs:label xml:lang="en">positively influences</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#producedBy -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#producedBy">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:range rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:comment xml:lang="es">Indica qué microorganismo produce un compuesto químico durante el bioproceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Produced by</rdfs:label>
+        <rdfs:label xml:lang="es">Producido por</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#produces -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#produces">
+        <rdfs:subPropertyOf rdf:resource="https://w3id.org/bfpo#influences"/>
+        <rdfs:comment xml:lang="en">Relates a biological agent or process to a compound or product it generates during  fermentation. SubProperty of influences.</rdfs:comment>
+        <rdfs:label xml:lang="es">Produce</rdfs:label>
+        <rdfs:label xml:lang="en">produces</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#wasGeneratedBy -->
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/bfpo#wasGeneratedBy">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:range rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:comment xml:lang="es">Trazabilidad del compuesto químico. Indica en qué biorreactor fue generado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Fue generado por</rdfs:label>
+        <rdfs:label xml:lang="en">Was generated by</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAcidityQuality -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAcidityQuality">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryAcidity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Calidad percibida de la acidez del producto.</rdfs:comment>
+        <rdfs:label xml:lang="es">Calidad de acidez</rdfs:label>
+        <rdfs:label xml:lang="en">Has acidity quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAftertasteDuration -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAftertasteDuration">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Aftertaste"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Duración del sabor residual post-deglución.</rdfs:comment>
+        <rdfs:label xml:lang="es">Duración del retrogusto</rdfs:label>
+        <rdfs:label xml:lang="en">Has aftertaste duration</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAftertasteQuality -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAftertasteQuality">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Aftertaste"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Calidad del retrogusto percibido.</rdfs:comment>
+        <rdfs:label xml:lang="es">Calidad del retrogusto</rdfs:label>
+        <rdfs:label xml:lang="en">Has aftertaste quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAgitationFrequency -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAgitationFrequency">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Descripción de la frecuencia de agitación aplicada al biorreactor.</rdfs:comment>
+        <rdfs:label xml:lang="es">Frecuencia de agitación</rdfs:label>
+        <rdfs:label xml:lang="en">Has agitation frequency</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAgitationSpeed -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAgitationSpeed">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Velocidad de agitación mecánica del biorreactor expresada en rpm.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has agitation speed</rdfs:label>
+        <rdfs:label xml:lang="es">Velocidad de agitación</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000054"/>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAgitationType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAgitationType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Patrón de agitación del biorreactor.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has agitation type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de agitación</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAirFlow -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAirFlow">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Flujo de aire suministrado al biorreactor</rdfs:comment>
+        <rdfs:label xml:lang="es">Flujo de aireación</rdfs:label>
+        <rdfs:label xml:lang="en">Has air flow</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000055"/>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAltitude -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAltitude">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Altura sobre el nivel del mar donde se ubica el biorreactor. En metros.</rdfs:comment>
+        <rdfs:label xml:lang="es">Altitud</rdfs:label>
+        <rdfs:label xml:lang="en">Has altitude</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://qudt.org/vocab/quantitykind/Altitude"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAmbientHumidity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAmbientHumidity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Humedad relativa del ambiente externo al biorreactor expresada en porcentaje.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has ambient humidity</rdfs:label>
+        <rdfs:label xml:lang="es">Humedad del ambiente</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAmbientTemperature -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAmbientTemperature">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Temperatura del entorno externo al biorreactor.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has ambient temperature</rdfs:label>
+        <rdfs:label xml:lang="es">Temperatura ambiente</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAnaerobicThreshold -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAnaerobicThreshold">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Valor de oxígeno disuelto por debajo del cual se considera condición anaeróbica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has anaerobic threshold</rdfs:label>
+        <rdfs:label xml:lang="es">Umbral anaeróbico</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasAromaticIntensity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasAromaticIntensity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#AromaticProfile"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Fuerza del perfil aromático percibido en el producto.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has aromatic intensity</rdfs:label>
+        <rdfs:label xml:lang="es">Intensidad aromática</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasBalanceQuality -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasBalanceQuality">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Balance"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Calidad de la armonía entre los atributos sensoriales.</rdfs:comment>
+        <rdfs:label xml:lang="es">Calidad del balance</rdfs:label>
+        <rdfs:label xml:lang="en">Has balance quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasBitternessQuality -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasBitternessQuality">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bitterness"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Calidad del amargor percibido en el producto.</rdfs:comment>
+        <rdfs:label xml:lang="es">Calidad del amargor</rdfs:label>
+        <rdfs:label xml:lang="en">Has bitterness quality</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasBrixDegree -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasBrixDegree">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Sólidos solubles totales del sustrato. Indicador de azúcares disponibles para fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Grados Brix</rdfs:label>
+        <rdfs:label xml:lang="en">Has Brix degree</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+        <measuresVariable rdf:resource="https://w3id.org/bfpo#BrixDegree"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasChocolateType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasChocolateType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ChocolateNote"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Subcategoría de la nota chocolate.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has chocolate type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de nota chocolate</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasConcentration -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasConcentration">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Concentración de un compuesto químico en el medio fermentativo expresada en g/L.</rdfs:comment>
+        <rdfs:label xml:lang="es">Concentración</rdfs:label>
+        <rdfs:label xml:lang="en">Has concentration</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://qudt.org/vocab/quantitykind/Concentration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasCriticalThresholdMax -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasCriticalThresholdMax">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="en">Maximum critical threshold for a process variable. Values above this threshold indicate a critical condition requiring operational intervention. 
+Based on: Peñuela-Martínez et al. (2023), Cruz-O&apos;Byrne et al. (2020).</rdfs:comment>
+        <rdfs:isDefinedBy>https://w3id.org/bfpo#</rdfs:isDefinedBy>
+        <rdfs:label xml:lang="es">Umbral crítico máximo</rdfs:label>
+        <rdfs:label xml:lang="en">has critical threshold maximum</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasCriticalThresholdMin -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasCriticalThresholdMin">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="en">Minimum critical threshold for a process variable. Values below this threshold indicate a critical condition requiring operational intervention. 
+Based on: Cruz-O&apos;Byrne et al. (2020), Ferreira et al. (2023), 
+Peñuela-Martínez et al. (2023).</rdfs:comment>
+        <rdfs:isDefinedBy>https://w3id.org/bfpo#</rdfs:isDefinedBy>
+        <rdfs:label xml:lang="es">Umbral crítico mínimo</rdfs:label>
+        <rdfs:label xml:lang="en">has critical threshold minimum</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasCupProfile -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasCupProfile">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryAnalysis"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Conjunto de características organolépticas del producto evaluado en taza.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has cup profile</rdfs:label>
+        <rdfs:label xml:lang="es">Perfil en taza</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDefectIntensity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDefectIntensity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryDefect"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Intensidad del defecto sensorial detectado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has defect intensity</rdfs:label>
+        <rdfs:label xml:lang="es">Intensidad del defecto</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDefectPresence -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDefectPresence">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryDefect"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment xml:lang="es">ndica si un defecto sensorial específico está presente en el producto evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has defect presence</rdfs:label>
+        <rdfs:label xml:lang="es">Presencia de defecto</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDefectThreshold -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDefectThreshold">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#AceticAcid"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Nivel crítico de concentración de ácido acético a partir del cual se genera defecto avinado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has defect threshold</rdfs:label>
+        <rdfs:label xml:lang="es">Umbral de defecto</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDissolvedOxygen -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDissolvedOxygen">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Concentración de oxígeno en solución.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has dissolved oxygen</rdfs:label>
+        <rdfs:label xml:lang="es">Oxígeno disuelto (DO)</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000039"/>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+        <skos:altLabel xml:lang="en">DO</skos:altLabel>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDominantAcidType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDominantAcidType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryAcidity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Tipo de ácido que domina la percepción de acidez.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has dominant acid type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de ácido predominante</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDryBeansRatio -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDryBeansRatio">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Porcentaje de sustrato sin defectos físicos visibles.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has dry beans ratio</rdfs:label>
+        <rdfs:label xml:lang="es">Proporción de granos secos</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasDryMatterContent -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasDryMatterContent">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Porcentaje de sólidos totales en el sustrato fermentativo.</rdfs:comment>
+        <rdfs:label xml:lang="es">Contenido de materia seca</rdfs:label>
+        <rdfs:label xml:lang="en">Has dry matter content</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasEnzymeType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasEnzymeType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Tipo de enzima producida por microorganismos durante el proceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has enzyme type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de enzima</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFermentationDuration -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFermentationDuration">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Duración total del proceso fermentativo expresada en horas.</rdfs:comment>
+        <rdfs:label xml:lang="es">Duración de fermentación</rdfs:label>
+        <rdfs:label xml:lang="en">Has fermentation duration</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://qudt.org/vocab/quantitykind/Time"/>
+        <measuresVariable rdf:resource="https://w3id.org/bfpo#FermentationDuration"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFermentationTemperature -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFermentationTemperature">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Temperatura dentro de la masa fermentativa. Sensor DS18B20 disponible en el biorreactor.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has fermentation temperature</rdfs:label>
+        <rdfs:label xml:lang="es">Temperatura de fermentación</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000041"/>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+        <measuresVariable rdf:resource="https://w3id.org/bfpo#FermentationTemperature"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFermentativeCapacity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFermentativeCapacity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Yeast"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment xml:lang="es">Indica si la levadura produce etanol y CO2 durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Capacidad fermentativa</rdfs:label>
+        <rdfs:label xml:lang="en">Has fermentative capacity</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFinalMoistureContent -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFinalMoistureContent">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Humedad del sustrato al finalizar la fermentación y antes del secado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has final moisture content</rdfs:label>
+        <rdfs:label xml:lang="es">Porcentaje de humedad final</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFlavorNoteDevelopment -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFlavorNoteDevelopment">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Aparición y evolución de características aromáticas específicas durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Desarrollo de notas</rdfs:label>
+        <rdfs:label xml:lang="en">Has flavor note development</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFlowerType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFlowerType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#FloralNote"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#short"/>
+        <rdfs:comment xml:lang="es">Subcategoría de la nota floral.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has flower type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de nota floral</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasFruitType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasFruitType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#FruityNote"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Subcategoría de la nota frutal.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has fruit type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de nota frutal</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasGramType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasGramType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bacterium"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Clasificación bacteriana por tinción de Gram.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has Gram type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo Gram</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasInitialState -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasInitialState">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Estado del sustrato al inicio del proceso.</rdfs:comment>
+        <rdfs:label xml:lang="es">Estado inicial del sustrato</rdfs:label>
+        <rdfs:label xml:lang="en">Has initial state</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMaxScore -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMaxScore">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Puntaje máximo de la categoría de calidad en la escala SCA.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has maximum score</rdfs:label>
+        <rdfs:label xml:lang="es">Puntaje máximo del rango</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMeasuredActivity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMeasuredActivity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Actividad enzimática específica expresada en unidades por mililitro.</rdfs:comment>
+        <rdfs:label xml:lang="es">Actividad enzimática medida</rdfs:label>
+        <rdfs:label xml:lang="en">Has measured activity</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMeasuredValue -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMeasuredValue">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Valor numérico medido por sensor en un momento específico del proceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has measured value</rdfs:label>
+        <rdfs:label xml:lang="es">Valor medido</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/hasSimpleResult"/>
+        <rdfs:seeAlso rdf:resource="https://saref.etsi.org/core/Measurement"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMicrobialConcentration -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMicrobialConcentration">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Concentración de microorganismos expresada en unidades formadoras de colonia por mililitro.</rdfs:comment>
+        <rdfs:label xml:lang="es">Concentración microbiana</rdfs:label>
+        <rdfs:label xml:lang="en">Has microbial concentration</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMinScore -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMinScore">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Puntaje mínimo de la categoría de calidad en la escala SCA.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has minimum score</rdfs:label>
+        <rdfs:label xml:lang="es">Puntaje mínimo del rango</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMinimumRequiredScore -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMinimumRequiredScore">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#HighQuality"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Puntaje mínimo para clasificar un producto como alta calidad según el protocolo SCA.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has minimum required score</rdfs:label>
+        <rdfs:label xml:lang="es">Puntaje mínimo requerido</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasMucilagePercentage -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasMucilagePercentage">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Porcentaje de mucílago retenido en el sustrato al inicio del proceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has mucilage percentage</rdfs:label>
+        <rdfs:label xml:lang="es">Porcentaje de mucílago</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasNoteCount -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasNoteCount">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#AromaticComplexity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment xml:lang="es">Número de notas aromáticas identificadas en el perfil del producto evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Cantidad de notas aromáticas</rdfs:label>
+        <rdfs:label xml:lang="en">Has note count</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasNoteIntensity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasNoteIntensity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Intensidad de una nota aromática específica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has note intensity</rdfs:label>
+        <rdfs:label xml:lang="es">Intensidad de nota</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasNotePresence -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasNotePresence">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment xml:lang="es">Indica si una nota aromática específica está presente en el perfil del producto.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has note presence</rdfs:label>
+        <rdfs:label xml:lang="es">Presencia de nota</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasOptimalPH -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasOptimalPH">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">pH óptimo de crecimiento de la especie microbiológica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has optimal pH</rdfs:label>
+        <rdfs:label xml:lang="es">pH óptimo</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasOptimalRangeMax -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasOptimalRangeMax">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Límite superior del rango óptimo de la variable en el proceso de fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has optimal range maximum</rdfs:label>
+        <rdfs:label xml:lang="es">Rango óptimo máximo</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasOptimalRangeMin -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasOptimalRangeMin">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Límite inferior del rango óptimo de la variable en el proceso de fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has optimal range minimum</rdfs:label>
+        <rdfs:label xml:lang="es">Rango óptimo mínimo</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasOptimalTemperature -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasOptimalTemperature">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Temperatura óptima de crecimiento de la especie microbiológica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has optimal temperature</rdfs:label>
+        <rdfs:label xml:lang="es">Temperatura óptima</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasOrganicAcidProfile -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasOrganicAcidProfile">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Análisis completo de ácidos orgánicos presentes en el producto final de la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has organic acid profile</rdfs:label>
+        <rdfs:label xml:lang="es">Perfil de ácidos orgánicos</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000074"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasOxygenTolerance -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasOxygenTolerance">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bacterium"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Requerimiento de oxígeno para el crecimiento.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has oxygen tolerance</rdfs:label>
+        <rdfs:label xml:lang="es">Tolerancia al oxígeno</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasPH -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasPH">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Potencial de hidrógeno del medio fermentativo.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has pH</rdfs:label>
+        <rdfs:label xml:lang="es">pH</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000040"/>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+        <measuresVariable rdf:resource="https://w3id.org/bfpo#pH"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasPerceivedIntensity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasPerceivedIntensity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Intensidad de percepción de un atributo sensorial.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has perceived intensity</rdfs:label>
+        <rdfs:label xml:lang="es">Intensidad percibida</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasPerceivedWeight -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasPerceivedWeight">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Body"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Sensación de peso del producto en boca.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has perceived weight</rdfs:label>
+        <rdfs:label xml:lang="es">Peso percibido</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasProbableCause -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasProbableCause">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryDefect"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Causa probable del defecto sensorial identificado en la evaluación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Causa probable</rdfs:label>
+        <rdfs:label xml:lang="en">Has probable cause</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasRedoxPotential -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasRedoxPotential">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Potencial de oxidorreducción del medio</rdfs:comment>
+        <rdfs:label xml:lang="en">Has redox potential</rdfs:label>
+        <rdfs:label xml:lang="es">Potencial redox (ORP)</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+        <skos:altLabel xml:lang="en">ORP</skos:altLabel>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasResidualSugarContent -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasResidualSugarContent">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Azúcares no consumidos por los microorganismos al finalizar la fermentación</rdfs:comment>
+        <rdfs:label xml:lang="es">Contenido de azúcares residuales</rdfs:label>
+        <rdfs:label xml:lang="en">Has residual sugar content</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000111"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasRipenessLevel -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasRipenessLevel">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#RipenessState"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Estado de maduración del sustrato al inicio del proceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has ripeness level</rdfs:label>
+        <rdfs:label xml:lang="es">Nivel de madurez</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSCAAttributeScore -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSCAAttributeScore">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Puntaje individual de cada atributo sensorial en escala 0-10.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has SCA attribute score</rdfs:label>
+        <rdfs:label xml:lang="es">Puntaje SCA por atributo</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSCAScore -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSCAScore">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SCAScore"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Puntuación total del protocolo SCA en escala 0-100.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has SCA score</rdfs:label>
+        <rdfs:label xml:lang="es">Puntaje SCA total</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSanitaryLevel -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSanitaryLevel">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Estado sanitario inicial del sustrato.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has sanitary level</rdfs:label>
+        <rdfs:label xml:lang="es">Nivel sanitario inicial</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasScientificName -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasScientificName">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Nombre científico binomial de la especie microbiológica según nomenclatura ICBN/ICNB.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has scientific name</rdfs:label>
+        <rdfs:label xml:lang="es">Nombre científico</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasShannonIndex -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasShannonIndex">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Índice de diversidad de especies microbianas presentes en el bioproceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has Shannon index</rdfs:label>
+        <rdfs:label xml:lang="es">Índice de diversidad Shannon</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSpecies -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSpecies">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Variety"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Especie botánica de la variedad del sustrato.</rdfs:comment>
+        <rdfs:label xml:lang="es">Especie</rdfs:label>
+        <rdfs:label xml:lang="en">Has species</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSpiceType -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSpiceType">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#SpicyNote"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Subcategoría de la nota especiada.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has spice type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de nota especiada</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSubstrateHumidity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSubstrateHumidity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Contenido de agua en el sustrato durante la fermentación expresado en porcentaje.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has substrate humidity</rdfs:label>
+        <rdfs:label xml:lang="es">Humedad del sustrato</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasSubstrateVolume -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasSubstrateVolume">
+        <rdfs:comment xml:lang="es">Volumen en litros del sustrato fermentativo en el biorreactor.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has substrate volume</rdfs:label>
+        <rdfs:label xml:lang="es">Volumen del sustrato</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasTexture -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasTexture">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Body"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Textura percibida del producto en boca.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has texture</rdfs:label>
+        <rdfs:label xml:lang="es">Textura</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasTotalMicrobialPopulation -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasTotalMicrobialPopulation">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#ProcessObservation"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Suma de UFC/mL de todos los microorganismos presentes en el proceso.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has total microbial population</rdfs:label>
+        <rdfs:label xml:lang="es">Población microbiana total</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasTotalTritrableAcidity -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasTotalTritrableAcidity">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Bioreactor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:comment xml:lang="es">Acidez acumulada en el producto fermentado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Acidez total y titulable</rdfs:label>
+        <rdfs:label xml:lang="en">Has total titratable acidity</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#hasVarietyName -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#hasVarietyName">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#Variety"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment xml:lang="es">Nombre de la variedad botánica del sustrato procesado en la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Has variety name</rdfs:label>
+        <rdfs:label xml:lang="es">Nombre de variedad</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/bfpo#meetsCriteria -->
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/bfpo#meetsCriteria">
+        <rdfs:domain rdf:resource="https://w3id.org/bfpo#HighQuality"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment xml:lang="es">Indica si el producto cumple el criterio de alta calidad según el protocolo SCA.</rdfs:comment>
+        <rdfs:label xml:lang="es">Cumple criterio</rdfs:label>
+        <rdfs:label xml:lang="en">Meets criteria</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/FeatureOfInterest -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/sosa/FeatureOfInterest"/>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/ObservableProperty -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/sosa/ObservableProperty"/>
+    
+
+
+    <!-- http://www.w3.org/ns/sosa/Observation -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/sosa/Observation"/>
+    
+
+
+    <!-- https://w3id.org/bfpo#AceticAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#AceticAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#OrganicAcid"/>
+        <rdfs:comment xml:lang="es">Ácido etanoico. Indicador de sobrefermentación cuando excede el umbral.</rdfs:comment>
+        <rdfs:label xml:lang="en">Acetic acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido acético</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_15366"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#AceticDefect -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#AceticDefect">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryDefect"/>
+        <rdfs:comment xml:lang="es">Sabor a vinagre por producción excesiva de ácido acético durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Acetic defect</rdfs:label>
+        <rdfs:label xml:lang="es">Defecto acético</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Aftertaste -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Aftertaste">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Sabor residual percibido después de deglutir el producto evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Aftertaste</rdfs:label>
+        <rdfs:label xml:lang="es">Retrogusto</rdfs:label>
+        <skos:altLabel xml:lang="en">Finish</skos:altLabel>
+        <skos:altLabel xml:lang="es">Postgusto</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Aldehyde -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Aldehyde">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#VolatileCompound"/>
+        <rdfs:comment xml:lang="es">Compuestos con grupo funcional –CHO. Generan aromas florales y frutales en el producto.</rdfs:comment>
+        <rdfs:label xml:lang="en">Aldehyde</rdfs:label>
+        <rdfs:label xml:lang="es">Aldehído</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_17478"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Alkaloid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Alkaloid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">Compuestos nitrogenados bioactivos.</rdfs:comment>
+        <rdfs:label xml:lang="es">Alcaloide</rdfs:label>
+        <rdfs:label xml:lang="en">Alkaloid</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_22315"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#AnaerobicFermentationType -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#AnaerobicFermentationType">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ClosedSystem"/>
+        <rdfs:comment xml:lang="es">Clasificación de fermentaciones sin oxígeno.</rdfs:comment>
+        <rdfs:label xml:lang="en">Anaerobic fermentation type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de fermentación anaeróbica</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Aroma -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Aroma">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Percepción aromática del producto fermentado evaluada en el protocolo SCA.</rdfs:comment>
+        <rdfs:label xml:lang="en">Aroma</rdfs:label>
+        <rdfs:label xml:lang="es">Aroma</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000058"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#AromaticComplexity -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#AromaticComplexity">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Diversidad de notas aromáticas perceptibles simultáneamente en el producto evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Aromatic complexity</rdfs:label>
+        <rdfs:label xml:lang="es">Complejidad aromática</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0001502"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#AromaticNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#AromaticNote">
+        <rdfs:comment xml:lang="es">Clase raíz de todas las notas específicas del perfil organoléptico del producto fermentado según el SCA Flavor Wheel 2016.</rdfs:comment>
+        <rdfs:label xml:lang="en">Aromatic note</rdfs:label>
+        <rdfs:label xml:lang="es">Nota aromática</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000058"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#AromaticProfile -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#AromaticProfile">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Conjunto integrado de aromas percibidos en el producto fermentado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Aromatic profile</rdfs:label>
+        <rdfs:label xml:lang="es">Perfil aromático</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Bacterium -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Bacterium">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:comment xml:lang="es">Microorganismos procarióticos del bioproceso.</rdfs:comment>
+        <rdfs:label xml:lang="es">Bacteria</rdfs:label>
+        <rdfs:label xml:lang="en">Bacterium</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/NCBITaxon_2"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Balance -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Balance">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment rdf:resource="https://w3id.org/bfpo"/>
+        <rdfs:label xml:lang="en">Balance</rdfs:label>
+        <rdfs:label xml:lang="es">Balance</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Bioreactor -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Bioreactor">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/FeatureOfInterest"/>
+        <rdfs:comment xml:lang="es">Instrumento físico donde ocurre el bioproceso de fermentación. Objeto de interés observado por los sensores del sistema.</rdfs:comment>
+        <rdfs:label xml:lang="en">Bioreactor</rdfs:label>
+        <rdfs:label xml:lang="es">Biorreactor</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000014"/>
+        <rdfs:seeAlso rdf:resource="http://www.w3.org/ns/sosa/FeatureOfInterest"/>
+        <rdfs:seeAlso rdf:resource="https://saref.etsi.org/core/Device"/>
+        <rdfs:seeAlso rdf:resource="https://saref.etsi.org/saref4inma/ProductionEquipment"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Bitterness -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Bitterness">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Percepción amarga asociada a compuestos fenólicos y alcaloides del producto.</rdfs:comment>
+        <rdfs:label xml:lang="es">Amargor</rdfs:label>
+        <rdfs:label xml:lang="en">Bitterness</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0002474"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Body -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Body">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Sensación táctil de peso y textura del producto fermentado en boca.</rdfs:comment>
+        <rdfs:label xml:lang="en">Body</rdfs:label>
+        <rdfs:label xml:lang="es">Cuerpo</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000037"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#CaramelNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#CaramelNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas de caramelo, miel y panela en el perfil aromático.</rdfs:comment>
+        <rdfs:label xml:lang="en">Caramel note</rdfs:label>
+        <rdfs:label xml:lang="es">Nota caramelo</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#CarbonDioxide -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#CarbonDioxide">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">CO2 producido por microorganismos durante la fermentación. Indicador de actividad metabólica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Carbon dioxide</rdfs:label>
+        <rdfs:label xml:lang="es">Dióxido de carbono (CO2)</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_16526"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#CarbonicMaceration -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#CarbonicMaceration">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AnaerobicFermentationType"/>
+        <rdfs:comment xml:lang="es">Fermentación con CO2 exógeno. Término enológico adoptado en café de especialidad.</rdfs:comment>
+        <rdfs:label xml:lang="en">Carbonic maceration</rdfs:label>
+        <rdfs:label xml:lang="es">Maceración carbónica</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ChemicalCompound -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ChemicalCompound">
+        <rdfs:comment xml:lang="es">Clase raíz de todas las sustancias químicas presentes o producidas durante el bioproceso de fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Chemical compound</rdfs:label>
+        <rdfs:label xml:lang="es">Compuesto químico</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_24431"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ChlorogenicAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ChlorogenicAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#PhenolicCompound"/>
+        <rdfs:comment xml:lang="es">Principales antioxidantes del sustrato. Ésteres del ácido quínico.</rdfs:comment>
+        <rdfs:label xml:lang="en">Chlorogenic acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido clorogénico (CQA)</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_16112"/>
+        <skos:altLabel xml:lang="en">CQA</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ChocolateNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ChocolateNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas de chocolate y cacao en el perfil aromático.</rdfs:comment>
+        <rdfs:label xml:lang="en">Chocolate note</rdfs:label>
+        <rdfs:label xml:lang="es">Nota chocolate</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#CitricAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#CitricAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#OrganicAcid"/>
+        <rdfs:comment xml:lang="es">Ácido 2-hidroxipropano-1,2,3-tricarboxílico. Ácido natural del sustrato fermentativo.</rdfs:comment>
+        <rdfs:label xml:lang="en">Citric acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido cítrico</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_30769"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ClosedSystem -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ClosedSystem">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#FermentationSystemConfiguration"/>
+        <rdfs:comment xml:lang="es">istema sellado sin contacto con el ambiente. Acumula CO2.</rdfs:comment>
+        <rdfs:label xml:lang="en">Closed system</rdfs:label>
+        <rdfs:label xml:lang="es">Sistema cerrado</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#CupClarity -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#CupClarity">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Ausencia de sabores extraños o defectos en el producto evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="en">Cup clarity</rdfs:label>
+        <rdfs:label xml:lang="es">Limpieza de taza</rdfs:label>
+        <skos:altLabel xml:lang="es">Claridad de taza</skos:altLabel>
+        <skos:altLabel xml:lang="en">Clean cup</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Ester -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Ester">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#VolatileCompound"/>
+        <rdfs:comment xml:lang="es">Compuestos de esterificación entre ácidos y alcoholes. Responsables de aromas frutales.</rdfs:comment>
+        <rdfs:label xml:lang="en">Ester</rdfs:label>
+        <rdfs:label xml:lang="es">Éster</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_35701"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Ethanol -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Ethanol">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">Alcohol etílico C2H5OH. Producto de la fermentación alcohólica de azúcares.</rdfs:comment>
+        <rdfs:label xml:lang="es">Etanol</rdfs:label>
+        <rdfs:label xml:lang="en">Ethanol</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_16236"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#FermentationMediumType -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#FermentationMediumType">
+        <rdfs:comment xml:lang="es">Clasificación por presencia o ausencia de agua en el medio fermentativo.</rdfs:comment>
+        <rdfs:label xml:lang="en">Fermentation medium type</rdfs:label>
+        <rdfs:label xml:lang="es">Tipo de medio de fermentación</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000011"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#FermentationSystemConfiguration -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#FermentationSystemConfiguration">
+        <rdfs:comment xml:lang="es">Tipo de sistema de fermentación por grado de apertura. Determina disponibilidad de oxígeno en el proceso.</rdfs:comment>
+        <rdfs:label xml:lang="es">Configuración del sistema</rdfs:label>
+        <rdfs:label xml:lang="en">Fermentation system configuration</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#FilamentousFungus -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#FilamentousFungus">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:comment xml:lang="es">Hongos eucarióticos filamentosos distintos de levaduras. Pueden generar defectos sensoriales.</rdfs:comment>
+        <rdfs:label xml:lang="en">Filamentous fungus</rdfs:label>
+        <rdfs:label xml:lang="es">Hongo filamentoso</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/NCBITaxon_4751"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Flavor -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Flavor">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Percepción gustativa integrada. Incluye componentes gustativos y retronasal.</rdfs:comment>
+        <rdfs:label xml:lang="en">Flavor</rdfs:label>
+        <rdfs:label xml:lang="es">Sabor</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000043"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#FloralNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#FloralNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas florales en el perfil aromático. Jazmín, rosa, lavanda.</rdfs:comment>
+        <rdfs:label xml:lang="en">Floral note</rdfs:label>
+        <rdfs:label xml:lang="es">Nota floral</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Fructose -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Fructose">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SimpleSugar"/>
+        <rdfs:comment xml:lang="es">Monosacárido consumido por microorganismos fermentadores.</rdfs:comment>
+        <rdfs:label xml:lang="es">Fructosa</rdfs:label>
+        <rdfs:label xml:lang="en">Fructose</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_15824"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#FruityNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#FruityNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas de frutas en el perfil aromático.</rdfs:comment>
+        <rdfs:label xml:lang="en">Fruity note</rdfs:label>
+        <rdfs:label xml:lang="es">Nota frutal</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Glucose -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Glucose">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SimpleSugar"/>
+        <rdfs:comment xml:lang="es">Monosacárido. Principal azúcar consumido por microorganismos durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Glucosa</rdfs:label>
+        <rdfs:label xml:lang="en">Glucose</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_17234"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#HerbalNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#HerbalNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas herbales de té y plantas en el perfil aromático.</rdfs:comment>
+        <rdfs:label xml:lang="en">Herbal note</rdfs:label>
+        <rdfs:label xml:lang="es">Nota herbal</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#HighQuality -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#HighQuality">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+        <rdfs:comment xml:lang="es">Puntaje SCA igual o mayor a 85, según el protocolo de catación de la SCA.</rdfs:comment>
+        <rdfs:label xml:lang="es">Alta calidad</rdfs:label>
+        <rdfs:label xml:lang="en">High quality</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#LacticAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#LacticAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#OrganicAcid"/>
+        <rdfs:comment xml:lang="es">Principal producto de la fermentación láctica.</rdfs:comment>
+        <rdfs:label xml:lang="en">Lactic acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido láctico</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_28358"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#MalicAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#MalicAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#OrganicAcid"/>
+        <rdfs:comment xml:lang="es">Ácido hidroxibutanodioico. Componente del perfil de acidez del producto.</rdfs:comment>
+        <rdfs:label xml:lang="en">Malic acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido málico</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_6650"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#MediumQuality -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#MediumQuality">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+        <rdfs:comment xml:lang="es">Puntaje SCA entre 80 y 84,99, según el protocolo de catación de la SCA.</rdfs:comment>
+        <rdfs:label xml:lang="es">Calidad media</rdfs:label>
+        <rdfs:label xml:lang="en">Medium quality</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Microorganism -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Microorganism">
+        <rdfs:comment xml:lang="es">Clase raíz de todos los microorganismos que participan en el bioproceso de fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Microorganism</rdfs:label>
+        <rdfs:label xml:lang="es">Microorganismo</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#NuttyNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#NuttyNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas de nueces y almendras en el perfil aromático.</rdfs:comment>
+        <rdfs:label xml:lang="es">Nota frutos secos</rdfs:label>
+        <rdfs:label xml:lang="en">Nutty note</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#OpenSystem -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#OpenSystem">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#FermentationSystemConfiguration"/>
+        <rdfs:comment xml:lang="es">Sistema de fermentación en contacto con el ambiente. Permite intercambio de O2 y CO2.</rdfs:comment>
+        <rdfs:label xml:lang="en">Open system</rdfs:label>
+        <rdfs:label xml:lang="es">Sistema abierto</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#OrganicAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#OrganicAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">Clase padre de los ácidos producidos durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Organic acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido orgánico</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_64709"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#OverfermentedDefect -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#OverfermentedDefect">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryDefect"/>
+        <rdfs:comment xml:lang="es">Defecto causado por tiempo o temperatura de fermentación excesivos.</rdfs:comment>
+        <rdfs:label xml:lang="es">Defecto de sobrefermentación</rdfs:label>
+        <rdfs:label xml:lang="en">Overfermented defect</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#OverripeState -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#OverripeState">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#RipenessState"/>
+        <rdfs:comment xml:lang="es">Sustrato pasado del punto óptimo. Riesgo de defectos por fermentación previa al proceso.</rdfs:comment>
+        <rdfs:label xml:lang="es">Estado sobremaduro</rdfs:label>
+        <rdfs:label xml:lang="en">Overripe state</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#PhenolicCompound -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#PhenolicCompound">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">Antioxidantes y polifenoles del sustrato fermentativo.</rdfs:comment>
+        <rdfs:label xml:lang="es">Compuesto fenólico</rdfs:label>
+        <rdfs:label xml:lang="en">Phenolic compound</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_26195"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ProcessObservation -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ProcessObservation">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/Observation"/>
+        <rdfs:label xml:lang="es">Observación del proceso</rdfs:label>
+        <rdfs:label xml:lang="en">Process observation</rdfs:label>
+        <skos:definition xml:lang="en">Record of the fermentation process variables taken at a given time.</skos:definition>
+        <skos:definition xml:lang="es">Registro de las variables del proceso de fermentación tomado en un instante determinado.</skos:definition>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ProcessVariable -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ProcessVariable">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/sosa/ObservableProperty"/>
+        <rdfs:comment xml:lang="en">Measurable variable of the coffee fermentation process in a bioreactor. Each instance 
+represents a specific variable with its associated optimal operational ranges and critical thresholds documented in the scientific literature.</rdfs:comment>
+        <rdfs:label xml:lang="en">Process Variable</rdfs:label>
+        <rdfs:label xml:lang="es">Variable de proceso</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PREFER_0000098"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#ProcessingMethod -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#ProcessingMethod">
+        <rdfs:comment xml:lang="es">Método de preparación del sustrato antes o durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Método de procesamiento</rdfs:label>
+        <rdfs:label xml:lang="en">Processing method</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#QualityClassification -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#QualityClassification">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityEvaluation"/>
+        <rdfs:comment xml:lang="es">Sistema de categorización del producto fermentado por rango de puntaje SCA.</rdfs:comment>
+        <rdfs:label xml:lang="es">Clasificación de calidad</rdfs:label>
+        <rdfs:label xml:lang="en">Quality classification</rdfs:label>
+        <owl:priorVersion rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#QualityDescriptor -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#QualityDescriptor">
+        <rdfs:comment xml:lang="es">Agrupa descriptores cualitativos positivos y defectos sensoriales del producto fermentado evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Descriptor de calidad</rdfs:label>
+        <rdfs:label xml:lang="en">Quality descriptor</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000001"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#QualityEvaluation -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#QualityEvaluation">
+        <rdfs:comment xml:lang="es">Proceso formal de valoración de calidad del producto fermentado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Evaluación de calidad</rdfs:label>
+        <rdfs:label xml:lang="en">Quality evaluation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#RipeState -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#RipeState">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#RipenessState"/>
+        <rdfs:comment xml:lang="es">Sustrato en punto óptimo de madurez. Mayor contenido de azúcares y aromas precursores.</rdfs:comment>
+        <rdfs:label xml:lang="es">Estado maduro</rdfs:label>
+        <rdfs:label xml:lang="en">Ripe state</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0001701"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#RipenessState -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#RipenessState">
+        <rdfs:comment xml:lang="es">Nivel de madurez del sustrato al inicio del proceso. Determina la composición química inicial.</rdfs:comment>
+        <rdfs:label xml:lang="es">Estado de madurez</rdfs:label>
+        <rdfs:label xml:lang="en">Ripeness state</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000001"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SCAScore -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SCAScore">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityEvaluation"/>
+        <rdfs:comment xml:lang="es">Puntuación total SCA en escala 0-100.</rdfs:comment>
+        <rdfs:label xml:lang="es">Puntaje SCA</rdfs:label>
+        <rdfs:label xml:lang="en">SCA score</rdfs:label>
+        <skos:altLabel xml:lang="en">Cupping score</skos:altLabel>
+        <skos:altLabel xml:lang="es">Score de catación</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SensoryAcidity -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SensoryAcidity">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Percepción vibrante de acidez en taza. Distinta del pH que es una medición química.</rdfs:comment>
+        <rdfs:label xml:lang="es">Acidez sensorial</rdfs:label>
+        <rdfs:label xml:lang="en">Sensory acidity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SensoryAnalysis -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SensoryAnalysis">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityEvaluation"/>
+        <rdfs:comment xml:lang="es">Evaluación sensorial formal del producto fermentado mediante el protocolo SCA de catación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Análisis sensorial</rdfs:label>
+        <rdfs:label xml:lang="en">Sensory analysis</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SensoryAttribute -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SensoryAttribute">
+        <rdfs:comment xml:lang="es">Clase raíz de todos los atributos evaluados en el análisis sensorial del producto fermentado según el protocolo SCA Cupping 2015.</rdfs:comment>
+        <rdfs:label xml:lang="es">Atributo sensorial</rdfs:label>
+        <rdfs:label xml:lang="en">Sensory attribute</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0000001"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SensoryDefect -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SensoryDefect">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityDescriptor"/>
+        <rdfs:comment xml:lang="es">Sabor indeseable detectable en la evaluación sensorial.</rdfs:comment>
+        <rdfs:label xml:lang="es">Defecto sensorial</rdfs:label>
+        <rdfs:label xml:lang="en">Sensory defect</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SimpleSugar -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SimpleSugar">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">Azúcares simples del sustrato fermentativo, que agrupan monosacáridos (glucosa, fructosa) y disacáridos (sacarosa). Constituyen los sustratos primarios consumidos por los microorganismos durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Azúcar simple</rdfs:label>
+        <rdfs:label xml:lang="en">Simple sugar</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_16646"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SolidStateFermentation -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SolidStateFermentation">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#FermentationMediumType"/>
+        <rdfs:comment xml:lang="es">Fermentación sin agua añadida. Menor actividad de agua y proceso más lento.</rdfs:comment>
+        <rdfs:label xml:lang="es">Fermentación en estado sólido</rdfs:label>
+        <rdfs:label xml:lang="en">Solid state fermentation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SpicyNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SpicyNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment xml:lang="es">Notas de especias en el perfil aromático. Canela, clavo, pimienta.</rdfs:comment>
+        <rdfs:label xml:lang="es">Nota especiada</rdfs:label>
+        <rdfs:label xml:lang="en">Spicy note</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#StandardAnaerobicFermentation -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#StandardAnaerobicFermentation">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AnaerobicFermentationType"/>
+        <rdfs:comment xml:lang="es">Fermentación en tanques sellados sin O2. Sin modificaciones adicionales al proceso anaeróbico.</rdfs:comment>
+        <rdfs:label xml:lang="es">Fermentación anaeróbica estándar</rdfs:label>
+        <rdfs:label xml:lang="en">Standard anaerobic fermentation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#StandardQuality -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#StandardQuality">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#QualityClassification"/>
+        <rdfs:comment xml:lang="es">Puntaje SCA menor a 80, según el protocolo de catación de la SCA.</rdfs:comment>
+        <rdfs:label xml:lang="es">Calidad estándar</rdfs:label>
+        <rdfs:label xml:lang="en">Standard quality</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SubmergedFermentation -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SubmergedFermentation">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#FermentationMediumType"/>
+        <rdfs:comment xml:lang="es">ermentación con sustrato bajo agua. Garantiza anaerobiosis total desde el inicio del proceso.</rdfs:comment>
+        <rdfs:label xml:lang="es">Fermentación sumergida</rdfs:label>
+        <rdfs:label xml:lang="en">Submerged fermentation</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#SuccinicAcid -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#SuccinicAcid">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#OrganicAcid"/>
+        <rdfs:comment xml:lang="es">Ácido butanodioico. Metabolito producido durante la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="en">Succinic acid</rdfs:label>
+        <rdfs:label xml:lang="es">Ácido succínico</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_15741"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Sucrose -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Sucrose">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SimpleSugar"/>
+        <rdfs:comment xml:lang="es">Disacárido. Precursor de glucosa y fructosa. Principal azúcar de reserva del sustrato.</rdfs:comment>
+        <rdfs:label xml:lang="es">Sacarosa</rdfs:label>
+        <rdfs:label xml:lang="en">Sucrose</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_17992"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Sweetness -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Sweetness">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Percepción de dulzura natural del producto. Distinto del contenido de azúcares residuales.</rdfs:comment>
+        <rdfs:label xml:lang="es">Dulzor</rdfs:label>
+        <rdfs:label xml:lang="en">Sweetness</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Uniformity -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Uniformity">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryAttribute"/>
+        <rdfs:comment xml:lang="es">Consistencia percibida entre múltiples tazas del mismo lote evaluado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Uniformidad</rdfs:label>
+        <rdfs:label xml:lang="en">Uniformity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#UnripeState -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#UnripeState">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#RipenessState"/>
+        <rdfs:comment xml:lang="es">Sustrato inmaduro. Menor contenido de azúcares y compuestos precursores aromáticos</rdfs:comment>
+        <rdfs:label xml:lang="es">Estado verde</rdfs:label>
+        <rdfs:label xml:lang="en">Unripe state</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/PATO_0001501"/>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Variety -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Variety">
+        <rdfs:comment xml:lang="es">Variedad botánica del sustrato procesado en la fermentación.</rdfs:comment>
+        <rdfs:label xml:lang="es">Variedad del sustrato</rdfs:label>
+        <rdfs:label xml:lang="en">Variety</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#VolatileCompound -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#VolatileCompound">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#ChemicalCompound"/>
+        <rdfs:comment xml:lang="es">Moléculas aromáticas de alta presión de vapor. Determinan el perfil organoléptico del producto fermentado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Compuesto volátil (VOC)</rdfs:label>
+        <rdfs:label xml:lang="en">Volatile compound</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/CHEBI_134179"/>
+        <skos:altLabel xml:lang="en">VOCs</skos:altLabel>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#WinyDefect -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#WinyDefect">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#SensoryDefect"/>
+        <rdfs:comment xml:lang="es">Sabor a vino o vinagre por exceso de ácido acético en el producto fermentado.</rdfs:comment>
+        <rdfs:label xml:lang="es">Defecto avinado</rdfs:label>
+        <rdfs:label xml:lang="en">Winy defect</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#WinyNote -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#WinyNote">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#AromaticNote"/>
+        <rdfs:comment rdf:resource="https://w3id.org/bfpo#WinyNote"/>
+        <rdfs:comment xml:lang="es">Notas fermentadas con carácter vinoso en el perfil aromático.</rdfs:comment>
+        <rdfs:label xml:lang="es">Nota vinosa</rdfs:label>
+        <rdfs:label xml:lang="en">Winy note</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/bfpo#Yeast -->
+
+    <owl:Class rdf:about="https://w3id.org/bfpo#Yeast">
+        <rdfs:subClassOf rdf:resource="https://w3id.org/bfpo#Microorganism"/>
+        <rdfs:comment xml:lang="es">Hongos unicelulares fermentadores. Producen etanol, CO2 y compuestos volátiles.</rdfs:comment>
+        <rdfs:label xml:lang="es">Levadura</rdfs:label>
+        <rdfs:label xml:lang="en">Yeast</rdfs:label>
+        <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/NCBITaxon_147537"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://w3id.org/bfpo#AlcoholVariable -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/bfpo#AlcoholVariable">
+        <rdf:type rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <hasCriticalThresholdMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2.0</hasCriticalThresholdMax>
+        <hasOptimalRangeMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2.0</hasOptimalRangeMax>
+        <hasOptimalRangeMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</hasOptimalRangeMin>
+        <rdfs:comment xml:lang="en">Ethanol concentration produced by yeast activity during coffee fermentation. High alcohol levels may inhibit microbial activity and affect sensory quality. Critical threshold based on Brioschi Junior et al. (2021).</rdfs:comment>
+        <rdfs:label xml:lang="en">Alcohol content</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/bfpo#BrixVariable -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/bfpo#BrixVariable">
+        <rdf:type rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <hasCriticalThresholdMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">8.0</hasCriticalThresholdMin>
+        <hasOptimalRangeMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">16.0</hasOptimalRangeMax>
+        <hasOptimalRangeMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">9.0</hasOptimalRangeMin>
+        <rdfs:comment xml:lang="en">Soluble solids content of the fermentation medium expressed in degrees Brix. Indicator of substrate availability for microbial activity. Values based on Ferreira et al. (2023).</rdfs:comment>
+        <rdfs:label xml:lang="en">Brix degree</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/bfpo#DissolvedOxygenVariable -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/bfpo#DissolvedOxygenVariable">
+        <rdf:type rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <hasCriticalThresholdMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.1</hasCriticalThresholdMin>
+        <hasOptimalRangeMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">2.0</hasOptimalRangeMax>
+        <hasOptimalRangeMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.0</hasOptimalRangeMin>
+        <rdfs:comment xml:lang="en">Dissolved oxygen concentration in the fermentation medium. In SIAF and anaerobic fermentation processes, oxygen decreases progressively as microbial  activity consumes it. Values below 0.5 mg/L indicate anaerobiosis. Based on Ferreira et al. (2023).</rdfs:comment>
+        <rdfs:label xml:lang="en">Dissolved oxygen</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/bfpo#TemperatureVariable -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/bfpo#TemperatureVariable">
+        <rdf:type rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <hasCriticalThresholdMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</hasCriticalThresholdMax>
+        <hasOptimalRangeMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">25.0</hasOptimalRangeMax>
+        <hasOptimalRangeMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">15.0</hasOptimalRangeMin>
+        <rdfs:comment xml:lang="en">Temperature of the fermentation medium in the bioreactor. Controls microbial kinetics and enzymatic activity. Optimal range based on Peñuela-Martínez et al. (2023) and 
+Cruz-O&apos;Byrne et al. (2020) for controlled temperature coffee fermentation.</rdfs:comment>
+        <rdfs:label xml:lang="en">Fermentation temperature</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/bfpo#TotalAcidityVariable -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/bfpo#TotalAcidityVariable">
+        <rdf:type rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <hasCriticalThresholdMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.2</hasCriticalThresholdMax>
+        <hasOptimalRangeMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.18</hasOptimalRangeMax>
+        <hasOptimalRangeMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.45</hasOptimalRangeMin>
+        <rdfs:comment xml:lang="en">Total titratable acidity of the fermentation medium expressed in g/L. Reflects the accumulation of organic acids produced by lactic acid bacteria and yeast during fermentation. Range based on Cruz-O&apos;Byrne et al. (2020)</rdfs:comment>
+        <rdfs:label xml:lang="en">Total acidity</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- https://w3id.org/bfpo#pHVariable -->
+
+    <owl:NamedIndividual rdf:about="https://w3id.org/bfpo#pHVariable">
+        <rdf:type rdf:resource="https://w3id.org/bfpo#ProcessVariable"/>
+        <hasCriticalThresholdMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.6</hasCriticalThresholdMin>
+        <hasOptimalRangeMax rdf:datatype="http://www.w3.org/2001/XMLSchema#float">5.5</hasOptimalRangeMax>
+        <hasOptimalRangeMin rdf:datatype="http://www.w3.org/2001/XMLSchema#float">4.0</hasOptimalRangeMin>
+        <rdfs:comment xml:lang="en">Hydrogen ion concentration in the fermentation medium. Key indicator of microbial activity and fermentation progress in coffee bioreactor fermentation. Optimal range 
+and critical threshold based on Cruz-O&apos;Byrne et al. (2020) and Ferreira et al. (2023).</rdfs:comment>
+        <rdfs:label xml:lang="en">pH</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://w3id.org/bfpo#AromaticNote"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#Bioreactor"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#ChemicalCompound"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#FermentationMediumType"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#FermentationSystemConfiguration"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#Microorganism"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#ProcessObservation"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#ProcessVariable"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#ProcessingMethod"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#QualityDescriptor"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#QualityEvaluation"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#RipenessState"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#SensoryAttribute"/>
+            <rdf:Description rdf:about="https://w3id.org/bfpo#Variety"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

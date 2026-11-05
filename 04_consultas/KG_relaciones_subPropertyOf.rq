@@ -1,0 +1,10 @@
+PREFIX bfpo: <https://w3id.org/bfpo#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT (COUNT(*) AS ?totalRelaciones) WHERE {
+  {
+    SELECT DISTINCT ?origen ?destino WHERE {
+      ?propiedad rdfs:subPropertyOf* bfpo:influences .
+      ?origen ?propiedad ?destino .
+    }
+  }
+}

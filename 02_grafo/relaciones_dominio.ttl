@@ -1,0 +1,423 @@
+# ===========================================================
+# GRAFO DE CONOCIMIENTO DEL DOMINIO — BFPO
+# ===========================================================
+# FUENTES BIBLIOGRÁFICAS:
+# [1] Cruz-O'Byrne et al. (2020). Coffee Science, 15, e151797 DOI:  https://doi.org/10.25186/.v15i.1797
+# [2] Revelo-Romo et al. (2025). Food Research International, 206
+# [3] Ferreira et al. (2023). Food Research International, 169
+# [4] Brioschi Junior et al. (2021). Food Chemistry, 342  DOI:10.1016/j.foodchem.2020.128296
+# [5] Rocha et al. (2023). Food Research International, 174
+# [6] Hogan et al. (2021). ACM Computing Surveys, 54(4)
+# [7] SCA (2015). Cupping Protocols
+# [8] Cenicafé (2010). El beneficio del café en Colombia
+# ===========================================================
+
+@prefix bfpo:   <https://w3id.org/bfpo#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# ===========================================================
+# NOTA: las propiedades bfpo:influences, bfpo:positivelyInfluences,
+# bfpo:negativelyInfluences, bfpo:produces y bfpo:isPartOf se
+# definen en la ontología BFPO (grafo /ontology). Este archivo
+# solo contiene afirmaciones que las utilizan.
+# ===========================================================
+
+# ===========================================================
+# SECCIÓN 2 — INDIVIDUOS DEL DOMINIO
+# ===========================================================
+
+bfpo:Yeast
+    a owl:NamedIndividual, bfpo:Microorganism ;
+    rdfs:label "Yeast"@en ;
+    rdfs:label "Levadura"@es ;
+    rdfs:comment "Levaduras fermentativas presentes en la fermentación de café. Géneros: Saccharomyces, Pichia, Candida. Ref: Revelo-Romo et al. (2025)."@es .
+
+bfpo:LacticAcidBacteria
+    a owl:NamedIndividual, bfpo:Microorganism ;
+    rdfs:label "Lactic acid bacteria"@en ;
+    rdfs:label "Bacterias lácticas"@es ;
+    rdfs:comment "Bacterias del ácido láctico (LAB) presentes en fermentaciones SIAF. Géneros: Leuconostoc, Lactobacillus. Ref: Revelo-Romo et al. (2025)."@es .
+
+bfpo:Ethanol
+    a owl:NamedIndividual, bfpo:ChemicalCompound ;
+    rdfs:label "Ethanol"@en ;
+    rdfs:label "Etanol"@es ;
+    rdfs:comment "Alcohol etílico producido por levaduras durante la fermentación alcohólica. Precursor de compuestos aromáticos. Ref: Brioschi Junior et al. (2021)."@es .
+
+bfpo:Ester
+    a owl:NamedIndividual, bfpo:VolatileCompound ;
+    rdfs:label "Ester"@en ;
+    rdfs:label "Éster"@es ;
+    rdfs:comment "Compuestos aromáticos frutales formados por esterificación entre ácidos y alcoholes. Ref: Rocha et al. (2023)."@es .
+
+bfpo:OrganicAcid
+    a owl:NamedIndividual, bfpo:ChemicalCompound ;
+    rdfs:label "Organic acid"@en ;
+    rdfs:label "Ácido orgánico"@es ;
+    rdfs:comment "Ácidos orgánicos producidos durante la fermentación. Su acumulación reduce el pH. Ref: Cruz-O'Byrne et al. (2020)."@es .
+
+bfpo:CO2
+    a owl:NamedIndividual, bfpo:CarbonDioxide ;
+    rdfs:label "Carbon dioxide"@en ;
+    rdfs:label "Dióxido de carbono"@es ;
+    rdfs:comment "CO2 producido por microorganismos. Indicador de actividad metabólica. En SIAF crea condiciones anaeróbicas."@es .
+
+bfpo:AromaticIntensity
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Aromatic intensity"@en ;
+    rdfs:label "Intensidad aromática"@es ;
+    rdfs:comment "Fuerza del perfil aromático percibido en el producto fermentado."@es .
+
+bfpo:AceticDefect
+    a owl:NamedIndividual, bfpo:SensoryDefect ;
+    rdfs:label "Acetic defect"@en ;
+    rdfs:comment "Defect characterized by vinegar-like aroma and flavor from excessive acetic acid production during prolonged fermentation. Ref: Cenicafé (2010), Cruz-O'Byrne et al. (2020)."@en .
+
+# ===========================================================
+# SECCIÓN 3 — INDIVIDUOS DE VARIABLES Y ATRIBUTOS
+# ===========================================================
+
+bfpo:pH
+    a owl:NamedIndividual;
+    rdfs:label "pH"@en ;
+    rdfs:label "pH"@es .
+
+bfpo:BrixDegree
+    a owl:NamedIndividual;
+    rdfs:label "Brix degree"@en ;
+    rdfs:label "Grados Brix"@es .
+
+bfpo:FermentationTemperature
+    a owl:NamedIndividual;
+    rdfs:label "Fermentation temperature"@en ;
+    rdfs:label "Temperatura de fermentación"@es .
+
+bfpo:FermentationDuration
+    a owl:NamedIndividual;
+    rdfs:label "Fermentation duration"@en ;
+    rdfs:label "Duración de la fermentación"@es .
+
+bfpo:Microorganism
+    a owl:NamedIndividual;
+    rdfs:label "Microorganism"@en .
+
+bfpo:LacticAcid
+    a owl:NamedIndividual, bfpo:OrganicAcid ;
+    rdfs:label "Lactic acid"@en .
+
+bfpo:AceticAcid
+    a owl:NamedIndividual, bfpo:OrganicAcid ;
+    rdfs:label "Acetic acid"@en .
+
+bfpo:VolatileCompound
+    a owl:NamedIndividual, bfpo:ChemicalCompound ;
+    rdfs:label "Volatile compound"@en .
+
+bfpo:SCAScore
+    a owl:NamedIndividual, bfpo:QualityEvaluation ;
+    rdfs:label "SCA score"@en .
+
+bfpo:SensoryAcidity
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Sensory acidity"@en .
+
+bfpo:Aroma
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Aroma"@en .
+
+bfpo:Flavor
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Flavor"@en .
+
+bfpo:Body
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Body"@en .
+
+bfpo:Balance
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Balance"@en .
+
+bfpo:Sweetness
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Sweetness"@en .
+
+bfpo:Uniformity
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Uniformity"@en .
+
+bfpo:CupClarity
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Cup clarity"@en .
+
+bfpo:Aftertaste
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Aftertaste"@en .
+
+bfpo:AromaticProfile
+    a owl:NamedIndividual, bfpo:SensoryAttribute ;
+    rdfs:label "Aromatic profile"@en .
+
+bfpo:WinyDefect
+    a owl:NamedIndividual, bfpo:SensoryDefect ;
+    rdfs:label "Winy defect"@en ;
+    rdfs:comment "Defect characterized by wine-like fermented aroma. Caused by acetic acid accumulation and low pH. Ref: Ferreira et al. (2023), Brioschi Junior et al. (2021)."@en .
+
+bfpo:OverfermentedDefect
+    a owl:NamedIndividual, bfpo:SensoryDefect ;
+    rdfs:label "Overfermented defect"@en ;
+    rdfs:comment "Defect caused by excessive fermentation duration. Results in unpleasant odors and reduced cup quality. Ref: Cenicafé (2010)."@en .
+
+bfpo:SIAFFermentation
+    a owl:NamedIndividual, bfpo:AnaerobicFermentationType ;
+    rdfs:label "SIAF fermentation"@en ;
+    rdfs:label "Fermentación SIAF"@es .
+
+bfpo:OrganicAcidProfile
+    a owl:NamedIndividual ;
+    rdfs:label "Organic acid profile"@en ;
+    rdfs:label "Perfil de ácidos orgánicos"@es .
+
+bfpo:EthanolProduction
+    a owl:NamedIndividual ;
+    rdfs:label "Ethanol production"@en ;
+    rdfs:label "Producción de etanol"@es .
+
+bfpo:HighQuality
+    a owl:NamedIndividual, bfpo:QualityClassification ;
+    rdfs:label "High quality"@en ;
+    rdfs:comment "SCA >= 85 según protocolo SCA Cupping 2015."@es .
+
+bfpo:MediumQuality
+    a owl:NamedIndividual, bfpo:QualityClassification ;
+    rdfs:label "Medium quality"@en ;
+    rdfs:comment "SCA entre 80 y 84 según protocolo SCA Cupping 2015."@es .
+
+bfpo:StandardQuality
+    a owl:NamedIndividual, bfpo:QualityClassification ;
+    rdfs:label "Standard quality"@en ;
+    rdfs:comment "SCA < 80 según protocolo SCA Cupping 2015."@es .
+
+# ===========================================================
+# SECCIÓN 4 — RELACIONES DE TEMPERATURA
+# Ref: Cruz-O'Byrne et al. (2020); Ferreira et al. (2023)
+# Alta temperatura → acelera metabolismo microbiano
+# Alta temperatura → acelera consumo de azúcares (Brix baja)
+# Alta temperatura → acelera producción de ácidos (pH baja)
+# Alta temperatura → reduce duración del proceso
+# NOTA: solo se declaran subpropiedades específicas.
+# ===========================================================
+
+bfpo:FermentationTemperature
+    bfpo:positivelyInfluences bfpo:Microorganism ;
+    bfpo:negativelyInfluences bfpo:FermentationDuration ;
+    bfpo:negativelyInfluences bfpo:BrixDegree ;
+    bfpo:negativelyInfluences bfpo:pH .
+
+# ===========================================================
+# SECCIÓN 5 — RELACIONES DE DURACIÓN
+# Ref: Cruz-O'Byrne et al. (2020); Rocha et al. (2023)
+# Mayor duración → más ácidos orgánicos acumulados
+# Mayor duración → pH más bajo
+# Mayor duración → más compuestos volátiles y ésteres
+# Mayor duración → Brix más bajo (azúcares consumidos)
+# Mayor duración → riesgo de sobrefermentación y defecto acético
+# ===========================================================
+
+bfpo:FermentationDuration
+    bfpo:negativelyInfluences bfpo:pH ;
+    bfpo:negativelyInfluences bfpo:BrixDegree ;
+    bfpo:positivelyInfluences bfpo:LacticAcid ;
+    bfpo:positivelyInfluences bfpo:AceticAcid ;
+    bfpo:positivelyInfluences bfpo:AceticDefect ;
+    bfpo:positivelyInfluences bfpo:OverfermentedDefect ;
+    bfpo:positivelyInfluences bfpo:VolatileCompound ;
+    bfpo:positivelyInfluences bfpo:Ester ;
+    bfpo:positivelyInfluences bfpo:OrganicAcidProfile ;
+    bfpo:influences bfpo:SCAScore .
+
+# ===========================================================
+# SECCIÓN 6 — RELACIONES DEL pH
+# Ref: Cruz-O'Byrne et al. (2020); Ferreira et al. (2023)
+# pH bajo → favorece LAB y levaduras sobre patógenos
+# pH bajo → acumulación de ácido láctico y acético
+# pH bajo (< 4.0) → riesgo de defecto avinado (Winy)
+# pH bajo (< 4.0) → riesgo de sobrefermentación
+# NOTA: pH negativelyInfluences WinyDefect significa que
+# cuando el pH BAJA el riesgo de WinyDefect AUMENTA.
+# Las relaciones con levaduras, LAB, microorganismos y puntaje
+# SCA no son monotónicas (dependen de un intervalo óptimo), por
+# lo que se expresan con la relación general bfpo:influences.
+# ===========================================================
+
+bfpo:pH
+    bfpo:influences bfpo:LacticAcidBacteria ;
+    bfpo:influences bfpo:Yeast ;
+    bfpo:influences bfpo:Microorganism ;
+    bfpo:influences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:SensoryAcidity ;
+    bfpo:negativelyInfluences bfpo:WinyDefect ;
+    bfpo:negativelyInfluences bfpo:OverfermentedDefect .
+
+# ===========================================================
+# SECCIÓN 7 — RELACIONES DEL BRIX
+# Ref: Cruz-O'Byrne et al. (2020); Ferreira et al. (2023)
+# Alto Brix → más sustrato disponible → mayor actividad
+# microbiana → más levaduras y LAB activas
+# Brix bajo → sustrato agotado → proceso finaliza
+# ===========================================================
+
+bfpo:BrixDegree
+    bfpo:positivelyInfluences bfpo:Microorganism ;
+    bfpo:positivelyInfluences bfpo:Yeast ;
+    bfpo:positivelyInfluences bfpo:EthanolProduction ;
+    bfpo:positivelyInfluences bfpo:SCAScore .
+
+# ===========================================================
+# SECCIÓN 8 — RELACIONES DE MICROORGANISMOS
+# Ref: Revelo-Romo et al. (2025); Cruz-O'Byrne et al. (2020)
+# Microorganismos producen ácidos, alcoholes y CO2
+# Levaduras → etanol, VOCs, ésteres, CO2
+# LAB → ácido láctico, reducen pH y Brix
+# ===========================================================
+
+bfpo:Microorganism
+    bfpo:produces bfpo:LacticAcid ;
+    bfpo:produces bfpo:AceticAcid ;
+    bfpo:produces bfpo:VolatileCompound ;
+    bfpo:produces bfpo:EthanolProduction ;
+    bfpo:produces bfpo:CO2 ;
+    bfpo:negativelyInfluences bfpo:pH ;
+    bfpo:negativelyInfluences bfpo:BrixDegree .
+
+bfpo:Yeast
+    bfpo:produces bfpo:Ethanol ;
+    bfpo:produces bfpo:EthanolProduction ;
+    bfpo:produces bfpo:VolatileCompound ;
+    bfpo:produces bfpo:Ester ;
+    bfpo:produces bfpo:CO2 ;
+    bfpo:negativelyInfluences bfpo:BrixDegree .
+
+bfpo:LacticAcidBacteria
+    bfpo:produces bfpo:LacticAcid ;
+    bfpo:positivelyInfluences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:pH ;
+    bfpo:negativelyInfluences bfpo:BrixDegree .
+
+# ===========================================================
+# SECCIÓN 9 — RELACIONES DE COMPUESTOS QUÍMICOS
+# Ref: Brioschi Junior et al. (2021); Revelo-Romo et al. (2025)
+# Ácido láctico → acidez sensorial positiva
+# Ácido acético → WinyDefect cuando se acumula en exceso
+# VOCs → aroma, flavor, perfil aromático
+# Etanol → precursor de ésteres aromáticos
+# ===========================================================
+
+bfpo:LacticAcid
+    bfpo:positivelyInfluences bfpo:SensoryAcidity ;
+    bfpo:positivelyInfluences bfpo:Aroma ;
+    bfpo:negativelyInfluences bfpo:pH .
+
+bfpo:AceticAcid
+    bfpo:negativelyInfluences bfpo:pH ;
+    bfpo:positivelyInfluences bfpo:WinyDefect ;
+    bfpo:positivelyInfluences bfpo:AceticDefect ;
+    bfpo:negativelyInfluences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:CupClarity ;
+    bfpo:positivelyInfluences bfpo:SensoryAcidity .
+
+bfpo:VolatileCompound
+    bfpo:positivelyInfluences bfpo:Aroma ;
+    bfpo:positivelyInfluences bfpo:Flavor ;
+    bfpo:positivelyInfluences bfpo:AromaticProfile ;
+    bfpo:positivelyInfluences bfpo:AromaticIntensity .
+
+bfpo:Ethanol
+    bfpo:positivelyInfluences bfpo:VolatileCompound ;
+    bfpo:positivelyInfluences bfpo:Ester ;
+    bfpo:positivelyInfluences bfpo:Aroma .
+
+bfpo:Ester
+    bfpo:positivelyInfluences bfpo:Aroma ;
+    bfpo:positivelyInfluences bfpo:Flavor ;
+    bfpo:positivelyInfluences bfpo:SCAScore .
+
+bfpo:OrganicAcid
+    bfpo:negativelyInfluences bfpo:pH ;
+    bfpo:positivelyInfluences bfpo:OrganicAcidProfile .
+
+bfpo:OrganicAcidProfile
+    bfpo:positivelyInfluences bfpo:SCAScore ;
+    bfpo:positivelyInfluences bfpo:Flavor ;
+    bfpo:positivelyInfluences bfpo:SensoryAcidity .
+
+# ===========================================================
+# SECCIÓN 10 — ATRIBUTOS SENSORIALES → SCA
+# Ref: SCA (2015) Cupping Protocols
+# Cada atributo es parte del puntaje SCA e influye en él
+# isPartOf es la relación estructural: solo se declara para los
+# atributos puntuados en el formulario SCA (2015). AromaticProfile
+# y AromaticIntensity no son atributos puntuados y solo influyen.
+# positivelyInfluences expresa la contribución al puntaje
+# ===========================================================
+
+bfpo:Aroma         bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:Flavor        bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:Body          bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:Balance       bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:Sweetness     bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:Uniformity    bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:CupClarity    bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:Aftertaste    bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:SensoryAcidity bfpo:isPartOf bfpo:SCAScore ;
+                   bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:AromaticProfile bfpo:positivelyInfluences bfpo:SCAScore .
+bfpo:AromaticIntensity bfpo:positivelyInfluences bfpo:SCAScore .
+
+# ===========================================================
+# SECCIÓN 11 — DEFECTOS SENSORIALES
+# Ref: Ferreira et al. (2023); Brioschi Junior et al. (2021)
+# Los defectos reducen el puntaje SCA y afectan CupClarity
+# Cada defecto tiene una variable principal causante:
+# WinyDefect      → causado principalmente por pH bajo + AceticAcid
+# OverfermentedDefect → causado por FermentationDuration excesiva
+# AceticDefect    → causado por AceticAcid + FermentationDuration
+# ===========================================================
+
+bfpo:WinyDefect
+    bfpo:negativelyInfluences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:CupClarity .
+
+bfpo:OverfermentedDefect
+    bfpo:negativelyInfluences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:CupClarity .
+
+bfpo:AceticDefect
+    bfpo:negativelyInfluences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:CupClarity .
+
+# ===========================================================
+# SECCIÓN 12 — MÉTODO SIAF
+# Ref: Ferreira et al. (2023); Revelo-Romo et al. (2025)
+# ===========================================================
+
+bfpo:SIAFFermentation
+    bfpo:positivelyInfluences bfpo:LacticAcid ;
+    bfpo:positivelyInfluences bfpo:VolatileCompound ;
+    bfpo:positivelyInfluences bfpo:SCAScore ;
+    bfpo:negativelyInfluences bfpo:AceticAcid ;
+    bfpo:negativelyInfluences bfpo:pH .
+
+
+
+

@@ -1,0 +1,21 @@
+PREFIX bfpo: <https://w3id.org/bfpo#>
+SELECT DISTINCT ?variable ?p1 ?n1 ?p2 ?n2 ?p3 ?n3 WHERE {
+  GRAPH <http://w3id.org/bfpo/observacion_actual> {
+    bfpo:ObservacionActual ?propiedad ?valor .
+  }
+  GRAPH <http://w3id.org/bfpo/ontology> {
+    ?propiedad bfpo:measuresVariable ?variable .
+  }
+  GRAPH <http://w3id.org/bfpo/conocimiento_experto> {
+    VALUES ?p1 { bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces bfpo:influences }
+    ?variable ?p1 ?n1 .
+    OPTIONAL {
+      VALUES ?p2 { bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces bfpo:influences }
+      ?n1 ?p2 ?n2 .
+      OPTIONAL {
+        VALUES ?p3 { bfpo:positivelyInfluences bfpo:negativelyInfluences bfpo:produces bfpo:influences }
+        ?n2 ?p3 ?n3 .
+      }
+    }
+  }
+}

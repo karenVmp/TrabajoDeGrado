@@ -1,0 +1,24 @@
+PREFIX bfpo: <https://w3id.org/bfpo#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT DISTINCT ?variable ?var_label ?efecto ?efecto_label WHERE {
+  GRAPH <http://w3id.org/bfpo/observacion_actual> {
+    bfpo:ObservacionActual ?propiedad_medicion ?valor .
+  }
+  VALUES (?propiedad_medicion ?variable_rango ?variable) {
+    (bfpo:hasPH bfpo:pHVariable bfpo:pH)
+    (bfpo:hasFermentationTemperature bfpo:TemperatureVariable bfpo:FermentationTemperature)
+  }
+  ?variable_rango bfpo:hasOptimalRangeMin ?minimo ;
+                  bfpo:hasOptimalRangeMax ?maximo .
+  FILTER(xsd:decimal(?valor) < xsd:decimal(?minimo) ||
+         xsd:decimal(?valor) > xsd:decimal(?maximo))
+  ?variable bfpo:influences ?efecto .
+  FILTER EXISTS {
+    ?variable ?relacion_original ?efecto .
+    FILTER(?relacion_original IN (bfpo:positivelyInfluences, bfpo:negativelyInfluences))
+  }
+  OPTIONAL { ?variable rdfs:label ?var_label . FILTER(LANG(?var_label) = "en") }
+  OPTIONAL { ?efecto rdfs:label ?efecto_label . FILTER(LANG(?efecto_label) = "en") }
+}
+ORDER BY ?variable ?efecto

@@ -1,0 +1,230 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix bfpo: <https://w3id.org/bfpo#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# --- Fuente de datos ---
+<#FuenteCSV>
+    rml:source "fermentacion_yina_clean.csv" ;
+    rml:referenceFormulation ql:CSV .
+
+# --- Biorreactor (instancia) ---
+<#MapBiorreactor>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#{bioreactor_id}" ;
+        rr:class bfpo:Bioreactor
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "bioreactor_id" ; rr:datatype xsd:string ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasFermentationTemperature ;
+        rr:objectMap [ rml:reference "fermentation_temperature_c" ; rr:datatype xsd:float ]
+    ] ;
+    # Enlace del biorreactor con cada una de sus observaciones
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasObservation ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#Obs_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] ;
+    # Método de fermentación que aloja el biorreactor (processing_method = SIAF)
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hosts ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#{processing_method}Fermentation" ]
+    ] .
+
+# --- Observación por cada registro ---
+<#MapObservacion>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Obs_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Bioreactor
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasFermentationDuration ;
+        rr:objectMap [ rml:reference "fermentation_duration_h" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasPH ;
+        rr:objectMap [ rml:reference "ph" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasBrixDegree ;
+        rr:objectMap [ rml:reference "brix_degree" ; rr:datatype xsd:float ]
+    ] .
+# El puntaje SCA total se registra solo en el nodo SCA_..., porque en BFPO
+# hasSCAScore tiene como dominio la clase SCAScore.
+
+# --- Puntaje SCA total (instancia por observación) ---
+# Los puntajes de cada atributo se representan en instancias propias (ver abajo)
+<#MapSCAScore>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:SCAScore
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAScore ;
+        rr:objectMap [ rml:reference "sca_score_total" ; rr:datatype xsd:float ]
+    ] ;
+    # Enlace del puntaje SCA con su clasificación de calidad
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasQualityClassification ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#{quality_classification}" ]
+    ] .
+
+# --- Atributos sensoriales (una instancia por atributo y observación) ---
+# hasSCAAttributeScore tiene como dominio SensoryAttribute en BFPO; cada
+# instancia se tipa con la clase del atributo y se enlaza con su puntaje
+# SCA mediante isPartOf, igual que en las relaciones del dominio.
+
+<#MapAroma>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Aroma_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Aroma
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "aroma_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapFlavor>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Flavor_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Flavor
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "flavor_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapAftertaste>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Aftertaste_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Aftertaste
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "aftertaste_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapSensoryAcidity>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#SensoryAcidity_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:SensoryAcidity
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "acidity_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapBody>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Body_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Body
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "body_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapBalance>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Balance_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Balance
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "balance_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapSweetness>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Sweetness_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Sweetness
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "sweetness_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapCupClarity>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#CupClarity_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:CupClarity
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "cup_clarity_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+<#MapUniformity>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#Uniformity_{fermentation_id}_{fermentation_duration_h}h" ;
+        rr:class bfpo:Uniformity
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:hasSCAAttributeScore ;
+        rr:objectMap [ rml:reference "uniformity_score" ; rr:datatype xsd:float ]
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate bfpo:isPartOf ;
+        rr:objectMap [ rr:template "https://w3id.org/bfpo#SCA_{fermentation_id}_{fermentation_duration_h}h" ]
+    ] .
+
+# --- Clasificación de calidad ---
+<#MapCalidad>
+    rml:logicalSource <#FuenteCSV> ;
+    rr:subjectMap [
+        rr:template "https://w3id.org/bfpo#{quality_classification}" ;
+        rr:class bfpo:QualityClassification
+    ] ;
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label ;
+        rr:objectMap [ rml:reference "quality_classification" ; rr:datatype xsd:string ]
+    ] .

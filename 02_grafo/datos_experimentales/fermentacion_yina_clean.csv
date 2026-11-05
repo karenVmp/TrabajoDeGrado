@@ -1,0 +1,10 @@
+fermentation_id,bioreactor_id,fermentation_temperature_c,processing_method,fermentation_duration_h,ph,brix_degree,aroma_score,flavor_score,aftertaste_score,acidity_score,body_score,uniformity_score,balance_score,cup_clarity_score,sweetness_score,cupper_score,sca_score_total,quality_classification
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,0,5.473,15.633333333333333,7.63,7.38,7.5,7.5,7.38,10,7.13,10,10,7.13,81.65,MediumQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,12,4.518999999999999,14.4,7.88,7.63,7.63,7.63,7.63,10,7.5,10,10,7.5,83.4,MediumQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,24,4.415,13.833333333333334,8.0,7.75,7.75,7.75,7.75,10,7.63,10,10,7.63,84.25999999999999,MediumQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,36,4.063333333333333,13.4,8.13,7.88,7.88,7.88,7.88,10,7.88,10,10,7.75,85.28,HighQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,48,4.125666666666667,12.333333333333334,8.25,8.0,8.0,8.0,8.0,10,8.0,10,10,7.88,86.13,HighQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,60,4.066333333333334,9.733333333333333,8.13,7.88,7.88,7.88,7.88,10,7.88,10,10,7.75,85.28,HighQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,72,3.9200000000000004,9.3,7.88,7.75,7.75,7.75,7.75,10,7.63,10,10,7.63,84.13999999999999,MediumQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,84,3.8543333333333334,9.233333333333333,7.75,7.5,7.5,7.5,7.5,10,7.5,10,10,7.5,82.75,MediumQuality
+FERM_23C_2DA,BiorreactorYina,23.0,SIAF,96,3.8480000000000003,8.899999999999999,7.5,7.25,7.25,7.25,7.25,10,7.25,10,10,7.25,81.0,MediumQuality

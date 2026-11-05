@@ -1,0 +1,8 @@
+PREFIX bfpo: <https://w3id.org/bfpo#>
+SELECT (COUNT(*) AS ?totalRelaciones) WHERE {
+  {
+    SELECT DISTINCT ?origen ?destino WHERE {
+      ?origen bfpo:influences ?destino .
+    }
+  }
+}
